@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           bottomNavigationBar: TabBar(
             tabs: const [
-              Tab(text: 'Home', icon: Icon(Icons.home)),
+              Tab(text: 'Homeeeeeeeeeee', icon: Icon(Icons.home)),
               Tab(text: 'Chat', icon: Icon(Icons.chat)),
               Tab(text: 'Profile', icon: Icon(Icons.person)),
             ],
