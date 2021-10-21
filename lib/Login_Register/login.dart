@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'register.dart';
 import 'package:http/http.dart' as http;
@@ -12,15 +14,24 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final formkey = GlobalKey<FormState>();
 
-  Future save() async {
-    var res = await http.post(Uri.parse('http://localhost:3000/login-register/login'),
+  Future login() async {
+    var res = await http.post(Uri.parse('http://10.0.2.2:3000/login-register/login'),
     headers: <String,String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },
         body: <String, String>{
-          'email': userNameController.text,
+          'userName': userNameController.text,
           'password': passwordController.text
         });
+    String output = res.body;
+    if(res.statusCode == 200)
+    {
+      print(output);
+    }
+    else
+    {
+      print(output);
+    }
     print(res.body);     
   }
 
@@ -41,7 +52,7 @@ class _LoginState extends State<Login> {
                 children: [
                   TextFormField(
                     decoration: const InputDecoration(
-                      labelText: 'Email Address',
+                      labelText: 'Username',
                     ),
                     controller: userNameController,
                   ),
@@ -58,6 +69,7 @@ class _LoginState extends State<Login> {
             onPressed: () {
               print(userNameController.text);
               print(passwordController.text);
+              login();
             },
           ),
           TextButton(
