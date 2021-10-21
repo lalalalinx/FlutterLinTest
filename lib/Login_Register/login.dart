@@ -32,7 +32,9 @@ class _LoginState extends State<Login> {
     {
       print(output);
       await storage.write(key: "token", value: output);
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Home(),), (route) => false);
+      String? tokenstart = await storage.read(key: "token");
+      print(tokenstart);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){return Home();}));
     }
     else
     {
