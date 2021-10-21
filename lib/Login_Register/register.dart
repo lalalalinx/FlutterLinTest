@@ -176,8 +176,8 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.deepPurple[700],
-                        fixedSize: const Size(320, 55),
+                        primary: Colors.black,
+                        fixedSize: const Size(200, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),

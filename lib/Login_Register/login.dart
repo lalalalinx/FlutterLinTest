@@ -126,10 +126,11 @@ class _LoginState extends State<Login> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Colors.deepPurple[700],
+                primary: Colors.black,
                 fixedSize: const Size(350, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50),
+                  side: BorderSide(color: Colors.black, width: 1.5)
                 ),
               ),
             ),
@@ -150,13 +151,15 @@ class _LoginState extends State<Login> {
                 'Register',
                 style: TextStyle(
                   fontSize: 18,
+                  color: Colors.black,
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Colors.grey[800],
+                primary: Colors.white,
                 fixedSize: const Size(350, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50),
+                  side: BorderSide(color: Colors.black, width: 1.5)
                 ),
               ),
               onPressed: () {
