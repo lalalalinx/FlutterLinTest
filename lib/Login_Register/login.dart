@@ -18,14 +18,14 @@ class _LoginState extends State<Login> {
           'Context-Type': 'application/json;charSet=UTF-8'
         },
         body: <String, String>{
-          'email': emailController.text,
+          'email': userNameController.text,
           'password': passwordController.text
         });
     print(res.body);     
   }
 
   //controller
-  final emailController = TextEditingController();
+  final userNameController = TextEditingController();
   final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _LoginState extends State<Login> {
                     decoration: const InputDecoration(
                       labelText: 'Email Address',
                     ),
-                    controller: emailController,
+                    controller: userNameController,
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
           TextButton(
             child: const Text("Login"),
             onPressed: () {
-              print(emailController.text);
+              print(userNameController.text);
               print(passwordController.text);
             },
           ),
