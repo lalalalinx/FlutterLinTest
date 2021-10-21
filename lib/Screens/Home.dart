@@ -19,20 +19,36 @@ class _HomeState extends State<Home> {
         child: Scaffold(
           bottomNavigationBar: TabBar(
             tabs: const [
-              Tab(text: 'Homeeeeeeeeeee', icon: Icon(Icons.home)),
+              Tab(text: 'Home', icon: Icon(Icons.home)),
               Tab(text: 'Chat', icon: Icon(Icons.chat)),
               Tab(text: 'Profile', icon: Icon(Icons.person)),
             ],
-            labelStyle: TextStyle(color: Color(0xFFF00), fontSize: 12), 
+            labelStyle: TextStyle(color: Color(0xFFF00), fontSize: 12),
           ),
           backgroundColor: Colors.grey[900],
           appBar: AppBar(
-            backgroundColor: Colors.deepPurple[700],
-            title: Text("Arumjoh"),
+            backgroundColor: Colors.grey[900],
+            elevation: 5,
+            title: Text(
+                "Arumjoh",
+                style: TextStyle(
+                  letterSpacing: 4,
+                ),
+              ),
+              centerTitle: true,
             actions: [
               IconButton(icon: Icon(Icons.search), onPressed: () {}),
-              IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
             ],
+            leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.deepPurple, Colors.red],
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft,
+              )
+            ),
+          ),
           ),
           body: TabBarView(
             children: [
