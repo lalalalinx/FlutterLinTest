@@ -107,9 +107,9 @@ class _LoginState extends State<Login> {
                   ),
                 ],
               )),
-              SizedBox(
-                    height: 15.0,
-                  ),
+          SizedBox(
+            height: 15.0,
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
             child: ElevatedButton(
@@ -129,9 +129,8 @@ class _LoginState extends State<Login> {
                 primary: Colors.black,
                 fixedSize: const Size(350, 50),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  side: BorderSide(color: Colors.black, width: 1.5)
-                ),
+                    borderRadius: BorderRadius.circular(50),
+                    side: BorderSide(color: Colors.black, width: 1.5)),
               ),
             ),
           ),
@@ -158,9 +157,8 @@ class _LoginState extends State<Login> {
                 primary: Colors.white,
                 fixedSize: const Size(350, 50),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  side: BorderSide(color: Colors.black, width: 1.5)
-                ),
+                    borderRadius: BorderRadius.circular(50),
+                    side: BorderSide(color: Colors.black, width: 1.5)),
               ),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -170,10 +168,9 @@ class _LoginState extends State<Login> {
             ),
           ),
           Container(
-            child: Image.asset(
-              "assets/images/arumjoh.png",
-              height: 200,
-              width: 200),),
+            child: Image.asset("assets/images/arumjoh.png",
+                height: 200, width: 200),
+          ),
           // TextButton(
           //   child: const Text("Register"),
           //   onPressed: () {
