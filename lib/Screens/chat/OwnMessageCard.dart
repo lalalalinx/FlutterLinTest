@@ -12,38 +12,41 @@ class OwnMessageCard extends StatelessWidget {
       child: ConstrainedBox(
         constraints:
             BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 45),
-        child: Card(
-          elevation:1,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            color: Colors.lightGreen,
-            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            child: Stack(children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 50,
-                  top: 5,
-                  bottom: 20,
-                ),
-                child: Text("Hey",
-                    style: TextStyle(
-                      fontSize: 16,
-                    )),
-              ),
-              Positioned(
-                bottom: 4,
-                right: 10,
-                child: Row(children: [
-                  Text("2:04",
-                      style: TextStyle(fontSize: 13, color: Colors.grey[600])),
-                  SizedBox(width:5),
-                  Icon(
-                    Icons.done_all,
-                    size: 20,
+        child: Stack(
+          children: [
+            Card(
+                elevation: 1,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25)),
+                color: Colors.blue,
+                margin: EdgeInsets.only(
+                    left: 35.0, right: 10.0, top: 10, bottom: 10),
+                child: Stack(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 10,
+                    bottom: 10,
+                    ),
+                    child:
+                        Text("Hey", //<----------------------------------******
+                            style: TextStyle(
+                              fontSize: 16,
+                            )),
                   ),
-                ]),
-              ),
-            ])),
+                ])),
+            Positioned(
+              bottom: 8,
+              right: 75,
+              child: Row(children: [
+                Text("2:04", //<---------------------------------------*******
+                    style: TextStyle(fontSize: 13, color: Colors.white)),
+                SizedBox(width: 5),
+              ]),
+            ),
+          ],
+        ),
       ),
     );
   }

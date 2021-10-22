@@ -5,7 +5,6 @@ import 'package:chatki_project/Screens/chat/ReplyCard.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
-
 class IndividualChat extends StatefulWidget {
   const IndividualChat({Key? key}) : super(key: key);
 
@@ -14,16 +13,16 @@ class IndividualChat extends StatefulWidget {
 }
 
 class _IndividualChatState extends State<IndividualChat> {
-
   late Socket socket;
 
   @override
   void initState() {
-    socket = io('http://127.0.0.1:3000',
-    OptionBuilder()
-      .setTransports(['websocket']) // for Flutter or Dart VM
-      .disableAutoConnect()  // disable auto-connection
-      .build());
+    socket = io(
+        'http://127.0.0.1:3000',
+        OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .disableAutoConnect() // disable auto-connection
+            .build());
     socket.connect();
     super.initState();
 
@@ -35,54 +34,99 @@ class _IndividualChatState extends State<IndividualChat> {
     return Stack(
       children: [
         Scaffold(
-            backgroundColor: Colors.blueGrey,
-            body: Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Stack(children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height -60,
-                    child: ListView(shrinkWrap: true, children: [
+          backgroundColor: Colors.grey[900],
+          appBar: AppBar(
+            backgroundColor: Colors.grey[900],
+            elevation: 5,
+            title: Text(
+              "Friend Name", //<----------------------------------****
+              style: TextStyle(
+                letterSpacing: 4,
+              ),
+            ),
+            centerTitle: true,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 25,
+                color: Colors.white,
+              ),
+            ),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.deepPurple, Colors.red],
+                  begin: Alignment.bottomRight,
+                  end: Alignment.topLeft,
+                ),
+              ),
+            ),
+          ),
+          //backgroundColor: Colors.blueGrey,
+          body: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height - 60,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
                       OwnMessageCard(),
                       ReplyCard(),
-                      
-                      
-                    ]),
+                      ReplyCard(),
+                      OwnMessageCard(),
+                      OwnMessageCard(),
+                      OwnMessageCard(),
+                    ],
                   ),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Row(
-                        children: [
-                          Container(
-                              width: MediaQuery.of(context).size.width - 55,
-                              child: Card(
-                                margin: EdgeInsets.only(
-                                    left: 2, right: 2, bottom: 8),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25)),
-                                child: TextFormField(
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: 5,
-                                    minLines: 1,
-                                    textAlignVertical: TextAlignVertical.center,
-                                    decoration: InputDecoration(
-                                      hintText: "Type a message",
-                                      contentPadding: EdgeInsets.all(15),
-                                    )),
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8, left: 2),
-                            child: CircleAvatar(
-                              radius: 25,
-                              child: IconButton(
-                                icon: Icon(Icons.send),
-                                onPressed: () {},
-                              ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width - 55,
+                        child: Card(
+                          margin:
+                              EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                          child: TextFormField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 5,
+                            minLines: 1,
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration: InputDecoration(
+                              hintText: "Type a message",
+                              contentPadding: EdgeInsets.all(15),
                             ),
                           ),
-                        ],
-                      ))
-                ]))),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.blue[700],
+                          radius: 25,
+                          child: IconButton(
+                            color: Colors.white,
+                            icon: Icon(Icons.send),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

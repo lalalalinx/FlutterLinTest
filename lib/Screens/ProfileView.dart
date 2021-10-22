@@ -48,9 +48,17 @@ class _ProfileViewState extends State<ProfileView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(child: Text(
+              'Employee ID ',
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey[900],
+                  )
+            ),),
             Center(
               child: Text(
-                user.accountName,
+                user.employeeID,
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -67,7 +75,7 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             const SizedBox(height: 5),
             Text(
-              user.name+'  '+ user.surname,
+              user.userFName+'  '+ user.userLName,
               style: TextStyle(fontSize: 18),
             ),
             const SizedBox(height: 20),
@@ -106,7 +114,7 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             const SizedBox(height: 5),
             Text(
-              user.zIP + ' - ' + user.city + ' - ' + user.street,
+              user.zip + ' - ' + user.city + ' - ' + user.street,
               style: TextStyle(fontSize: 18),
             ),
           ],

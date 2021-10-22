@@ -4,14 +4,14 @@ import 'ProfileData.dart';
 
 class ProfileUserData {
   static const myUser = ProfileData(
-  accountName: 'Sarah69',
+  employeeID: '620696969',
   image:
     'https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg',
-  name: 'Sarah',
-  surname: 'Seagull',
+  userFName: 'Sarah',
+  userLName: 'Seagull',
   email: 'Sarah_seagull@gmail.com',
   tel: '0881986841',
-  zIP: '10400',
+  zip: '10400',
   city: 'Bangkok', 
   street: "Elephant", 
   );
