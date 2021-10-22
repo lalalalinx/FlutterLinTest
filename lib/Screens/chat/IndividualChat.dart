@@ -14,6 +14,14 @@ class IndividualChat extends StatefulWidget {
 }
 
 class _IndividualChatState extends State<IndividualChat> {
+
+  late IO.Socket socket;
+
+  void connect()
+  {
+    // socket = IO.io(uri));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
