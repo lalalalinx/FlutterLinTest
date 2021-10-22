@@ -3,7 +3,7 @@
    <application
         android:label="Arumjoh"
         android:icon="@mipmap/ic_launcher"
-        andriod:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

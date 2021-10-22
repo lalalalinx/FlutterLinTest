@@ -17,9 +17,22 @@ class _IndividualChatState extends State<IndividualChat> {
 
   late IO.Socket socket;
 
+  @override
+  void initState() {
+    super.initState();
+    connect();
+    print("initstate");
+  }
+
   void connect()
   {
-    // socket = IO.io(uri));
+    socket = IO.io("http://192.168.1.50:3000",<String,dynamic>{
+      "transports": ["websocket"],
+      "autoConnect": false,
+    });
+    socket.connect();
+    socket.onConnect((data)=> print("Connected"));
+    print(socket.connected);
   }
 
   @override

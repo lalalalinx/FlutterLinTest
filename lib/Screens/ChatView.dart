@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_literals_to_create_immutables
 
+import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/chatData.dart';
 import 'chat/ChatList.dart';
@@ -30,7 +31,11 @@ class _ChatViewState extends State<ChatView> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return IndividualChat();
+                }));
+              },
         child: Icon(Icons.chat),
       ),
       body: ListView.builder(
