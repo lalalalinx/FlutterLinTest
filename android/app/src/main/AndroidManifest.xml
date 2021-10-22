@@ -2,8 +2,7 @@
     package="com.example.chatki_project">
    <application
         android:label="Arumjoh"
-        android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

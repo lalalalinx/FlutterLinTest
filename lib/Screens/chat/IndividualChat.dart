@@ -3,7 +3,7 @@
 import 'package:chatki_project/Screens/chat/OwnMessageCard.dart';
 import 'package:chatki_project/Screens/chat/ReplyCard.dart';
 import 'package:flutter/material.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 
 class IndividualChat extends StatefulWidget {
@@ -15,24 +15,19 @@ class IndividualChat extends StatefulWidget {
 
 class _IndividualChatState extends State<IndividualChat> {
 
-  late IO.Socket socket;
+  late Socket socket;
 
   @override
   void initState() {
-    super.initState();
-    connect();
-    print("initstate");
-  }
-
-  void connect()
-  {
-    socket = IO.io("http://192.168.1.50:3000",<String,dynamic>{
-      "transports": ["websocket"],
-      "autoConnect": false,
-    });
+    socket = io('http://127.0.0.1:3000',
+    OptionBuilder()
+      .setTransports(['websocket']) // for Flutter or Dart VM
+      .disableAutoConnect()  // disable auto-connection
+      .build());
     socket.connect();
-    socket.onConnect((data)=> print("Connected"));
-    print(socket.connected);
+    super.initState();
+
+    print("Hello");
   }
 
   @override
