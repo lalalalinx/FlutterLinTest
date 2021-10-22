@@ -11,42 +11,39 @@ class OwnMessageCard extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
         constraints:
-            BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 45),
-        child: Stack(
-          children: [
-            Card(
-                elevation: 1,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25)),
-                color: Colors.blue,
-                margin: EdgeInsets.only(
-                    left: 35.0, right: 10.0, top: 10, bottom: 10),
-                child: Stack(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 10,
-                    bottom: 10,
-                    ),
-                    child:
-                        Text("Hey", //<----------------------------------******
-                            style: TextStyle(
-                              fontSize: 16,
-                            )),
-                  ),
-                ])),
-            Positioned(
-              bottom: 8,
-              right: 75,
-              child: Row(children: [
-                Text("2:04", //<---------------------------------------*******
-                    style: TextStyle(fontSize: 13, color: Colors.white)),
-                SizedBox(width: 5),
-              ]),
+            BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 150),
+        child: Card(
+          elevation:1,
+          shape: RoundedRectangleBorder(
+            borderRadius: 
+            BorderRadius.circular(30),
             ),
-          ],
-        ),
+            color: Colors.blue[400],
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0,top: 10),
+            child: Stack(children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 45,
+                  top: 10,
+                  bottom: 10,
+                ),
+                child: Text("448844444444444444444dddddddddd4Hey",
+                    style: TextStyle(
+                      fontSize: 16,
+                    )),
+              ),
+              Positioned(
+                bottom: 4,
+                right: 13,
+                child: Row(children: [
+                  Text("2:04",
+                      style: TextStyle(fontSize: 13, color: Colors.blue[800])),
+                  SizedBox(width:5),
+                  
+                ]),
+              ),
+            ])),
       ),
     );
   }

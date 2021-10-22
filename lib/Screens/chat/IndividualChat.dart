@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:chatki_project/Screens/chat/OwnMessageCard.dart';
 import 'package:chatki_project/Screens/chat/ReplyCard.dart';
@@ -45,6 +45,16 @@ class _IndividualChatState extends State<IndividualChat> {
               ),
             ),
             centerTitle: true,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 5),
+                child: CircleAvatar(
+                  backgroundColor: Colors.black,
+                  radius: 23,
+                  //onPressed: () {},
+                ),
+              ),
+            ],
             leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -72,7 +82,7 @@ class _IndividualChatState extends State<IndividualChat> {
             child: Stack(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height - 60,
+                  height: MediaQuery.of(context).size.height - 50,
                   child: ListView(
                     shrinkWrap: true,
                     children: [
@@ -91,9 +101,10 @@ class _IndividualChatState extends State<IndividualChat> {
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width - 55,
+                        color: Colors.grey[900],
                         child: Card(
-                          margin:
-                              EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                          margin: EdgeInsets.only(
+                              left: 10, right: 10, bottom: 10, top: 10),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25)),
                           child: TextFormField(
@@ -108,15 +119,20 @@ class _IndividualChatState extends State<IndividualChat> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.blue[700],
-                          radius: 25,
-                          child: IconButton(
-                            color: Colors.white,
-                            icon: Icon(Icons.send),
-                            onPressed: () {},
+                      Container(
+                        width: 55,
+                        height: 69,
+                        color: Colors.grey[900],
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.blue,
+                            radius: 25,
+                            child: IconButton(
+                              color: Colors.white,
+                              icon: Icon(Icons.send),
+                              onPressed: () {},
+                            ),
                           ),
                         ),
                       ),
