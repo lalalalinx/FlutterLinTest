@@ -43,7 +43,7 @@ class ProfileWidget extends StatelessWidget {
             fit: BoxFit.cover,
             width: 128,
             height: 128,
-            child: InkWell(onTap: onClicked),
+            child: InkWell(onTap: onClicked), //<------------- กดรูป
           ),
         ),
       ),

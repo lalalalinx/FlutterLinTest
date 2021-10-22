@@ -4,6 +4,7 @@ import 'package:chatki_project/Profile/ProfileData.dart';
 import 'package:chatki_project/Profile/ProfileUserData.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/Profile/ProfildWidget.dart';
+import 'package:chatki_project/Profile/EditProfile.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -25,7 +26,10 @@ class _ProfileViewState extends State<ProfileView> {
       ),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return EditProfile();
+                }));},
         child: Icon(Icons.edit),
       ),
         body: ListView(
