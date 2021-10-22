@@ -36,9 +36,9 @@ class _EditProfileState extends State<EditProfile> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
         onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ProfileView();
-                }));},
+                //<---------------------------------------------ยืนยัน edit ตรงนี้
+                Navigator.pop(context);
+                },
         child: Icon(Icons.done),
       ),
         body: ListView(
