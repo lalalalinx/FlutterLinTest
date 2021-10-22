@@ -1,7 +1,6 @@
 import 'dart:io';
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors, file_names
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
