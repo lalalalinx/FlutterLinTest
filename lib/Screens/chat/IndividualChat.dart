@@ -17,16 +17,19 @@ class _IndividualChatState extends State<IndividualChat> {
 
   @override
   void initState() {
+    connectSocket();
+    super.initState();
+  }
+
+  void connectSocket() {
     socket = io(
-        'http://127.0.0.1:3000',
+        'http://10.0.2.2:3000/',
         OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect() // disable auto-connection
             .build());
     socket.connect();
-    super.initState();
-
-    print("Hello");
+    
   }
 
   @override
