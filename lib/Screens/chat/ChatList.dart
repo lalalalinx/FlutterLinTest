@@ -38,6 +38,11 @@ class ChatList extends StatelessWidget {
       ),
       trailing: Text(chatData.time),
     ),
+    Padding(
+      padding: const EdgeInsets.only(bottom: 0),
+      child: Divider(thickness: 0.7,
+      ),
+    )
         ],
       ),
     );
