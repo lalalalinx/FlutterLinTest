@@ -2,7 +2,7 @@
 
 import 'package:chatki_project/Screens/ChatView.dart';
 import 'package:flutter/material.dart';
-import 'package:chatki_project/chatData.dart';
+import 'package:chatki_project/Model/chatData.dart';
 
 class ChatList extends StatelessWidget {
   const ChatList({Key? key, required this.chatData}) : super(key: key);

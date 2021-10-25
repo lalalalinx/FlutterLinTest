@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
-import 'package:chatki_project/Profile/ProfileData.dart';
-import 'package:chatki_project/Profile/ProfileUserData.dart';
+import 'package:chatki_project/Model/ProfileData.dart';
+import 'package:chatki_project/Model/ProfileUserData.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/Profile/ProfildWidget.dart';
 import 'package:chatki_project/Profile/EditProfile.dart';

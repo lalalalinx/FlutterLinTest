@@ -2,7 +2,7 @@
 
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
-import 'package:chatki_project/chatData.dart';
+import 'package:chatki_project/Model/chatData.dart';
 import 'chat/ChatList.dart';
 
 class ChatView extends StatefulWidget {
