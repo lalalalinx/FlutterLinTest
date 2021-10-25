@@ -3,6 +3,7 @@
 import 'package:chatki_project/Screens/chat/OwnMessageCard.dart';
 import 'package:chatki_project/Screens/chat/ReplyCard.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 class IndividualChat extends StatefulWidget {
@@ -14,6 +15,7 @@ class IndividualChat extends StatefulWidget {
 
 class _IndividualChatState extends State<IndividualChat> {
   late Socket socket;
+  final storage = FlutterSecureStorage();
 
   @override
   void initState() {
@@ -29,6 +31,7 @@ class _IndividualChatState extends State<IndividualChat> {
             .disableAutoConnect() // disable auto-connection
             .build());
     socket.connect();
+    socket.emit("signin",);
     
   }
 

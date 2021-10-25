@@ -1,6 +1,8 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
+import 'package:chatki_project/Storage/TokenStorage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'ChatView.dart';
 import 'HomeView.dart';
 import 'ProfileView.dart';
@@ -13,6 +15,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  final storage = FlutterSecureStorage();
+  
+  @override
+  void initState() {
+    super.initState();
+    readToken();
+  }
+
+  Future<String?> readToken() async {
+    final tokenStore = await storage.read(key: "token");
+    print("Token in home:$tokenStore");
+  }
+
+
   @override
   Widget build(BuildContext context) => DefaultTabController(
         length: 3,

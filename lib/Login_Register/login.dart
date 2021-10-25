@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:chatki_project/Screens/Home.dart';
+import 'package:chatki_project/Storage/TokenStorage.dart';
 import 'package:flutter/material.dart';
 import 'register.dart';
 import 'package:http/http.dart' as http;
@@ -17,7 +18,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formkey = GlobalKey<FormState>();
-  final storage = new FlutterSecureStorage();
+  final storage = FlutterSecureStorage();
 
   Future login() async {
     var res = await http.post(
@@ -31,10 +32,7 @@ class _LoginState extends State<Login> {
         });
     String output = res.body;
     if (res.statusCode == 200) {
-      print(output);
-      await storage.write(key: "token", value: output);
-      String? tokenstart = await storage.read(key: "token");
-      print(tokenstart);
+      await TokenStorage.setToken(output);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return Home();
       }));
