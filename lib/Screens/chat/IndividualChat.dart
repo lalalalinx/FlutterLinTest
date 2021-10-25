@@ -5,6 +5,7 @@ import 'package:chatki_project/Screens/chat/ReplyCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:socket_io_client/socket_io_client.dart';
+import 'package:http/http.dart' as http;
 
 class IndividualChat extends StatefulWidget {
   const IndividualChat({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _IndividualChatState extends State<IndividualChat> {
     super.initState();
   }
 
-  void connectSocket() {
+  Future<void> connectSocket() async {
     socket = io(
         'http://10.0.2.2:3000/',
         OptionBuilder()
@@ -31,8 +32,22 @@ class _IndividualChatState extends State<IndividualChat> {
             .disableAutoConnect() // disable auto-connection
             .build());
     socket.connect();
-    socket.emit("signin",);
     
+    String? tokenStore = await storage.read(key: "token");
+    socket.emit("signin",tokenStore);
+    
+  }
+
+  Future getEmployeeID() async {
+    String? tokenStore = await storage.read(key: "token");
+    late String tokenn = tokenStore!;
+
+    var res = await http.post(
+        Uri.parse('http://10.0.2.2:3000/indivChat'),
+        headers: <String, String>{
+          'auth-token': tokenn,
+        });
+        
   }
 
   @override

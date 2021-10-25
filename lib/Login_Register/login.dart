@@ -1,9 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:convert';
-
 import 'package:chatki_project/Screens/Home.dart';
-import 'package:chatki_project/Storage/TokenStorage.dart';
 import 'package:flutter/material.dart';
 import 'register.dart';
 import 'package:http/http.dart' as http;
@@ -32,7 +29,7 @@ class _LoginState extends State<Login> {
         });
     String output = res.body;
     if (res.statusCode == 200) {
-      await TokenStorage.setToken(output);
+      storage.write(key: "token", value: output);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return Home();
       }));
