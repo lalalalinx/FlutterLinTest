@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'registerNext.dart';
+
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -162,6 +164,10 @@ class _RegisterState extends State<Register> {
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: ElevatedButton(
                       onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return RegisterNext();
+                }));
+              
                         // save();
                         print(usernameController.text);
                         print(emailController.text);
@@ -170,7 +176,7 @@ class _RegisterState extends State<Register> {
                         print(employeeidController.text);
                       },
                       child: const Text(
-                        'Confirm',
+                        'Next',
                         style: TextStyle(
                           fontSize: 18,
                         ),
@@ -182,6 +188,7 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
+                      
                     ),
                   )
                 ],
