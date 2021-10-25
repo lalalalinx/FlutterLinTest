@@ -3,6 +3,7 @@
 import 'package:chatki_project/Screens/ChatView.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/Model/chatData.dart';
+import 'IndividualChat.dart';
 
 class ChatList extends StatelessWidget {
   const ChatList({Key? key, required this.chatData}) : super(key: key);
@@ -10,7 +11,15 @@ class ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context, MaterialPageRoute(builder: (contex) => IndividualChat())
+        );
+      },
+      child: Column(
+        children: [
+          ListTile(
       leading: CircleAvatar(
         radius: 25,
       ),
@@ -28,6 +37,10 @@ class ChatList extends StatelessWidget {
         ),
       ),
       trailing: Text(chatData.time),
+    ),
+        ],
+      ),
     );
+
   }
 }
