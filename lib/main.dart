@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'Screens/Home.dart';
 import 'Login_Register/login.dart';
 import 'Login_Register/register.dart';
+import 'demoo/LoginDemo.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: Login(),
+      home: LoginDemo(),
     );
   }
 }
