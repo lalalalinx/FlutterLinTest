@@ -114,12 +114,12 @@ class _IndividualChatState extends State<IndividualChat> {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      OwnMessageCard(),
-                      ReplyCard(),
-                      ReplyCard(),
-                      OwnMessageCard(),
-                      OwnMessageCard(),
-                      OwnMessageCard(),
+                      // OwnMessageCard(),
+                      // ReplyCard(),
+                      // ReplyCard(),
+                      // OwnMessageCard(),
+                      // OwnMessageCard(),
+                      // OwnMessageCard(),
                     ],
                   ),
                 ),
