@@ -40,7 +40,7 @@ class _IndividualPageDemoState extends State<IndividualPageDemo> {
     socket.connect();
     
     // String? tokenStore = await storage.read(key: "token");
-    socket.emit("signin",widget.sourceChat.id);
+    socket.emit("signin",{widget.sourceChat.id,widget.chatData.id});
     socket.onConnect((data){
       print("Connected");
       socket.on("message",(msg){
@@ -70,9 +70,7 @@ class _IndividualPageDemoState extends State<IndividualPageDemo> {
   void setMessage(String type,String message){
     MessageData messageData = MessageData(type: type,message: message);
     setState(() {
-      setState(() {
         messages.add(messageData);
-      });
     });
   }
 
