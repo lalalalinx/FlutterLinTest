@@ -16,6 +16,8 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   List<String> quotes = ['11111111111', '22222', '33'];
 
+
+
   @override
   Widget build(BuildContext context) {
     final user = ProfileUserData.myUser;
