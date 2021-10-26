@@ -19,22 +19,24 @@ class _ChatViewState extends State<ChatView> {
         isGroup: false,
         currentMessage: "Hi myself",
         time: "4:00",
-        icon: "person.png"),
+        icon: "person.png",
+        id: 1),
     ChatData(
         name: "Lin2",
         isGroup: true,
         currentMessage: "Hi myself2",
         time: "4:02",
-        icon: "person.png"),
+        icon: "person.png",
+        id:2),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return IndividualChat();
-                }));
+                // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //   return IndividualChat();
+                // }));
               },
         child: Icon(Icons.chat),
       ),

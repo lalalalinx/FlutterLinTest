@@ -19,8 +19,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    super.initState();
     readToken();
+    super.initState();
+    
   }
 
   Future<String?> readToken() async {

@@ -14,7 +14,7 @@ class ChatList extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-          context, MaterialPageRoute(builder: (contex) => IndividualChat())
+          context, MaterialPageRoute(builder: (contex) => IndividualChat(chatData:chatData))
         );
       },
       child: Column(
