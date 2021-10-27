@@ -10,44 +10,16 @@ String showProfileToJson(ShowProfile data) => json.encode(data.toJson());
 
 class ShowProfile {
     ShowProfile({
-        required this.employeeId,
-        required this.email,
-        required this.tel,
-        required this.userFName,
-        required this.userLName,
-        required this.city,
-        required this.street,
-        required this.zip,
+        required this.view,
     });
 
-    String employeeId;
-    String email;
-    String tel;
-    String userFName;
-    String userLName;
-    String city;
-    String street;
-    String zip;
+    List<String> view;
 
     factory ShowProfile.fromJson(Map<String, dynamic> json) => ShowProfile(
-        employeeId: json["employeeID"],
-        email: json["email"],
-        tel: json["tel"],
-        userFName: json["userFName"],
-        userLName: json["userLName"],
-        city: json["city"],
-        street: json["street"],
-        zip: json["zip"],
+        view: List<String>.from(json["view"].map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
-        "employeeID": employeeId,
-        "email": email,
-        "tel": tel,
-        "userFName": userFName,
-        "userLName": userLName,
-        "city": city,
-        "street": street,
-        "zip": zip,
+        "view": List<dynamic>.from(view.map((x) => x)),
     };
 }
