@@ -5,8 +5,8 @@ import 'ProfileData.dart';
 class ProfileUserData {
   static const myUser = ProfileData(
   employeeID: '620696969',
-  image:
-    'https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg',
+  //image:
+  //  'https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg',
   userFName: 'Sarah',
   userLName: 'Seagull',
   email: 'Sarah_seagull@gmail.com',

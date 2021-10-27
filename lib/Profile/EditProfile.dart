@@ -44,10 +44,10 @@ class _EditProfileState extends State<EditProfile> {
         body: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            ProfileWidget(
-              image: user.image,
-              onClicked: () async {},
-            ),
+            // ProfileWidget(
+            //   image: user.image,
+            //   onClicked: () async {},
+            // ),
             const SizedBox(height: 20),
             buildName(user),
           ],
