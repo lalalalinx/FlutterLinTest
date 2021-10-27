@@ -49,6 +49,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
+
   Widget buildName(user) => Container(
         padding: EdgeInsets.symmetric(horizontal: 48),
         child: Column(
