@@ -28,7 +28,7 @@ class _ProfileViewState extends State<ProfileView> {
     super.initState();
   }
 
-  Future<List> getProfileData() async {
+  Future<void> getProfileData() async {
     var token = readToken();
     var tokenString = token.toString();
     final tokenStore = await storage.read(key: "token");
@@ -41,16 +41,10 @@ class _ProfileViewState extends State<ProfileView> {
         'auth-token': tokenStore.toString()
       },
     );
-    var jsonData = jsonDecode(res.body);
-    
-    List<ShowProfile> viewShowProfile =[];
-    // for(var i in jsonData){
-    //   ShowProfile view = ShowProfile(i['view']);
-    //   viewShowProfile.add(view);
-    // }
-    print(viewShowProfile.length);
-
     var body = res.body;
+    final showProfile = ShowProfile.fromJson(jsonDecode(body));
+    
+    print(showProfile);
 
     String output = res.body;
     if (res.statusCode == 200) {
@@ -60,7 +54,7 @@ class _ProfileViewState extends State<ProfileView> {
     }
     //final profileJson = ShowProfile.fromJson(jsonDecode(body));
 
-    return viewShowProfile;
+    // return viewShowProfile;
   }
 
   Future<String?> readToken() async {

@@ -1,25 +1,18 @@
-// To parse this JSON data, do
-//
-//     final showProfile = showProfileFromJson(jsonString);
 
-import 'dart:convert';
-
-ShowProfile showProfileFromJson(String str) => ShowProfile.fromJson(json.decode(str));
-
-String showProfileToJson(ShowProfile data) => json.encode(data.toJson());
+// ignore_for_file: file_names
 
 class ShowProfile {
-    ShowProfile({
-        required this.view,
-    });
+  late List<String> view;
 
-    List<String> view;
+  ShowProfile({required this.view});
 
-    factory ShowProfile.fromJson(Map<String, dynamic> json) => ShowProfile(
-        view: List<String>.from(json["view"].map((x) => x)),
-    );
+  ShowProfile.fromJson(Map<String, dynamic> json) {
+    view = json['view'].cast<String>();
+  }
 
-    Map<String, dynamic> toJson() => {
-        "view": List<dynamic>.from(view.map((x) => x)),
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['view'] = this.view;
+    return data;
+  }
 }
