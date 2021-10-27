@@ -162,6 +162,7 @@ class _IndividualPageDemoState extends State<IndividualPageDemo> {
                             minLines: 1,
                             textAlignVertical: TextAlignVertical.center,
                             decoration: InputDecoration(
+                              border: InputBorder.none,
                               hintText: "Type a message",
                               contentPadding: EdgeInsets.all(15),
                             ),
