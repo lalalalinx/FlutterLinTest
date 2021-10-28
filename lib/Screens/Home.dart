@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
+import 'package:chatki_project/Login_Register/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'ChatView.dart';
@@ -55,15 +56,44 @@ class _HomeState extends State<Home> {
               ),
               centerTitle: true,
             actions: [
-              PopupMenuButton<int> (
-                onSelected: (item) => onSelected(context, item),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 0,
-                    child: Text('Settings'),
-                  ),
-                ],
-                  ),
+              Theme(
+                data: Theme.of(context).copyWith(
+                  dividerColor: Colors.white,
+                  iconTheme: IconThemeData(color: Colors.white),
+                  textTheme: TextTheme().apply(bodyColor: Colors.white),
+                ),
+                child: PopupMenuButton<int> (
+                  padding: EdgeInsets.all(0.0),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15),),),
+                  color: Colors.grey[900],
+                  onSelected: (item) => onSelected(context, item),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      padding: EdgeInsets.only(left: 15,right: 15),
+                      value: 0,
+                      child: Row(
+                        children: [
+                          Icon(Icons.settings,size: 20,),
+                          const SizedBox(width: 8,),
+                          Text('Settings', style: TextStyle(fontSize: 14),),
+                        ],
+                      ),
+                    ),
+                    PopupMenuDivider(),
+                    PopupMenuItem(
+                      padding: EdgeInsets.only(left: 15,right: 15),
+                      value: 1,
+                      child: Row(
+                        children: [
+                          Icon(Icons.logout,size: 20,),
+                          const SizedBox(width: 8,),
+                          Text('Sign Out', style: TextStyle(fontSize: 14),),
+                        ],
+                      ),
+                    ),
+                  ],
+                    ),
+              ),
             ],
             //leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
           flexibleSpace: Container(
@@ -91,6 +121,12 @@ class _HomeState extends State<Home> {
           case 0:
             Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => SettingsPage()),
+            );
+          break;
+          case 1:
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => Login()),
+              (route) => false,
             );
           break;
         }
