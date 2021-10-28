@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, dead_code
 
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:chatki_project/Model/ProfileData.dart';
 import 'package:chatki_project/Model/ProfileUserData.dart';
@@ -27,6 +28,13 @@ class _ProfileViewState extends State<ProfileView> {
   void initState() {
     storedData();
     super.initState();
+  }
+
+  void storedData() async {
+    super.initState();
+    stored = await getProfileData().whenComplete(() {
+      setState(() {});
+    });
   }
 
   Future<ProfileData> getProfileData() async {
@@ -73,10 +81,6 @@ class _ProfileViewState extends State<ProfileView> {
     return profileDatas;
   }
 
-  void storedData() async {
-    stored = await getProfileData();
-  }
-
   Future<String?> readToken() async {
     final tokenStore = await storage.read(key: "token");
   }
@@ -100,14 +104,35 @@ class _ProfileViewState extends State<ProfileView> {
           physics: BouncingScrollPhysics(),
           children: [
             Center(
-              child: Text(
-                stored.employeeID,
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: 
+              FutureBuilder(
+                future: getProfileData(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return Container(
+                      child: Center(
+                        child: Text('Loading . . .'),
+                      ),
+                    );
+                  } else
+                    return Center(
+                      child: Text(stored.userFName),
+                                  );
+                }
               ),
             ),
+              
+              
+            //   Text(
+            //     'stored.employeeID',
+            //     style: TextStyle(
+            //       fontSize: 30,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
+
+
             // ProfileWidget(
             //   image: user.image,
             //   onClicked: () async {},
