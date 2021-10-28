@@ -2,9 +2,11 @@
 
 import 'package:chatki_project/Screens/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'register.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'dart:convert';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -27,15 +29,27 @@ class _LoginState extends State<Login> {
           'userName': userNameController.text,
           'password': passwordController.text
         });
-    String output = res.body;
     if (res.statusCode == 200) {
+      String output = res.body;
       storage.write(key: "token", value: output);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return Home();
       }));
     } else {
-      print(output);
+      Map<String,dynamic> err = jsonDecode(res.body);
+      print(err["Error"]);
+      showToast("Error: ${err["Error"]}");
     }
+    
+  }
+
+  void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      gravity: ToastGravity.TOP,
+      fontSize: 20
+    );
+
   }
 
   //controller
@@ -99,6 +113,7 @@ class _LoginState extends State<Login> {
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                     ),
                     controller: passwordController,
+                    obscureText: true,
                   ),
                 ],
               )),
