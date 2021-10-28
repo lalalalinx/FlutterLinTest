@@ -151,9 +151,9 @@ class _ProfileViewState extends State<ProfileView> {
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  stored.employeeID,
+                                  stored.employeeID+' ',
                                   style: TextStyle(
-                                    fontSize: 30,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.w300,
                                     color: Colors.white,
                                   ),
@@ -192,7 +192,7 @@ class _ProfileViewState extends State<ProfileView> {
                               child: Text(
                                 'Name - Surname',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.deepPurple,
                                 ),
@@ -210,7 +210,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 stored.userFName + '  ' + stored.userLName,
                                 style: TextStyle(
                                   fontSize: 22,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w400,
                                   color: Colors.grey[900],
                                 ),
                               ),
@@ -235,7 +235,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   stored.email,
                                   style: TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.grey[900],
                                   ),
                                 ),
@@ -258,7 +258,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   stored.tel,
                                   style: TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.grey[900],
                                   ),
                                 ),
@@ -283,7 +283,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   stored.city,
                                   style: TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.grey[900],
                                   ),
                                 ),
@@ -306,7 +306,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   stored.street,
                                   style: TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.grey[900],
                                   ),
                                 ),
@@ -329,7 +329,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   stored.zip,
                                   style: TextStyle(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.grey[900],
                                   ),
                                 ),
