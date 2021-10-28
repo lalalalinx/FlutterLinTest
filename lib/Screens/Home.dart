@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'ChatView.dart';
 import 'HomeView.dart';
 import 'ProfileView.dart';
+import 'package:chatki_project/settings_page.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -54,9 +55,17 @@ class _HomeState extends State<Home> {
               ),
               centerTitle: true,
             actions: [
-              IconButton(icon: Icon(Icons.search), onPressed: () {}),
+              PopupMenuButton<int> (
+                onSelected: (item) => onSelected(context, item),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 0,
+                    child: Text('Settings'),
+                  ),
+                ],
+                  ),
             ],
-            leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
+            //leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -76,4 +85,16 @@ class _HomeState extends State<Home> {
           ),
         ),
       );
+
+      void onSelected(BuildContext context, int item){
+        switch (item) {
+          case 0:
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => SettingsPage()),
+            );
+          break;
+        }
+      }
 }
+
+
