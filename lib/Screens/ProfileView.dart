@@ -104,25 +104,261 @@ class _ProfileViewState extends State<ProfileView> {
           physics: BouncingScrollPhysics(),
           children: [
             Center(
-              child: 
-              FutureBuilder(
-                future: getProfileData(),
-                builder: (context, snapshot) {
-                  if (snapshot.data == null) {
-                    return Container(
-                      child: Center(
-                        child: Text('Loading . . .'),
-                      ),
-                    );
-                  } else
-                    return Center(
-                      child: Text(stored.userFName),
-                                  );
-                }
-              ),
+              child: FutureBuilder(
+                  future: getProfileData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null) {
+                      return Container(
+                        child: Center(
+                          child: Text('Loading . . .'),
+                        ),
+                      );
+                    } else
+                      return Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              //height: 200.0,
+                              child: Container(
+                                color: Colors.grey[900],
+                              ),
+                            ),
+                            Container(
+                              color: Colors.grey[900],
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 30),
+                                child: Center(
+                                child: Container(
+                                  width: 170,
+                                  height: 170,
+                                  
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[900],
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage('https://files.eventpass.co/eventpass-api/files/1629791258776-46229AD3-D72F-483A-B699-7D7C49B3946B.jpeg'),
+                                      ),
+                                    ),
+                                  ),
+                              ),),
+                            ),
+                            Container(
+                              alignment: Alignment.topRight,
+                              color: Colors.grey[900],
+                              height: 50,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  stored.employeeID,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                                // Row(
+                                //   children: [
+                                //     SizedBox(width: 40.0),
+                                //     Text(
+                                //       'Employee ID :',
+                                //       style: TextStyle(
+                                //         fontSize: 20,
+                                //         fontWeight: FontWeight.w300,
+                                //         color: Colors.red[400],
+                                //       ),
+                                //     ),
+                                //     SizedBox(width: 10.0),
+                                //     Text(
+                                //       stored.employeeID,
+                                //       style: TextStyle(
+                                //         fontSize: 30,
+                                //         fontWeight: FontWeight.w300,
+                                //         color: Colors.white,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                            //   ),
+                            // ),
+
+                            SizedBox(height: 20.0),
+                            Center(
+                              //padding: EdgeInsets.only(left: 40),
+                              child: Text(
+                                'Name - Surname',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.deepPurple,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Center(
+                                //padding: EdgeInsets.only(left: 125),
+                                child: Padding(
+                              padding: EdgeInsets.only(
+                                left: 20,
+                                right: 20,
+                              ),
+                              child: Text(
+                                stored.userFName + '  ' + stored.userLName,
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey[900],
+                                ),
+                              ),
+                            )),
+                            SizedBox(height: 10.0),
+                            Divider(thickness: 1),
+
+                            SizedBox(height: 20.0),
+                            Row(
+                              children: [
+                                SizedBox(width: 40.0),
+                                Text(
+                                  'Email :',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.deepPurple,
+                                  ),
+                                ),
+                                SizedBox(width: 25.0),
+                                Text(
+                                  stored.email,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey[900],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10.0),
+                            Row(
+                              children: [
+                                SizedBox(width: 40.0),
+                                Text(
+                                  'Tel :',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.deepPurple,
+                                  ),
+                                ),
+                                SizedBox(width: 46.0),
+                                Text(
+                                  stored.tel,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey[900],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10.0),
+                            Divider(thickness: 1),
+                            SizedBox(height: 20.0),
+                            Row(
+                              children: [
+                                SizedBox(width: 40.0),
+                                Text(
+                                  'City',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.deepPurple,
+                                  ),
+                                ),
+                                SizedBox(width: 49.0),
+                                Text(
+                                  stored.city,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey[900],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10.0),
+                            Row(
+                              children: [
+                                SizedBox(width: 40.0),
+                                Text(
+                                  'Street',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.deepPurple,
+                                  ),
+                                ),
+                                SizedBox(width: 31.0),
+                                Text(
+                                  stored.street,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey[900],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10.0),
+                            Row(
+                              children: [
+                                SizedBox(width: 40.0),
+                                Text(
+                                  'ZIP',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.deepPurple,
+                                  ),
+                                ),
+                                SizedBox(width: 50.0),
+                                Text(
+                                  stored.zip,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey[900],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            // Center(
+                            //   child: Text('Employee ID ',
+                            //       style: TextStyle(
+                            //         fontSize: 20,
+                            //         fontWeight: FontWeight.w500,
+                            //         color: Colors.grey[900],
+                            //       ),),
+                            // ),
+                            // //--
+                            // Center(
+                            //   child: Text(
+                            //     stored.employeeID,
+                            //     style: TextStyle(
+                            //       fontSize: 30,
+                            //       fontWeight: FontWeight.bold,
+                            //     ),
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                      );
+                  }),
             ),
-              
-              
+
             //   Text(
             //     'stored.employeeID',
             //     style: TextStyle(
@@ -131,7 +367,6 @@ class _ProfileViewState extends State<ProfileView> {
             //     ),
             //   ),
             // ),
-
 
             // ProfileWidget(
             //   image: user.image,
