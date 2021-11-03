@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:chatki_project/Profile/ProfildWidget.dart';
 import 'package:chatki_project/Profile/EditProfile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -24,6 +25,7 @@ class _ProfileViewState extends State<ProfileView> {
   final storage = FlutterSecureStorage();
   late ProfileData stored;
 
+
   @override
   void initState() {
     storedData();
@@ -37,28 +39,23 @@ class _ProfileViewState extends State<ProfileView> {
     });
   }
 
-  Future<ProfileData> getProfileData() async {
+  Future getProfileData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var res = await http.get(
       Uri.parse(
         'http://10.0.2.2:4000/profile/view',
       ),
       headers: <String, String>{
-        'auth-token': token.toString(),
+        'auth-token' : token.toString(),
         'refresh-token': refreshToken.toString(),
       },
     );
-    var body = res.body;
-    final showProfile = ShowProfile.fromJson(jsonDecode(body));
+    final showProfile = ShowProfile.fromJson(jsonDecode(res.body));
     String output = res.body;
     if (res.statusCode == 200) {
-      print("ok");
-    } else {
-      print(output);
-    }
-
-    ProfileData profileDatas = ProfileData(
+      ProfileData profileDatas = ProfileData(
         employeeID: showProfile.view[0],
         email: showProfile.view[1],
         tel: showProfile.view[2],
@@ -67,26 +64,27 @@ class _ProfileViewState extends State<ProfileView> {
         city: showProfile.view[5],
         street: showProfile.view[6],
         zip: showProfile.view[7]);
-
-    // ProfileData userData = ProfileData(
-    //   showProfile.view[0],
-    //   showProfile.view[1],
-    //   showProfile.view[2],
-    //   showProfile.view[3],
-    //   showProfile.view[4],
-    //   showProfile.view[5],
-    //   showProfile.view[6],
-    //   showProfile.view[7]);
-    // profileDatas.add(userData);
-
-    print(showProfile.view.length);
-    return profileDatas;
+        prefs.setString('employeeID', profileDatas.employeeID);
+        String? employeeID = prefs.getString('employeeID');
+        print(employeeID);
+        return profileDatas;
+    } else {
+      print(output);
+    }
   }
 
   Future<String?> readToken() async {
     final tokenStore = await storage.read(key: "token");
     final refreshTokenStore = await storage.read(key: "refreshToken");
   }
+
+  getStringValuesSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //Return String
+  String? stringValue = prefs.getString('employeeID');
+  return stringValue;
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +191,7 @@ class _ProfileViewState extends State<ProfileView> {
                             Center(
                               //padding: EdgeInsets.only(left: 40),
                               child: Text(
-                                'Name - Surname',
+                                getStringValuesSF(),
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
