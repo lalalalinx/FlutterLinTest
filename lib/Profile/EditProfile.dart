@@ -1,10 +1,15 @@
-// ignore_for_file: file_names, prefer_const_constructors
+// ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, non_constant_identifier_names
 
 import 'package:chatki_project/Model/ProfileData.dart';
 import 'package:chatki_project/Model/ProfileUserData.dart';
 import 'package:chatki_project/Screens/ProfileView.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/Profile/ProfildWidget.dart';
+import 'package:chatki_project/Model/EditProfileData.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -14,7 +19,43 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  List<String> quotes = ['11111111111', '22222', '33'];
+  final storage = FlutterSecureStorage();
+  late EditProfileData stored;
+
+  @override
+  void initState() {
+    storedData();
+    super.initState();
+  }
+
+  void storedData() async {
+    super.initState();
+    stored = await getEditProfileData().whenComplete(() {
+      setState(() {});
+    });
+  }
+
+  Future getEditProfileData() async {
+    final token = await storage.read(key: "token");
+    final refreshToken = await storage.read(key: "refreshToken");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var res = await http.post(
+      Uri.parse('http://10.0.2.2:4000/profile/edit'),
+      headers: <String, String>{
+        'Context-Type': 'application/json;charSet=UTF-8'
+      },
+      body: <String, String>{
+          
+      });
+
+    String? EmployeeID = prefs.getString('EmployeeID');
+      return EmployeeID;
+  }
+
+  Future<String?> readToken() async {
+    final tokenStore = await storage.read(key: "token");
+    final refreshTokenStore = await storage.read(key: "refreshToken");
+  }
 
   //controller
   final userFNameController = TextEditingController();
