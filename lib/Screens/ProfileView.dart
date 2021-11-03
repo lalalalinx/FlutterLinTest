@@ -38,14 +38,16 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Future<ProfileData> getProfileData() async {
-    var token = readToken();
-    var tokenString = token.toString();
-    final tokenStore = await storage.read(key: "token");
+    final token = await storage.read(key: "token");
+    final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.get(
       Uri.parse(
-        'http://10.0.2.2:3000/profile/view',
+        'http://10.0.2.2:4000/profile/view',
       ),
-      headers: <String, String>{'auth-token': tokenStore.toString()},
+      headers: <String, String>{
+        'auth-token': token.toString(),
+        'refresh-token': refreshToken.toString(),
+      },
     );
     var body = res.body;
     final showProfile = ShowProfile.fromJson(jsonDecode(body));
@@ -83,6 +85,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   Future<String?> readToken() async {
     final tokenStore = await storage.read(key: "token");
+    final refreshTokenStore = await storage.read(key: "refreshToken");
   }
 
   @override
