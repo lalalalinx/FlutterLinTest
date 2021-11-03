@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, prefer_const_constructors
 
 import 'package:chatki_project/Login_Register/login.dart';
+import 'package:chatki_project/Model/ProfileData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'ChatView.dart';
@@ -15,21 +16,66 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+
+// final String employeeID;
+//   //final String image;
+//   final String email;
+//   final String tel;
+//   final String userFName;
+//   final String userLName;
+//   final String city; 
+//   final String street;
+//   final String zip;
+
 class _HomeState extends State<Home> {
+  List<ProfileData> profile = [
+    ProfileData(
+        userFName: "Lin",
+        userLName: "Suk",
+        email: "lin@gmail",
+        tel: "08911",
+        city: "god",
+        street: "sake",
+        zip: "1122",
+        employeeID: "62070503406",
+        ),
+    ProfileData(
+        userFName: "Jade",
+        userLName: "Chan",
+        email: "jade@gmail",
+        tel: "1234",
+        city: "river",
+        street: "lake",
+        zip: "12345",
+        employeeID: "62070503409",
+        ),
+    ProfileData(
+        userFName: "Doon",
+        userLName: "Kit",
+        email: "doon@gmail",
+        tel: "08444",
+        city: "road",
+        street: "trip",
+        zip: "56678",
+        employeeID: "62070503422",
+        ),
+  ];
   
   final storage = FlutterSecureStorage();
 
   @override
   void initState() {
-    readToken();
+    // readToken();
     super.initState();
     
   }
 
-  Future<String?> readToken() async {
-    final tokenStore = await storage.read(key: "token");
-    print("Token in home:$tokenStore");
-  }
+  // Future<String?> readToken() async {
+  //   final tokenStore = await storage.read(key: "token");
+  //   final refreshTokenStore = await storage.read(key: "refreshToken");
+  //   print("Token in home:$tokenStore");
+  //   print("Token in home:$refreshTokenStore");
+  // }
 
 
   @override

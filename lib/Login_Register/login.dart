@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
 
   Future login() async {
     var res = await http.post(
-        Uri.parse('http://10.0.2.2:3000/login-register/login'),
+        Uri.parse('http://10.0.2.2:4000/login-register/login'),
         headers: <String, String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },
@@ -30,8 +30,9 @@ class _LoginState extends State<Login> {
           'password': passwordController.text
         });
     if (res.statusCode == 200) {
-      String output = res.body;
-      storage.write(key: "token", value: output);
+      Map<String, dynamic> output = jsonDecode(res.body);
+      storage.write(key: "token", value: output['token']);
+      storage.write(key: "refreshToken", value: output['refreshToken']);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return Home();
       }));
