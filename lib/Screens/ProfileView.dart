@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:chatki_project/Profile/ProfildWidget.dart';
 import 'package:chatki_project/Profile/EditProfile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -40,6 +40,7 @@ class _ProfileViewState extends State<ProfileView> {
   Future<ProfileData> getProfileData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
+    SharedPreferences prefs =  await SharedPreferences.getInstance();
     var res = await http.get(
       Uri.parse(
         'http://10.0.2.2:4000/profile/view',
@@ -53,7 +54,7 @@ class _ProfileViewState extends State<ProfileView> {
     final showProfile = ShowProfile.fromJson(jsonDecode(body));
     String output = res.body;
     if (res.statusCode == 200) {
-      print("ok");
+      print("helli");
     } else {
       print(output);
     }
@@ -79,6 +80,7 @@ class _ProfileViewState extends State<ProfileView> {
     //   showProfile.view[7]);
     // profileDatas.add(userData);
 
+    prefs.setString('employeeID', profileDatas.employeeID);
     print(showProfile.view.length);
     return profileDatas;
   }
