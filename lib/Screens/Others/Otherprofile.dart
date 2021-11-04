@@ -93,6 +93,7 @@ class _OtherProfileState extends State<OtherProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final shape = StadiumBorder();
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
@@ -332,31 +333,47 @@ class _OtherProfileState extends State<OtherProfile> {
                                 ],
                               ),
                               Padding(
-                                //ปุ่มด้านล่าง
+                                //ปุ่ม 'chat' ด้านล่าง
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 30.0, horizontal: 110),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return Home();
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Chat',
-                                    style: TextStyle(
-                                      fontSize: 18,
+                                child: Container(
+                                  decoration: ShapeDecoration(
+                                    shape: shape,
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.blue,
+                                        Colors.deepPurple,
+                                      ],
                                     ),
                                   ),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.deepPurple[700],
-                                    fixedSize: const Size(200, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return Home(); //<----------ไปหน้าแชทคนนั้นๆ
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'C h a t',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      //primary: Colors.deepPurple[700],
+                                      fixedSize: const Size(200, 50),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      primary: Colors.transparent,
+                                      shadowColor: Colors.transparent,
                                     ),
                                   ),
                                 ),

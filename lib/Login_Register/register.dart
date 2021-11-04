@@ -152,14 +152,6 @@ class _RegisterState extends State<Register> {
                     ),
                     controller: employeeidController,
                   ),
-                  // TextButton(
-                  //   style: TextButton.styleFrom(
-                  //     backgroundColor: Colors.deepPurple[700],
-                  //     primary: Colors.white,
-                  //     padding:
-                  //         EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  //     shape: shape,
-                  //   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: ElevatedButton(
