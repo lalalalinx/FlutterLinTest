@@ -175,7 +175,7 @@ class _HomeState extends State<Home> {
     switch (item) {
       case 0:
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => SettingsPage()),
+          MaterialPageRoute(builder: (context) => Settings()),
         );
         break;
       case 1:
