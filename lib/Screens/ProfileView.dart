@@ -25,7 +25,6 @@ class _ProfileViewState extends State<ProfileView> {
   final storage = FlutterSecureStorage();
   late ProfileData stored;
 
-
   @override
   void initState() {
     storedData();
@@ -48,7 +47,7 @@ class _ProfileViewState extends State<ProfileView> {
         'http://10.0.2.2:4000/profile/view',
       ),
       headers: <String, String>{
-        'auth-token' : token.toString(),
+        'auth-token': token.toString(),
         'refresh-token': refreshToken.toString(),
       },
     );
@@ -56,24 +55,24 @@ class _ProfileViewState extends State<ProfileView> {
     String output = res.body;
     if (res.statusCode == 200) {
       ProfileData profileDatas = ProfileData(
-        employeeID: showProfile.view[0],
-        email: showProfile.view[1],
-        tel: showProfile.view[2],
-        userFName: showProfile.view[3],
-        userLName: showProfile.view[4],
-        city: showProfile.view[5],
-        street: showProfile.view[6],
-        zip: showProfile.view[7]);
-        prefs.setString('employeeID', profileDatas.employeeID);
-        prefs.setString('email', profileDatas.email);
-        prefs.setString('tel', profileDatas.tel);
-        prefs.setString('userFName', profileDatas.userFName);
-        prefs.setString('userLName', profileDatas.userLName);
-        prefs.setString('city', profileDatas.city);
-        prefs.setString('street', profileDatas.street);
-        prefs.setString('zip', profileDatas.zip);
-        
-        return profileDatas;
+          employeeID: showProfile.view[0],
+          email: showProfile.view[1],
+          tel: showProfile.view[2],
+          userFName: showProfile.view[3],
+          userLName: showProfile.view[4],
+          city: showProfile.view[5],
+          street: showProfile.view[6],
+          zip: showProfile.view[7]);
+      prefs.setString('employeeID', profileDatas.employeeID);
+      prefs.setString('email', profileDatas.email);
+      prefs.setString('tel', profileDatas.tel);
+      prefs.setString('userFName', profileDatas.userFName);
+      prefs.setString('userLName', profileDatas.userLName);
+      prefs.setString('city', profileDatas.city);
+      prefs.setString('street', profileDatas.street);
+      prefs.setString('zip', profileDatas.zip);
+
+      return profileDatas;
     } else {
       print(output);
     }
@@ -85,12 +84,11 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   getStringValuesSF() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  String? stringValue = prefs.getString('employeeID');
-  return stringValue;
-}
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    String? stringValue = prefs.getString('employeeID');
+    return stringValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +114,14 @@ class _ProfileViewState extends State<ProfileView> {
                   builder: (context, snapshot) {
                     if (snapshot.data == null) {
                       return Container(
-                        child: Center(
-                          child: Text('Loading . . .'),
+                        height: 500,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'L o a d i n g . . .',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 20),                          
+                          ),
                         ),
                       );
                     } else
@@ -136,20 +140,21 @@ class _ProfileViewState extends State<ProfileView> {
                               child: Padding(
                                 padding: EdgeInsets.only(top: 30),
                                 child: Center(
-                                child: Container(
-                                  width: 170,
-                                  height: 170,
-                                  
+                                  child: Container(
+                                    width: 170,
+                                    height: 170,
                                     decoration: BoxDecoration(
                                       color: Colors.grey[900],
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: NetworkImage('https://files.eventpass.co/eventpass-api/files/1629791258776-46229AD3-D72F-483A-B699-7D7C49B3946B.jpeg'),
+                                        image: NetworkImage(
+                                            'https://files.eventpass.co/eventpass-api/files/1629791258776-46229AD3-D72F-483A-B699-7D7C49B3946B.jpeg'),
                                       ),
                                     ),
                                   ),
-                              ),),
+                                ),
+                              ),
                             ),
                             Container(
                               alignment: Alignment.topRight,
@@ -158,7 +163,7 @@ class _ProfileViewState extends State<ProfileView> {
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  stored.employeeID+' ',
+                                  stored.employeeID + ' ',
                                   style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.w300,
@@ -168,28 +173,28 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                             ),
 
-                                // Row(
-                                //   children: [
-                                //     SizedBox(width: 40.0),
-                                //     Text(
-                                //       'Employee ID :',
-                                //       style: TextStyle(
-                                //         fontSize: 20,
-                                //         fontWeight: FontWeight.w300,
-                                //         color: Colors.red[400],
-                                //       ),
-                                //     ),
-                                //     SizedBox(width: 10.0),
-                                //     Text(
-                                //       stored.employeeID,
-                                //       style: TextStyle(
-                                //         fontSize: 30,
-                                //         fontWeight: FontWeight.w300,
-                                //         color: Colors.white,
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
+                            // Row(
+                            //   children: [
+                            //     SizedBox(width: 40.0),
+                            //     Text(
+                            //       'Employee ID :',
+                            //       style: TextStyle(
+                            //         fontSize: 20,
+                            //         fontWeight: FontWeight.w300,
+                            //         color: Colors.red[400],
+                            //       ),
+                            //     ),
+                            //     SizedBox(width: 10.0),
+                            //     Text(
+                            //       stored.employeeID,
+                            //       style: TextStyle(
+                            //         fontSize: 30,
+                            //         fontWeight: FontWeight.w300,
+                            //         color: Colors.white,
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                             //   ),
                             // ),
 
