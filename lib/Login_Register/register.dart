@@ -164,7 +164,7 @@ class _RegisterState extends State<Register> {
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: ElevatedButton(
                       onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
                   return RegisterNext();
                 }));
               

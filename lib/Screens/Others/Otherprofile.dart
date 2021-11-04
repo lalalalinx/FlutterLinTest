@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:chatki_project/Screens/Home.dart';
+import 'package:chatki_project/Screens/HomeView.dart';
 import 'package:flutter/material.dart';
 
 import 'package:chatki_project/Model/ProfileData.dart'; //list data ของ user
@@ -99,7 +100,10 @@ class _OtherProfileState extends State<OtherProfile> {
         backgroundColor: Colors.grey[900],
         leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return Home();
+              }));
             },
             icon: Icon(
               Icons.arrow_back_ios,
@@ -179,32 +183,6 @@ class _OtherProfileState extends State<OtherProfile> {
                                   ),
                                 ),
                               ),
-
-                              // Row(
-                              //   children: [
-                              //     SizedBox(width: 40.0),
-                              //     Text(
-                              //       'Employee ID :',
-                              //       style: TextStyle(
-                              //         fontSize: 20,
-                              //         fontWeight: FontWeight.w300,
-                              //         color: Colors.red[400],
-                              //       ),
-                              //     ),
-                              //     SizedBox(width: 10.0),
-                              //     Text(
-                              //       stored.employeeID,
-                              //       style: TextStyle(
-                              //         fontSize: 30,
-                              //         fontWeight: FontWeight.w300,
-                              //         color: Colors.white,
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              //   ),
-                              // ),
-
                               SizedBox(height: 20.0),
                               Center(
                                 //padding: EdgeInsets.only(left: 40),
@@ -236,7 +214,6 @@ class _OtherProfileState extends State<OtherProfile> {
                               )),
                               SizedBox(height: 10.0),
                               Divider(thickness: 1),
-
                               SizedBox(height: 20.0),
                               Row(
                                 children: [
