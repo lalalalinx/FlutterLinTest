@@ -54,26 +54,6 @@ class _ProfileViewState extends State<ProfileView> {
     String output = res.body;
     if (res.statusCode == 200) {
       ProfileData profileDatas = ProfileData(
-<<<<<<< Updated upstream
-          employeeID: showProfile.view[0],
-          email: showProfile.view[1],
-          tel: showProfile.view[2],
-          userFName: showProfile.view[3],
-          userLName: showProfile.view[4],
-          city: showProfile.view[5],
-          street: showProfile.view[6],
-          zip: showProfile.view[7]);
-      prefs.setString('employeeID', profileDatas.employeeID);
-      prefs.setString('email', profileDatas.email);
-      prefs.setString('tel', profileDatas.tel);
-      prefs.setString('userFName', profileDatas.userFName);
-      prefs.setString('userLName', profileDatas.userLName);
-      prefs.setString('city', profileDatas.city);
-      prefs.setString('street', profileDatas.street);
-      prefs.setString('zip', profileDatas.zip);
-
-      return profileDatas;
-=======
         employeeID: showProfile.view[0],
         email: showProfile.view[1],
         tel: showProfile.view[2],
@@ -84,7 +64,6 @@ class _ProfileViewState extends State<ProfileView> {
         zip: showProfile.view[7]);
         prefs.setString('employeeID', profileDatas.employeeID); 
         return profileDatas;
->>>>>>> Stashed changes
     } else {
       print(output);
     }
@@ -94,16 +73,6 @@ class _ProfileViewState extends State<ProfileView> {
     final refreshTokenStore = await storage.read(key: "refreshToken");
   }
 
-<<<<<<< Updated upstream
-  getStringValuesSF() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    String? stringValue = prefs.getString('employeeID');
-    return stringValue;
-  }
-
-=======
->>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
 
