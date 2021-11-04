@@ -65,8 +65,14 @@ class _ProfileViewState extends State<ProfileView> {
         street: showProfile.view[6],
         zip: showProfile.view[7]);
         prefs.setString('employeeID', profileDatas.employeeID);
-        String? employeeID = prefs.getString('employeeID');
-        print(employeeID);
+        prefs.setString('email', profileDatas.email);
+        prefs.setString('tel', profileDatas.tel);
+        prefs.setString('userFName', profileDatas.userFName);
+        prefs.setString('userLName', profileDatas.userLName);
+        prefs.setString('city', profileDatas.city);
+        prefs.setString('street', profileDatas.street);
+        prefs.setString('zip', profileDatas.zip);
+        
         return profileDatas;
     } else {
       print(output);
@@ -191,7 +197,7 @@ class _ProfileViewState extends State<ProfileView> {
                             Center(
                               //padding: EdgeInsets.only(left: 40),
                               child: Text(
-                                getStringValuesSF(),
+                                'EmployeeID',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,

@@ -23,17 +23,17 @@ class _EditProfileState extends State<EditProfile> {
   late EditProfileData stored;
 
   @override
-  void initState() {
-    storedData();
-    super.initState();
-  }
+  // void initState() {
+  //   storedData();
+  //   super.initState();
+  // }
 
-  void storedData() async {
-    super.initState();
-    stored = await getEditProfileData().whenComplete(() {
-      setState(() {});
-    });
-  }
+  // void storedData() async {
+  //   super.initState();
+  //   stored = await getEditProfileData().whenComplete(() {
+  //     setState(() {});
+  //   });
+  // }
 
   Future getEditProfileData() async {
     final token = await storage.read(key: "token");
@@ -45,11 +45,15 @@ class _EditProfileState extends State<EditProfile> {
         'Context-Type': 'application/json;charSet=UTF-8'
       },
       body: <String, String>{
-          
+        'employeeID': employeeIDController.text,
+        'email': emailController.text,
+        'tel': telController.text,
+        'userFName': userFNameController.text,
+        'userLName': userLNameController.text,
+        'zip': zipController.text,
+        'city': cityController.text,
+        'street': streetController.text,
       });
-
-    String? EmployeeID = prefs.getString('EmployeeID');
-      return EmployeeID;
   }
 
   Future<String?> readToken() async {
@@ -57,11 +61,69 @@ class _EditProfileState extends State<EditProfile> {
     final refreshTokenStore = await storage.read(key: "refreshToken");
   }
 
-  //controller
-  final userFNameController = TextEditingController();
+  getEmployeeID() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //Return String
+  String? employeeID = prefs.getString('employeeID');
+  return employeeID;
+  }
+
+  getEmail() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //Return String
+  String? email = prefs.getString('email');
+  return email;
+  }
+
+  getTel() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //Return String
+  String? tel = prefs.getString('tel');
+  return tel;
+  }
+
+  getUserFName() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //Return String
+  String? userFName = prefs.getString('userFName');
+  return userFName;
+  }
+
+  getUserLName() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //Return String
+  String? userLName = prefs.getString('userLName');
+  return userLName;
+  }
+
+  getCity() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //Return String
+  String? city = prefs.getString('city');
+  return city;
+  }
+
+  getStreet() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //Return String
+  String? street = prefs.getString('street');
+  return street;
+  }
+
+  getzip() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  //Return String
+  String? zip = prefs.getString('zip');
+  return zip;
+  }
+
+  
+  // //controller
+  final employeeIDController = TextEditingController();
   final emailController = TextEditingController();
-  final userLNameController = TextEditingController();
   final telController = TextEditingController();
+  final userFNameController = TextEditingController();
+  final userLNameController = TextEditingController();
   final zipController = TextEditingController();
   final cityController = TextEditingController();
   final streetController = TextEditingController();
@@ -102,14 +164,14 @@ class _EditProfileState extends State<EditProfile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(child: Text(
-              'Employee ID: '+ user.employeeID,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                  )
-            ),),
+            // Center(child: Text(
+            //   'Employee ID: ',
+            //   style: TextStyle(
+            //       fontSize: 18,
+            //       fontWeight: FontWeight.w500,
+            //       color: Colors.black,
+            //       )
+            // ),),
             const SizedBox(height: 15),
             TextFormField(
                     decoration: InputDecoration(
