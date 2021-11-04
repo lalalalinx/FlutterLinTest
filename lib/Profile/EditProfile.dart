@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:chatki_project/Profile/ProfildWidget.dart';
 import 'package:chatki_project/Model/EditProfileData.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
+  const EditProfile({Key? key, required this.profileDatas}) : super(key: key);
+  final ProfileData profileDatas;
 
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -20,110 +19,37 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final storage = FlutterSecureStorage();
-  late EditProfileData stored;
 
-  @override
-  // void initState() {
-  //   storedData();
-  //   super.initState();
-  // }
-
-  // void storedData() async {
-  //   super.initState();
-  //   stored = await getEditProfileData().whenComplete(() {
-  //     setState(() {});
-  //   });
-  // }
-
-  Future getEditProfileData() async {
+  Future editProfile() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var res = await http.post(
-      Uri.parse('http://10.0.2.2:4000/profile/edit'),
-      headers: <String, String>{
-        'Context-Type': 'application/json;charSet=UTF-8'
-      },
-      body: <String, String>{
-        'employeeID': employeeIDController.text,
-        'email': emailController.text,
-        'tel': telController.text,
-        'userFName': userFNameController.text,
-        'userLName': userLNameController.text,
-        'zip': zipController.text,
-        'city': cityController.text,
-        'street': streetController.text,
-      });
+    var res = await http.post(Uri.parse('http://10.0.2.2:4000/profile/edit'),
+        headers: <String, String>{
+          'auth-token': token.toString(),
+          'refresh-token': refreshToken.toString(),
+          'Context-Type': 'application/json;charSet=UTF-8'
+        },
+        body: <String, String>{
+          'userFName': userFNameController.text,
+          'userLName': userLNameController.text,
+          'email': emailController.text,
+          'tel': telController.text,
+          'zip': zipController.text,
+          'city': cityController.text,
+          'street': streetController.text
+        });
+    if (res.statusCode == 200) {
+      print(res.body);
+    } else {
+      print(res.body.toString());
+    }
   }
 
-  Future<String?> readToken() async {
-    final tokenStore = await storage.read(key: "token");
-    final refreshTokenStore = await storage.read(key: "refreshToken");
-  }
-
-  getEmployeeID() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  String? employeeID = prefs.getString('employeeID');
-  return employeeID;
-  }
-
-  getEmail() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  String? email = prefs.getString('email');
-  return email;
-  }
-
-  getTel() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  String? tel = prefs.getString('tel');
-  return tel;
-  }
-
-  getUserFName() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  String? userFName = prefs.getString('userFName');
-  return userFName;
-  }
-
-  getUserLName() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  String? userLName = prefs.getString('userLName');
-  return userLName;
-  }
-
-  getCity() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  String? city = prefs.getString('city');
-  return city;
-  }
-
-  getStreet() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  String? street = prefs.getString('street');
-  return street;
-  }
-
-  getzip() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Return String
-  String? zip = prefs.getString('zip');
-  return zip;
-  }
-
-  
   // //controller
-  final employeeIDController = TextEditingController();
-  final emailController = TextEditingController();
-  final telController = TextEditingController();
   final userFNameController = TextEditingController();
   final userLNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final telController = TextEditingController();
   final zipController = TextEditingController();
   final cityController = TextEditingController();
   final streetController = TextEditingController();
@@ -131,6 +57,13 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     final user = ProfileUserData.myUser;
+    userFNameController.text = widget.profileDatas.userFName;
+    userLNameController.text = widget.profileDatas.userLName;
+    emailController.text = widget.profileDatas.email;
+    telController.text = widget.profileDatas.tel;
+    zipController.text = widget.profileDatas.zip;
+    cityController.text = widget.profileDatas.city;
+    streetController.text = widget.profileDatas.street;
 
     return Container(
       decoration: BoxDecoration(
@@ -138,12 +71,13 @@ class _EditProfileState extends State<EditProfile> {
       ),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-        onPressed: () {
-                //<---------------------------------------------ยืนยัน edit ตรงนี้
-                Navigator.pop(context);
-                },
-        child: Icon(Icons.done),
-      ),
+          onPressed: () {
+            //<---------------------------------------------ยืนยัน edit ตรงนี้
+            editProfile();
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.done),
+        ),
         body: ListView(
           physics: BouncingScrollPhysics(),
           children: [
@@ -152,111 +86,54 @@ class _EditProfileState extends State<EditProfile> {
             //   onClicked: () async {},
             // ),
             const SizedBox(height: 20),
-            buildName(user),
+            buildEdit(user),
           ],
         ),
       ),
     );
   }
 
-  Widget buildName(user) => Container(
+  Widget buildEdit(user) => Container(
         padding: EdgeInsets.symmetric(horizontal: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Center(child: Text(
-            //   'Employee ID: ',
-            //   style: TextStyle(
-            //       fontSize: 18,
-            //       fontWeight: FontWeight.w500,
-            //       color: Colors.black,
-            //       )
-            // ),),
+            Center(
+              child: Text('Edit Information',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  )),
+            ),
             const SizedBox(height: 15),
-            TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Name',
-                      hintText: 'Name',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                    ),
-                    controller: userFNameController,
-                  ),
-                  const SizedBox(height: 15),
-            TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Surname',
-                      hintText: 'Surname',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                    ),
-                    controller: userLNameController,
-                  ),
-                  const SizedBox(height: 15),
-            TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'Email',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                    ),
-                    controller: userFNameController,
-                  ),
+            editForm("Name", userFNameController),
             const SizedBox(height: 15),
-            TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Tel',
-                      hintText: 'Tel',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                    ),
-                    controller: telController,
-                  ),
+            editForm("Surname", userLNameController),
             const SizedBox(height: 15),
-            TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'ZIP',
-                      hintText: 'ZIP',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                    ),
-                    controller: zipController,
-                  ),
-                  const SizedBox(height: 15),
-            TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'City',
-                      hintText: 'City',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                    ),
-                    controller: cityController,
-                  ),
-                  const SizedBox(height: 15),
-            TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Street',
-                      hintText: 'Street',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                    ),
-                    controller: streetController,
-                  ),
+            editForm("Email", emailController),
+            const SizedBox(height: 15),
+            editForm("Tel", telController),
+            const SizedBox(height: 15),
+            editForm("ZIP", zipController),
+            const SizedBox(height: 15),
+            editForm("City", cityController),
+            const SizedBox(height: 15),
+            editForm("Street", streetController),
           ],
         ),
       );
+
+  TextFormField editForm(String hText, TextEditingController controller) {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: hText,
+        hintText: hText,
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30.0))),
+        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+      ),
+      controller: controller,
+    );
+  }
 }
