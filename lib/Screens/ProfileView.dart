@@ -32,7 +32,6 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   void storedData() async {
-    super.initState();
     stored = await getProfileData().whenComplete(() {
       setState(() {});
     });
@@ -55,6 +54,7 @@ class _ProfileViewState extends State<ProfileView> {
     String output = res.body;
     if (res.statusCode == 200) {
       ProfileData profileDatas = ProfileData(
+<<<<<<< Updated upstream
           employeeID: showProfile.view[0],
           email: showProfile.view[1],
           tel: showProfile.view[2],
@@ -73,16 +73,28 @@ class _ProfileViewState extends State<ProfileView> {
       prefs.setString('zip', profileDatas.zip);
 
       return profileDatas;
+=======
+        employeeID: showProfile.view[0],
+        email: showProfile.view[1],
+        tel: showProfile.view[2],
+        userFName: showProfile.view[3],
+        userLName: showProfile.view[4],
+        city: showProfile.view[5],
+        street: showProfile.view[6],
+        zip: showProfile.view[7]);
+        prefs.setString('employeeID', profileDatas.employeeID); 
+        return profileDatas;
+>>>>>>> Stashed changes
     } else {
       print(output);
     }
   }
-
   Future<String?> readToken() async {
     final tokenStore = await storage.read(key: "token");
     final refreshTokenStore = await storage.read(key: "refreshToken");
   }
 
+<<<<<<< Updated upstream
   getStringValuesSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Return String
@@ -90,17 +102,22 @@ class _ProfileViewState extends State<ProfileView> {
     return stringValue;
   }
 
+=======
+>>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
       ),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return EditProfile();
+          onPressed: () async{
+            await Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return EditProfile(profileDatas: stored);
+            })).then((value) => setState(() {
+              storedData();
             }));
           },
           child: Icon(Icons.edit),
@@ -391,42 +408,6 @@ class _ProfileViewState extends State<ProfileView> {
       ),
     );
 
-    // Widget buildName(user) => Scaffold(
-    //       appBar: AppBar(
-    //         title: Text('Your Profile'),
-    //         centerTitle: true,
-    //         elevation: 0,
-    //       ),
-    //       body: Container(
-    //         child: Card(
-    //           child: FutureBuilder(
-    //             future: getProfileData(),
-    //             builder: (context, snapshot) {
-    //               if (snapshot.data == null) {
-    //                 return Container(
-    //                   child: Center(
-    //                     child: Text('Loading . . .'),
-    //                   ),
-    //                 );
-    //               } else
-    //                 return Center(
-    //                   child: Text(stored.userFName),
-    // );
-    // ignore: curly_braces_in_flow_control_structures
-    // return ListView.builder(
-    //     //itemBuilder: snapshot.data.length,
-    //     itemBuilder: (context, i) {
-    //       return ListTile(
-    //         title: Text(snapshot.data[0]),
-    //         subtitle: Text(snapshot.data[3]),
-    //         trailing: Text(snapshot.data[4]),
-    //       );
-    //     });
-    //         },
-    //       ),
-    //     ),
-    //   ),
-    // );
 
     Container(
       padding: EdgeInsets.symmetric(horizontal: 48),
