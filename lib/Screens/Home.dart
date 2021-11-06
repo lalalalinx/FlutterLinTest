@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+
 import 'package:chatki_project/Login_Register/login.dart';
 import 'package:chatki_project/Model/ProfileData.dart';
 import 'package:flutter/material.dart';
@@ -16,17 +17,9 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-// final String employeeID;
-//   //final String image;
-//   final String email;
-//   final String tel;
-//   final String userFName;
-//   final String userLName;
-//   final String city;
-//   final String street;
-//   final String zip;
 
 class _HomeState extends State<Home> {
+
   List<ProfileData> profile = [
     ProfileData(
       userFName: "Lin",
@@ -61,12 +54,6 @@ class _HomeState extends State<Home> {
   ];
 
   final storage = FlutterSecureStorage();
-
-  @override
-  void initState() {
-    // readToken();
-    super.initState();
-  }
   
   @override
   Widget build(BuildContext context) => DefaultTabController(
