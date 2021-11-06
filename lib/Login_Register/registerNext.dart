@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+
+import 'login.dart';
 
 class RegisterNext extends StatefulWidget {
   const RegisterNext({Key? key}) : super(key: key);
@@ -18,8 +21,7 @@ class _RegisterNextState extends State<RegisterNext> {
   Future savePersonalInfo() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
-    var res = await http.post(
-        Uri.parse('http://10.0.2.2:4000/profile/edit'),
+    var res = await http.post(Uri.parse('http://10.0.2.2:4000/profile/edit'),
         headers: <String, String>{
           'auth-token': token.toString(),
           'refresh-token': refreshToken.toString(),
@@ -36,12 +38,19 @@ class _RegisterNextState extends State<RegisterNext> {
         });
     if (res.statusCode == 200) {
       print(res.body);
+      showToast("Added information successfully");
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return Login();
+      }));
     } else {
       print(res.body.toString());
     }
   }
 
-  //var
+    void showToast(String message) {
+    Fluttertoast.showToast(
+        msg: message, gravity: ToastGravity.TOP, fontSize: 20);
+  }
 
   //controller
   final imageController = TextEditingController();
@@ -71,7 +80,7 @@ class _RegisterNextState extends State<RegisterNext> {
               )),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 40),
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 40),
           child: Form(
             key: formkey,
             child: SingleChildScrollView(
@@ -97,170 +106,41 @@ class _RegisterNextState extends State<RegisterNext> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'image',
-                      hintText: 'image',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: imageController,
-                  ),
+                  registerInfoForm('Image', imageController),
                   SizedBox(
                     height: 20.0,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Name',
-                      hintText: 'Name',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: userFNameController,
-                  ),
+                  registerInfoForm('Name', userFNameController),
                   SizedBox(
                     height: 20.0,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Surname',
-                      hintText: 'Surname',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: userLNameController,
-                  ),
+                  registerInfoForm('Surname', userLNameController),
                   SizedBox(
                     height: 20.0,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Tel',
-                      hintText: 'Tel',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: telController,
-                  ),
+                  registerInfoForm('Tel', telController),
                   SizedBox(
                     height: 20.0,
                   ),
-                  Row(crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(child: 
-                    TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'ZIP',
-                      hintText: 'ZIP',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: zipController,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      registerCForm('ZIP', zipController),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      registerCForm('City', cityController),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      registerCForm('Street', streetController),
+                    ],
                   ),
-                    ),
-                    SizedBox(
-                    width: 10.0,
-                    ),
-                    Expanded(child:
-                    TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'City',
-                      hintText: 'City',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: cityController,
-                  ),
-                    ),
-                    SizedBox(
-                    width: 10.0,
-                    ),
-                    Expanded(child: 
-                    TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Street',
-                      hintText: 'Street',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: streetController,
-                  ),
-                    ),
-                  ],
-                  ),
-                  // TextFormField(
-                  //   decoration: InputDecoration(
-                  //     labelText: 'zip',
-                  //     hintText: 'zip',
-                  //     border: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                  //     contentPadding:
-                  //         EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                  //   ),
-                  //   controller: zipController,
-                  // ),
-                  // SizedBox(
-                  //   height: 20.0,
-                  // ),
-                  // TextFormField(
-                  //   decoration: InputDecoration(
-                  //     labelText: 'city',
-                  //     hintText: 'city',
-                  //     border: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                  //     contentPadding:
-                  //         EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                  //   ),
-                  //   controller: cityController,
-                  // ),
-                  // SizedBox(
-                  //   height: 20.0,
-                  // ),
-                  // TextFormField(
-                  //   decoration: InputDecoration(
-                  //     labelText: 'street',
-                  //     hintText: 'street',
-                  //     border: OutlineInputBorder(
-                  //         borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                  //     contentPadding:
-                  //         EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                  //   ),
-                  //   controller: streetController,
-                  // ),
-                  // TextButton(
-                  //   style: TextButton.styleFrom(
-                  //     backgroundColor: Colors.deepPurple[700],
-                  //     primary: Colors.white,
-                  //     padding:
-                  //         EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  //     shape: shape,
-                  //   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        // save();
-                        print(imageController.text);
-                        print(userFNameController.text);
-                        print(userLNameController.text);
-                        print(telController.text);
-                        print(zipController.text);
-                        print(cityController.text);
-                        print(streetController.text);
+                        savePersonalInfo(); 
                       },
                       child: const Text(
                         'Confirm',
@@ -282,5 +162,34 @@ class _RegisterNextState extends State<RegisterNext> {
             ),
           ),
         ));
+  }
+
+  Expanded registerCForm(String hText, TextEditingController controller) {
+    return Expanded(
+      child: TextFormField(
+        decoration: InputDecoration(
+          labelText: hText,
+          hintText: hText,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(6.0))),
+          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        ),
+        controller: controller,
+      ),
+    );
+  }
+
+  TextFormField registerInfoForm(
+      String hText, TextEditingController controller) {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: hText,
+        hintText: hText,
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(6.0))),
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      ),
+      controller: controller,
+    );
   }
 }

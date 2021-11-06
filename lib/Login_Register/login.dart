@@ -123,8 +123,6 @@ class _LoginState extends State<Login> {
             padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
             child: ElevatedButton(
               onPressed: () {
-                print(userNameController.text);
-                print(passwordController.text);
                 login();
               },
               child: const Text(

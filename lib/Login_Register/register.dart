@@ -33,6 +33,7 @@ class _RegisterState extends State<Register> {
     if (res.statusCode == 200) {
       print(res.body);
       login();
+      showToast("Registered successfully");
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return RegisterNext();
       }));
@@ -151,10 +152,6 @@ class _RegisterState extends State<Register> {
                     child: ElevatedButton(
                       onPressed: () {
                         registerUser();
-                        // print(usernameController.text);
-                        // print(emailController.text);
-                        // print(passwordController.text);
-                        // print(employeeidController.text);
                       },
                       child: const Text(
                         'Next',
