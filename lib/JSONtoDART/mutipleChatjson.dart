@@ -1,64 +1,80 @@
 // To parse this JSON data, do
 //
-//     final mutipleChatjson = mutipleChatjsonFromJson(jsonString);
+//     final multipleChatList = multipleChatListFromJson(jsonString);
 
-// ignore_for_file: file_names, unnecessary_this, unnecessary_new, deprecated_member_use, prefer_collection_literals
+// ignore_for_file: file_names
 
-// class MutipleChatjson {
-// 	late List<List> set;
-
-// 	MutipleChatjson({required this.set});
-
-// 	MutipleChatjson.fromJson(Map<String, dynamic> json) {
-// 		if (json['set'] != null) {
-// 			set = new List<List>();
-// 			json['set'].forEach((v) { set.add(new List.fromJson(v)); });
-// 		}
-// 	}
-
-// 	Map<String, dynamic> toJson() {
-// 		final Map<String, dynamic> data = new Map<String, dynamic>();
-// 		if (this.set != null) {
-//       data['set'] = this.set.map((v) => v.toJson()).toList();
-//     }
-// 		return data;
-// 	}
-// }
-
-// class Set {
-
-
-// 	Set({});
-
-// 	Set.fromJson(Map<String, dynamic> json) {
-// 	}
-
-// 	Map<String, dynamic> toJson() {
-// 		final Map<String, dynamic> data = new Map<String, dynamic>();
-// 		return data;
-// 	}
-// }
-
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
-MutipleChatjson mutipleChatjsonFromJson(String str) => MutipleChatjson.fromJson(json.decode(str));
+MultipleChatList multipleChatListFromJson(String str) => MultipleChatList.fromJson(json.decode(str));
 
-String mutipleChatjsonToJson(MutipleChatjson data) => json.encode(data.toJson());
+String multipleChatListToJson(MultipleChatList data) => json.encode(data.toJson());
 
-class MutipleChatjson {
-  late List<List> set;
-  
-    MutipleChatjson({
-        required this.mutipleChatjsonSet,
+class MultipleChatList {
+    MultipleChatList({
+        required this.getAllChat,
     });
 
-    List<List<String>> mutipleChatjsonSet;
+    List<GetAllChat> getAllChat;
 
-    factory MutipleChatjson.fromJson(Map<String, dynamic> json) => MutipleChatjson(
-        mutipleChatjsonSet: List<List<String>>.from(json["set"].map((x) => List<String>.from(x.map((x) => x)))),
+    factory MultipleChatList.fromJson(Map<String, dynamic> json) => MultipleChatList(
+        getAllChat: List<GetAllChat>.from(json["getAllChat"].map((x) => GetAllChat.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "set": List<dynamic>.from(mutipleChatjsonSet.map((x) => List<dynamic>.from(x.map((x) => x)))),
+        "getAllChat": List<dynamic>.from(getAllChat.map((x) => x.toJson())),
+    };
+}
+
+class GetAllChat {
+    GetAllChat({
+        required this.chatId,
+        required this.chatName,
+        required this.id,
+        required this.previewChat,
+    });
+
+    String chatId;
+    String chatName;
+    String id;
+    List<PreviewChat> previewChat;
+
+    factory GetAllChat.fromJson(Map<String, dynamic> json) => GetAllChat(
+        chatId: json["chatID"],
+        chatName: json["chatName"],
+        id: json["_id"],
+        previewChat: List<PreviewChat>.from(json["previewChat"].map((x) => PreviewChat.fromJson(x))),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "chatID": chatId,
+        "chatName": chatName,
+        "_id": id,
+        "previewChat": List<dynamic>.from(previewChat.map((x) => x.toJson())),
+    };
+}
+
+class PreviewChat {
+    PreviewChat({
+        required this.text,
+        required this.time,
+        required this.id,
+    });
+
+    String text;
+    DateTime time;
+    String id;
+
+    factory PreviewChat.fromJson(Map<String, dynamic> json) => PreviewChat(
+        text: json["text"],
+        time: DateTime.parse(json["time"]),
+        id: json["_id"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "text": text,
+        "time": time.toIso8601String(),
+        "_id": id,
     };
 }

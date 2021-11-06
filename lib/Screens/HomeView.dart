@@ -36,7 +36,7 @@ class _HomeViewState extends State<HomeView> {
     homedd = homeDataFromJson(res.body);
     String output = res.body;
     if (res.statusCode == 200) {
-      print(homedd.user[1].userName);
+      print(homedd.user[1].userName); //ตัวอย่างใช้งาน
       
     } else {
       print(output);

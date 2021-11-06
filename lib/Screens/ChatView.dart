@@ -2,10 +2,9 @@
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:chatki_project/Model/MutipleChatData.dart';
+import 'package:chatki_project/JSONtoDART/mutipleChatjson.dart';
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
-import 'package:chatki_project/JSONtoDART/MutipleChatjson.dart';
 //import 'package:chatki_project/Model/chatData.dart';
 import 'chat/ChatList.dart';
 
@@ -22,16 +21,15 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> {
   final storage = FlutterSecureStorage();
-  //late MutipleChatData stored;
+  late final MultipleChatList multipleChatList;
 
     @override
   void initState() {
-    storedData();
+    getMutipleChatData();
     super.initState();
   }
 
   void storedData() async {
-    super.initState();
     //stored = await getMutipleChatData().whenComplete(() {
     //   setState(() {});
     // });
@@ -49,37 +47,13 @@ class _ChatViewState extends State<ChatView> {
         'refresh-token': refreshToken.toString(),
       },
     );
-    var body = res.body;
-    final mutipleChatjson = MutipleChatjson.fromJson(jsonDecode(body));
-    String output = res.body;
+    multipleChatList = multipleChatListFromJson(res.body);
     if (res.statusCode == 200) {
-      print("ok");
+      print(multipleChatList.getAllChat[0].chatName); //ตัวอย่างใช้งาน
     } else {
+      String output = res.body;
       print(output);
     }
-    // var jsonData = jsonDecode(body);
-    // List<MutipleChatData> mutipleChats = [];
-    // for(var u in jsonData) {
-    //   MutipleChatData mutipleChatData = MutipleChatData(u["currentMessage"],u["time"],u["username"],u["chatRoomID"]);
-    //   mutipleChats.add(mutipleChatData);
-    // }
-
-    // print(mutipleChats.length);
-    // return mutipleChats;
-
-    // MutipleChatData mutipleChatDatas = MutipleChatData(
-    //     currentMessage: mutipleChatjson.mutipleChatjsonSet[0][0],
-    //     time: mutipleChatjson.mutipleChatjsonSet[0][1],
-    //     username: mutipleChatjson.mutipleChatjsonSet[0][2],
-    //     chatRoomID: mutipleChatjson.mutipleChatjsonSet[0][3]);
-
-    // print(mutipleChatjson.mutipleChatjsonSet.length);
-    // return mutipleChatDatas;
-  }
-
-  Future<String?> readToken() async {
-    final tokenStore = await storage.read(key: "token");
-    final refreshTokenStore = await storage.read(key: "refreshToken");
   }
 
 
