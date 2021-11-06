@@ -13,6 +13,7 @@ class HomeView extends StatefulWidget {
 }
 class _HomeViewState extends State<HomeView> {
 
+    late final HomeData homedd;
     final storage = FlutterSecureStorage();
     @override
   void initState() {
@@ -32,17 +33,14 @@ class _HomeViewState extends State<HomeView> {
         'refresh-token': refreshToken.toString(),
       },
     );
-    final homeData = homeDataFromJson(res.body);
+    homedd = homeDataFromJson(res.body);
     String output = res.body;
     if (res.statusCode == 200) {
-      print(homeData.user[0].userName);
+      print(homedd.user[1].userName);
+      
     } else {
       print(output);
     }
-  }
-  Future<String?> readToken() async {
-    final tokenStore = await storage.read(key: "token");
-    final refreshTokenStore = await storage.read(key: "refreshToken");
   }
 
   List<String> quotes = [

@@ -68,10 +68,10 @@ class _ProfileViewState extends State<ProfileView> {
       print(output);
     }
   }
-  Future<String?> readToken() async {
-    final tokenStore = await storage.read(key: "token");
-    final refreshTokenStore = await storage.read(key: "refreshToken");
-  }
+  // Future<String?> readToken() async {
+  //   final tokenStore = await storage.read(key: "token");
+  //   final refreshTokenStore = await storage.read(key: "refreshToken");
+  // }
 
   @override
   Widget build(BuildContext context) {
