@@ -115,11 +115,11 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBox(height: 15),
             editForm("Tel", telController),
             const SizedBox(height: 15),
-            editForm("ZIP", zipController),
-            const SizedBox(height: 15),
             editForm("City", cityController),
             const SizedBox(height: 15),
             editForm("Street", streetController),
+            const SizedBox(height: 15),
+            editForm("ZIP", zipController),
           ],
         ),
       );
