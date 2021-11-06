@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-
 import 'registerNext.dart';
 
 class Register extends StatefulWidget {
@@ -14,26 +16,61 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final formkey = GlobalKey<FormState>();
+  final storage = FlutterSecureStorage();
 
-  Future save() async {
+  Future registerUser() async {
     var res = await http.post(
-        Uri.parse('http://10.0.2.2:3000/login-register/register'),
+        Uri.parse('http://10.0.2.2:4000/login-register/register'),
         headers: <String, String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },
         body: <String, String>{
-          'userName': usernameController.text,
+          'userName': userNameController.text,
           'email': emailController.text,
           'password': passwordController.text,
           'employeeID': employeeidController.text
         });
-    print(res.body);
+    if (res.statusCode == 200) {
+      print(res.body);
+      login();
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return RegisterNext();
+      }));
+    } else {
+      Map<String, dynamic> err = jsonDecode(res.body);
+      print(err["message"]);
+      showToast("Error: ${err["message"]}");
+    }
   }
 
-  //var
+  Future login() async {
+    var res = await http.post(
+        Uri.parse('http://10.0.2.2:4000/login-register/login'),
+        headers: <String, String>{
+          'Context-Type': 'application/json;charSet=UTF-8'
+        },
+        body: <String, String>{
+          'userName': userNameController.text,
+          'password': passwordController.text
+        });
+    if (res.statusCode == 200) {
+      Map<String, dynamic> output = jsonDecode(res.body);
+      storage.write(key: "token", value: output['token']);
+      storage.write(key: "refreshToken", value: output['refreshToken']);
+    } else {
+      Map<String, dynamic> err = jsonDecode(res.body);
+      print(err["Error"]);
+      showToast("Error: ${err["Error"]}");
+    }
+  }
+
+  void showToast(String message) {
+    Fluttertoast.showToast(
+        msg: message, gravity: ToastGravity.TOP, fontSize: 20);
+  }
 
   //controller
-  final usernameController = TextEditingController();
+  final userNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -59,7 +96,7 @@ class _RegisterState extends State<Register> {
               )),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 40),
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 40),
           child: Form(
             key: formkey,
             child: SingleChildScrollView(
@@ -85,31 +122,11 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     height: 40.0,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Username',
-                      hintText: 'Username',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: usernameController,
-                  ),
+                  registerForm('Username', userNameController),
                   SizedBox(
                     height: 20.0,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Email Address',
-                      hintText: 'Email Address',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: emailController,
-                  ),
+                  registerForm('Email', emailController),
                   SizedBox(
                     height: 20.0,
                   ),
@@ -123,49 +140,21 @@ class _RegisterState extends State<Register> {
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                     ),
                     controller: passwordController,
+                    obscureText: true,
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Confirm Password',
-                      hintText: 'Confirm Password',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: confirmPasswordController,
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'EmployeeID',
-                      hintText: 'EmployeeID',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    ),
-                    controller: employeeidController,
-                  ),
+                  registerForm('EmployeeID', employeeidController),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40.0),
                     child: ElevatedButton(
                       onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                  return RegisterNext();
-                }));
-              
-                        // save();
-                        print(usernameController.text);
-                        print(emailController.text);
-                        print(passwordController.text);
-                        print(confirmPasswordController.text);
-                        print(employeeidController.text);
+                        registerUser();
+                        // print(usernameController.text);
+                        // print(emailController.text);
+                        // print(passwordController.text);
+                        // print(employeeidController.text);
                       },
                       child: const Text(
                         'Next',
@@ -180,7 +169,6 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
-                      
                     ),
                   )
                 ],
@@ -188,5 +176,18 @@ class _RegisterState extends State<Register> {
             ),
           ),
         ));
+  }
+
+  TextFormField registerForm(String hText, TextEditingController controller) {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: hText,
+        hintText: hText,
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(6.0))),
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      ),
+      controller: controller,
+    );
   }
 }

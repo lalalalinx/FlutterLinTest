@@ -41,7 +41,6 @@ class _LoginState extends State<Login> {
       print(err["Error"]);
       showToast("Error: ${err["Error"]}");
     }
-    
   }
 
   void showToast(String message) {
@@ -50,7 +49,6 @@ class _LoginState extends State<Login> {
       gravity: ToastGravity.TOP,
       fontSize: 20
     );
-
   }
 
   //controller
@@ -125,7 +123,6 @@ class _LoginState extends State<Login> {
             padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
             child: ElevatedButton(
               onPressed: () {
-                // save();
                 print(userNameController.text);
                 print(passwordController.text);
                 login();
@@ -145,14 +142,6 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-          // TextButton(
-          //   child: const Text("Login"),
-          //   onPressed: () {
-          //     print(userNameController.text);
-          //     print(passwordController.text);
-          //     login();
-          //   },
-          // ),
           Text("- OR -", style: TextStyle(color: Colors.black)),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
@@ -182,14 +171,6 @@ class _LoginState extends State<Login> {
             child: Image.asset("assets/images/arumjoh.png",
                 height: 200, width: 200),
           ),
-          // TextButton(
-          //   child: const Text("Register"),
-          //   onPressed: () {
-          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //       return Register();
-          //     }));
-          //   },
-          // )
         ],
       ),
     ));

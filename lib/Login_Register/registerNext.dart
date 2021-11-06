@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterNext extends StatefulWidget {
@@ -12,15 +13,20 @@ class RegisterNext extends StatefulWidget {
 
 class _RegisterNextState extends State<RegisterNext> {
   final formkey = GlobalKey<FormState>();
+  final storage = FlutterSecureStorage();
 
-  Future save() async {
+  Future savePersonalInfo() async {
+    final token = await storage.read(key: "token");
+    final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.post(
-        Uri.parse('http://10.0.2.2:3000/login-register/register'),
+        Uri.parse('http://10.0.2.2:4000/profile/edit'),
         headers: <String, String>{
+          'auth-token': token.toString(),
+          'refresh-token': refreshToken.toString(),
           'Context-Type': 'application/json;charSet=UTF-8'
         },
         body: <String, String>{
-          'image': imageController.text,
+          // 'image': imageController.text,
           'userFName': userFNameController.text,
           'userLName': userLNameController.text,
           'tel': telController.text,
@@ -28,7 +34,11 @@ class _RegisterNextState extends State<RegisterNext> {
           'city': cityController.text,
           'street': streetController.text,
         });
-    print(res.body);
+    if (res.statusCode == 200) {
+      print(res.body);
+    } else {
+      print(res.body.toString());
+    }
   }
 
   //var
