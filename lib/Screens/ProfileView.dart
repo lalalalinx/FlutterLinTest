@@ -27,17 +27,10 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   void initState() {
-    storedData();
     super.initState();
   }
 
-  void storedData() async {
-    stored = await getProfileData().whenComplete(() {
-      setState(() {});
-    });
-  }
-
-  Future getProfileData() async {
+  Future<ProfileData> getProfileData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -53,7 +46,7 @@ class _ProfileViewState extends State<ProfileView> {
     final showProfile = ShowProfile.fromJson(jsonDecode(res.body));
     String output = res.body;
     if (res.statusCode == 200) {
-      ProfileData profileDatas = ProfileData(
+      stored = ProfileData(
         employeeID: showProfile.view[0],
         email: showProfile.view[1],
         tel: showProfile.view[2],
@@ -62,11 +55,11 @@ class _ProfileViewState extends State<ProfileView> {
         city: showProfile.view[5],
         street: showProfile.view[6],
         zip: showProfile.view[7]);
-        prefs.setString('employeeID', profileDatas.employeeID); 
-        return profileDatas;
+        prefs.setString('employeeID', stored.employeeID);
     } else {
       print(output);
     }
+    return stored;
   }
   // Future<String?> readToken() async {
   //   final tokenStore = await storage.read(key: "token");
@@ -86,7 +79,7 @@ class _ProfileViewState extends State<ProfileView> {
             await Navigator.push(context, MaterialPageRoute(builder: (context) {
               return EditProfile(profileDatas: stored);
             })).then((value) => setState(() {
-              storedData();
+              getProfileData();
             }));
           },
           child: Icon(Icons.edit),
@@ -97,8 +90,8 @@ class _ProfileViewState extends State<ProfileView> {
             Center(
               child: FutureBuilder(
                   future: getProfileData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.data == null) {
+                  builder: (context,AsyncSnapshot<ProfileData> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return Container(
                         height: 500,
                         child: Align(
@@ -149,7 +142,7 @@ class _ProfileViewState extends State<ProfileView> {
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  stored.employeeID + ' ',
+                                  snapshot.data!.employeeID + ' ',
                                   style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.w300,
@@ -180,7 +173,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 right: 20,
                               ),
                               child: Text(
-                                stored.userFName + '  ' + stored.userLName,
+                                snapshot.data!.userFName + '  ' + snapshot.data!.userLName,
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w400,
@@ -205,7 +198,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                                 SizedBox(width: 25.0),
                                 Text(
-                                  stored.email,
+                                  snapshot.data!.email,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -228,7 +221,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                                 SizedBox(width: 46.0),
                                 Text(
-                                  stored.tel,
+                                  snapshot.data!.tel,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -253,7 +246,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                                 SizedBox(width: 49.0),
                                 Text(
-                                  stored.city,
+                                  snapshot.data!.city,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -276,7 +269,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                                 SizedBox(width: 31.0),
                                 Text(
-                                  stored.street,
+                                  snapshot.data!.street,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -299,7 +292,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                                 SizedBox(width: 50.0),
                                 Text(
-                                  stored.zip,
+                                  snapshot.data!.zip,
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -308,6 +301,7 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                               ],
                             ),
+
                           ],
                         ),
                       );
@@ -331,87 +325,6 @@ class _ProfileViewState extends State<ProfileView> {
             //buildName(user),
           ],
         ),
-      ),
-    );
-
-
-    Container(
-      padding: EdgeInsets.symmetric(horizontal: 48),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Text('Employee ID ',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey[900],
-                )),
-          ),
-          //--
-          Center(
-            child: Text(
-              stored.employeeID,
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 40),
-          Text(
-            'Name - Surname',
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepPurple),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            stored.userFName + ' - ' + stored.userLName,
-            style: TextStyle(fontSize: 18),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'Email',
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepPurple),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            stored.email,
-            style: TextStyle(fontSize: 18),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'Tel',
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepPurple),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            stored.tel,
-            style: TextStyle(fontSize: 18),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'City - Street - ZIP',
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepPurple),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            stored.city + ' - ' + stored.street + ' - ' + stored.zip,
-            style: TextStyle(fontSize: 18),
-          ),
-          //--
-        ],
       ),
     );
   }
