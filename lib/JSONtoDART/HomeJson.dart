@@ -7,18 +7,18 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-HomeData homeDataFromJson(String str) => HomeData.fromJson(json.decode(str));
+ShowHome homeDataFromJson(String str) => ShowHome.fromJson(json.decode(str));
 
-String homeDataToJson(HomeData data) => json.encode(data.toJson());
+String homeDataToJson(ShowHome data) => json.encode(data.toJson());
 
-class HomeData {
-    HomeData({
+class ShowHome {
+    ShowHome({
         required this.user,
     });
 
     List<User> user;
 
-    factory HomeData.fromJson(Map<String, dynamic> json) => HomeData(
+    factory ShowHome.fromJson(Map<String, dynamic> json) => ShowHome(
         user: List<User>.from(json["user"].map((x) => User.fromJson(x))),
     );
 

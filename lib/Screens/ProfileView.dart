@@ -47,15 +47,15 @@ class _ProfileViewState extends State<ProfileView> {
     String output = res.body;
     if (res.statusCode == 200) {
       stored = ProfileData(
-        employeeID: showProfile.view[0],
-        email: showProfile.view[1],
-        tel: showProfile.view[2],
-        userFName: showProfile.view[3],
-        userLName: showProfile.view[4],
-        city: showProfile.view[5],
-        street: showProfile.view[6],
-        zip: showProfile.view[7]);
-        prefs.setString('employeeID', stored.employeeID);
+          employeeID: showProfile.view[0],
+          email: showProfile.view[1],
+          tel: showProfile.view[2],
+          userFName: showProfile.view[3],
+          userLName: showProfile.view[4],
+          city: showProfile.view[5],
+          street: showProfile.view[6],
+          zip: showProfile.view[7]);
+      prefs.setString('employeeID', stored.employeeID);
     } else {
       print(output);
     }
@@ -68,38 +68,38 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
       ),
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async{
-            await Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return EditProfile(profileDatas: stored);
-            })).then((value) => setState(() {
-              getProfileData();
-            }));
-          },
-          child: Icon(Icons.edit),
-        ),
         body: ListView(
           physics: BouncingScrollPhysics(),
           children: [
             Center(
               child: FutureBuilder(
                   future: getProfileData(),
-                  builder: (context,AsyncSnapshot<ProfileData> snapshot) {
+                  builder: (context, AsyncSnapshot<ProfileData> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Container(
                         height: 500,
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text(
-                            'L o a d i n g . . .',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20),                          
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 200.0,
+                              ),
+                              CircularProgressIndicator(),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              Text(
+                                'L o a d i n g . . .',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
                           ),
                         ),
                       );
@@ -108,6 +108,19 @@ class _ProfileViewState extends State<ProfileView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Scaffold(
+                              floatingActionButton: FloatingActionButton(
+                                onPressed: () async {
+                                  await Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return EditProfile(profileDatas: stored);
+                                  })).then((value) => setState(() {
+                                        getProfileData();
+                                      }));
+                                },
+                                child: Icon(Icons.edit),
+                              ),
+                            ),
                             SizedBox(
                               //height: 200.0,
                               child: Container(
@@ -151,7 +164,6 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                               ),
                             ),
-
                             SizedBox(height: 20.0),
                             Center(
                               //padding: EdgeInsets.only(left: 40),
@@ -173,7 +185,9 @@ class _ProfileViewState extends State<ProfileView> {
                                 right: 20,
                               ),
                               child: Text(
-                                snapshot.data!.userFName + '  ' + snapshot.data!.userLName,
+                                snapshot.data!.userFName +
+                                    '  ' +
+                                    snapshot.data!.userLName,
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w400,
@@ -183,7 +197,6 @@ class _ProfileViewState extends State<ProfileView> {
                             )),
                             SizedBox(height: 10.0),
                             Divider(thickness: 1),
-
                             SizedBox(height: 20.0),
                             Row(
                               children: [
@@ -301,7 +314,6 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                               ],
                             ),
-
                           ],
                         ),
                       );
