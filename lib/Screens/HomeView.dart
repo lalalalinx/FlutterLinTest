@@ -89,6 +89,49 @@ class _HomeViewState extends State<HomeView> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 20, bottom: 10, left: 20, right: 20),
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  decoration: const InputDecoration(
+                                    //labelText: 'Search',
+                                    hintText: 'Search',
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30.0))),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 15, horizontal: 15),
+                                  ),
+                                  //controller: r,
+                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      // <----------------------------
+                                    },
+                                    child: const Text(
+                                      'Login',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.black,
+                                      fixedSize: const Size(350, 50),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          side: BorderSide(
+                                              color: Colors.black, width: 1.5)),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
                           ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -96,16 +139,41 @@ class _HomeViewState extends State<HomeView> {
                             itemBuilder: (context, i) {
                               return Column(
                                 children: [
-                                  Container(
-                                    color: Colors.grey[900],
-                                    child: ListTile(
-                                      leading: Icon(Icons.person),
-                                      title:
-                                          Text(snapshot.data!.user[i].userName),
-                                      trailing: Text(
-                                          snapshot.data!.user[i].employeeId),
+                                  Card(
+                                    //padding: EdgeInsets.only(left: 10,right: 10),
+                                    margin: EdgeInsets.all(10),
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 10, bottom: 10),
+                                      child: ListTile(
+                                        title: Row(
+                                          children: [
+                                            Container(
+                                              width: 50,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[600],
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Text(
+                                                snapshot.data!.user[i].userName,
+                                                style: TextStyle(fontSize: 18)),
+                                          ],
+                                        ),
+                                        trailing: Text(
+                                          snapshot.data!.user[i].employeeId,
+                                          style: TextStyle(
+                                              color: Colors.grey[600]),
+                                        ),
+                                      ),
                                     ),
                                   ),
+                                  //Divider(thickness: 1),
                                 ],
                               );
                             },
