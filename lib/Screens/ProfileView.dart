@@ -159,31 +159,6 @@ class _ProfileViewState extends State<ProfileView> {
                               ),
                             ),
 
-                            // Row(
-                            //   children: [
-                            //     SizedBox(width: 40.0),
-                            //     Text(
-                            //       'Employee ID :',
-                            //       style: TextStyle(
-                            //         fontSize: 20,
-                            //         fontWeight: FontWeight.w300,
-                            //         color: Colors.red[400],
-                            //       ),
-                            //     ),
-                            //     SizedBox(width: 10.0),
-                            //     Text(
-                            //       stored.employeeID,
-                            //       style: TextStyle(
-                            //         fontSize: 30,
-                            //         fontWeight: FontWeight.w300,
-                            //         color: Colors.white,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                            //   ),
-                            // ),
-
                             SizedBox(height: 20.0),
                             Center(
                               //padding: EdgeInsets.only(left: 40),
@@ -333,24 +308,6 @@ class _ProfileViewState extends State<ProfileView> {
                                 ),
                               ],
                             ),
-                            // Center(
-                            //   child: Text('Employee ID ',
-                            //       style: TextStyle(
-                            //         fontSize: 20,
-                            //         fontWeight: FontWeight.w500,
-                            //         color: Colors.grey[900],
-                            //       ),),
-                            // ),
-                            // //--
-                            // Center(
-                            //   child: Text(
-                            //     stored.employeeID,
-                            //     style: TextStyle(
-                            //       fontSize: 30,
-                            //       fontWeight: FontWeight.bold,
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       );

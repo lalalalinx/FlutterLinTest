@@ -4,7 +4,6 @@
 import 'package:chatki_project/Login_Register/login.dart';
 import 'package:chatki_project/Model/ProfileData.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'ChatView.dart';
 import 'HomeView.dart';
 import 'ProfileView.dart';
@@ -19,41 +18,6 @@ class Home extends StatefulWidget {
 
 
 class _HomeState extends State<Home> {
-
-  List<ProfileData> profile = [
-    ProfileData(
-      userFName: "Lin",
-      userLName: "Suk",
-      email: "lin@gmail",
-      tel: "08911",
-      city: "god",
-      street: "sake",
-      zip: "1122",
-      employeeID: "62070503406",
-    ),
-    ProfileData(
-      userFName: "Jade",
-      userLName: "Chan",
-      email: "jade@gmail",
-      tel: "1234",
-      city: "river",
-      street: "lake",
-      zip: "12345",
-      employeeID: "62070503409",
-    ),
-    ProfileData(
-      userFName: "Doon",
-      userLName: "Kit",
-      email: "doon@gmail",
-      tel: "08444",
-      city: "road",
-      street: "trip",
-      zip: "56678",
-      employeeID: "62070503422",
-    ),
-  ];
-
-  final storage = FlutterSecureStorage();
   
   @override
   Widget build(BuildContext context) => DefaultTabController(

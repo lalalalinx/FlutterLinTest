@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:chatki_project/Model/MessageData.dart';
 import 'package:chatki_project/Model/chatData.dart';
 import 'package:chatki_project/Screens/chat/OwnMessageCard.dart';
 import 'package:chatki_project/Screens/chat/ReplyCard.dart';
@@ -9,7 +10,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 
 class IndividualChat extends StatefulWidget {
-  const IndividualChat({Key? key,required this.chatData}) : super(key: key);
+  const IndividualChat({Key? key, required this.chatData}) : super(key: key);
   final ChatData chatData;
 
   @override
@@ -19,11 +20,13 @@ class IndividualChat extends StatefulWidget {
 class _IndividualChatState extends State<IndividualChat> {
   late Socket socket;
   final storage = FlutterSecureStorage();
+  List<MessageData> messages = [];
+  late ChatData sourceChat;
 
   TextEditingController messageController = TextEditingController();
   @override
   void initState() {
-    connectSocket();
+    // connectSocket();
     super.initState();
   }
 
@@ -35,26 +38,38 @@ class _IndividualChatState extends State<IndividualChat> {
             .disableAutoConnect() // disable auto-connection
             .build());
     socket.connect();
-    
-    String? tokenStore = await storage.read(key: "token");
-    socket.emit("signin",tokenStore);
-    
+
+    // String? tokenStore = await storage.read(key: "token");
+    socket.emit("signin", {sourceChat.id, widget.chatData.id}); //sourceChat pls
+    socket.onConnect((data) {
+      print("Connected");
+      socket.on("message", (msg) {
+        setMessage("destination", msg["message"]);
+      });
+    });
   }
 
   Future getEmployeeID() async {
     String? tokenStore = await storage.read(key: "token");
     late String tokenn = tokenStore!;
 
-    var res = await http.post(
-        Uri.parse('http://10.0.2.2:3000/indivChat'),
+    var res = await http.post(Uri.parse('http://10.0.2.2:3000/indivChat'),
         headers: <String, String>{
           'auth-token': tokenn,
         });
-
   }
 
-  void sendMessage(String message,int myId,int targetId){
-    socket.emit("message",{"message": message,"myId": myId,"targetId": targetId});
+  void sendMessage(String message, int myId, int targetId) {
+    setMessage("source", message);
+    socket.emit(
+        "message", {"message": message, "myId": myId, "targetId": targetId});
+  }
+
+  void setMessage(String type, String message) {
+    MessageData messageData = MessageData(type: type, message: message);
+    setState(() {
+      messages.add(messageData);
+    });
   }
 
   @override
@@ -109,24 +124,26 @@ class _IndividualChatState extends State<IndividualChat> {
             width: MediaQuery.of(context).size.width,
             child: Stack(
               children: [
+                //message bubble
                 Container(
                   height: MediaQuery.of(context).size.height - 50,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      // OwnMessageCard(),
-                      // ReplyCard(),
-                      // ReplyCard(),
-                      // OwnMessageCard(),
-                      // OwnMessageCard(),
-                      // OwnMessageCard(),
-                    ],
-                  ),
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        if (messages[index].type == "source") {
+                          return OwnMessageCard(
+                              message: messages[index].message);
+                        } else {
+                          return ReplyCard(message: messages[index].message);
+                        }
+                      }),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Row(
                     children: [
+                      // Text message field
                       Container(
                         width: MediaQuery.of(context).size.width - 55,
                         color: Colors.grey[900],
@@ -137,7 +154,7 @@ class _IndividualChatState extends State<IndividualChat> {
                               borderRadius: BorderRadius.circular(25)),
                           child: TextFormField(
                             keyboardType: TextInputType.multiline,
-                            controller : messageController,
+                            controller: messageController,
                             maxLines: 5,
                             minLines: 1,
                             textAlignVertical: TextAlignVertical.center,
@@ -148,6 +165,7 @@ class _IndividualChatState extends State<IndividualChat> {
                           ),
                         ),
                       ),
+                      // sent button
                       Container(
                         width: 55,
                         height: 69,
@@ -161,7 +179,7 @@ class _IndividualChatState extends State<IndividualChat> {
                               color: Colors.white,
                               icon: Icon(Icons.send),
                               onPressed: () {
-                                sendMessage(messageController.text,1,2);
+                                sendMessage(messageController.text, 1, 2);
                                 messageController.clear();
                               },
                             ),

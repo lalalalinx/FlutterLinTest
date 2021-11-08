@@ -11,12 +11,12 @@ import 'package:chatki_project/Model/ProfileUserData.dart'; //kiki
 import 'package:chatki_project/JSONtoDART/ShowProfile.dart'; //๋JSON
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
 class OtherProfile extends StatefulWidget {
-  const OtherProfile({Key? key}) : super(key: key);
+  const OtherProfile({Key? key,required this.targetID}) : super(key: key);
+  final String targetID;
 
   @override
   _OtherProfileState createState() => _OtherProfileState();
@@ -42,16 +42,18 @@ class _OtherProfileState extends State<OtherProfile> {
   Future getProfileData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var res = await http.get(
-      Uri.parse(
-        'http://10.0.2.2:4000/profile/view',
-      ),
-      headers: <String, String>{
-        'auth-token': token.toString(),
-        'refresh-token': refreshToken.toString(),
-      },
-    );
+    var res = await http.post(
+        Uri.parse(
+          'http://10.0.2.2:4000/profile/viewOther',
+        ),
+        headers: <String, String>{
+          'auth-token': token.toString(),
+          'refresh-token': refreshToken.toString(),
+          'Context-Type': 'application/json;charSet=UTF-8'
+        },
+        body: <String, String>{
+          'targetID': widget.targetID,
+        });
     final showProfile = ShowProfile.fromJson(jsonDecode(res.body));
     String output = res.body;
     if (res.statusCode == 200) {
@@ -64,31 +66,11 @@ class _OtherProfileState extends State<OtherProfile> {
           city: showProfile.view[5],
           street: showProfile.view[6],
           zip: showProfile.view[7]);
-      prefs.setString('employeeID', profileDatas.employeeID);
-      prefs.setString('email', profileDatas.email);
-      prefs.setString('tel', profileDatas.tel);
-      prefs.setString('userFName', profileDatas.userFName);
-      prefs.setString('userLName', profileDatas.userLName);
-      prefs.setString('city', profileDatas.city);
-      prefs.setString('street', profileDatas.street);
-      prefs.setString('zip', profileDatas.zip);
 
       return profileDatas;
     } else {
       print(output);
     }
-  }
-
-  Future<String?> readToken() async {
-    final tokenStore = await storage.read(key: "token");
-    final refreshTokenStore = await storage.read(key: "refreshToken");
-  }
-
-  getStringValuesSF() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    String? stringValue = prefs.getString('employeeID');
-    return stringValue;
   }
 
   @override
