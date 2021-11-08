@@ -23,7 +23,7 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
   }
 
-  Future<HomeViewData> getHomeData() async {
+  Future<ShowHome> getHomeData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.get(
@@ -38,14 +38,11 @@ class _HomeViewState extends State<HomeView> {
     final showHome = ShowHome.fromJson(jsonDecode(res.body));
     String output = res.body;
     if (res.statusCode == 200) {
-      homedd = HomeViewData(
-        employeeID: showHome.user[0].employeeId,
-        userName: showHome.user[0].userName,
-        );
+      print("yee");
     } else {
       print(output);
     }
-    return homedd;
+    return showHome;
   }
 
   @override
@@ -60,39 +57,41 @@ class _HomeViewState extends State<HomeView> {
           physics: BouncingScrollPhysics(),
           children: [
             Center(
-                child: FutureBuilder(
-              future: getHomeData(),
-              builder: (context, AsyncSnapshot<HomeViewData> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Container(
-                    height: 500,
-                    child: Center(
-                      //alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 200.0,
-                          ),
-                          CircularProgressIndicator(),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                          // ignore: prefer_const_constructors
-                          Text(
-                            'L o a d i n g . . .',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+              child: FutureBuilder(
+                future: getHomeData(),
+                builder: (context, AsyncSnapshot<ShowHome> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                      height: 500,
+                      child: Center(
+                        //alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 200.0,
+                            ),
+                            CircularProgressIndicator(),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            // ignore: prefer_const_constructors
+                            Text(
+                              'L o a d i n g . . .',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                } else
-                  return Center(
+                    );
+                  } else
+                    return Center(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
                             itemCount: snapshot.data!.user.length,
                             itemBuilder: (context, i) {
                               return Column(
@@ -101,8 +100,10 @@ class _HomeViewState extends State<HomeView> {
                                     color: Colors.grey[900],
                                     child: ListTile(
                                       leading: Icon(Icons.person),
-                                      title: Text(snapshot.data!.user[i].userName),
-                                      trailing: Text(snapshot.data!.user[i].employeeId),
+                                      title:
+                                          Text(snapshot.data!.user[i].userName),
+                                      trailing: Text(
+                                          snapshot.data!.user[i].employeeId),
                                     ),
                                   ),
                                 ],
@@ -111,9 +112,9 @@ class _HomeViewState extends State<HomeView> {
                           )
                         ],
                       ),
-                      );
-              },
-            ),
+                    );
+                },
+              ),
             )
           ],
         ),
