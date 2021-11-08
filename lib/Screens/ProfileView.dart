@@ -68,12 +68,20 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return EditProfile(profileDatas: stored);
+          })).then((value) => setState(() {
+                getProfileData();
+              }));
+        },
+        child: Icon(Icons.edit),
       ),
-      child: Scaffold(
-        body: ListView(
+      body: Column(children: [
+        ListView(
+          shrinkWrap: true,
           physics: BouncingScrollPhysics(),
           children: [
             Center(
@@ -108,19 +116,6 @@ class _ProfileViewState extends State<ProfileView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Scaffold(
-                              floatingActionButton: FloatingActionButton(
-                                onPressed: () async {
-                                  await Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return EditProfile(profileDatas: stored);
-                                  })).then((value) => setState(() {
-                                        getProfileData();
-                                      }));
-                                },
-                                child: Icon(Icons.edit),
-                              ),
-                            ),
                             SizedBox(
                               //height: 200.0,
                               child: Container(
@@ -320,8 +315,6 @@ class _ProfileViewState extends State<ProfileView> {
                   }),
             ),
 
-
-
             //   Text(
             //     'stored.employeeID',
             //     style: TextStyle(
@@ -339,7 +332,7 @@ class _ProfileViewState extends State<ProfileView> {
             //buildName(user),
           ],
         ),
-      ),
+      ]),
     );
   }
 }
