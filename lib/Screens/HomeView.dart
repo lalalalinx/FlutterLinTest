@@ -4,13 +4,13 @@ import 'dart:convert';
 
 import 'package:chatki_project/JSONtoDART/HomeJson.dart';
 import 'package:chatki_project/Login_Register/login.dart';
+import 'package:chatki_project/Screens/Others/Otherprofile.dart';
 import 'package:chatki_project/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:chatki_project/Model/HomeViewData.dart';
-import 'others/Otherprofile.dart';
 import 'package:chatki_project/settings_page.dart';
 
 class HomeView extends StatefulWidget {
@@ -95,11 +95,11 @@ class _HomeViewState extends State<HomeView> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 20, bottom: 10, left: 10, right: 10),
+                                top: 30, bottom: 10, left: 15, right: 5),
                             child: Row(
                               children: [
                                 Container(
-                                  width: 312,
+                                  width: 305,
                                   child: TextFormField(
                                     decoration: const InputDecoration(
                                       //labelText: 'Search',
@@ -158,50 +158,55 @@ class _HomeViewState extends State<HomeView> {
                               return Column(
                                 children: [
                                   Card(
-                                    color: Colors.white,
-                                      margin: EdgeInsets.all(10),
+                                      color: Colors.white,
+                                      margin: EdgeInsets.all(5),
                                       child: Column(
                                         children: [
                                           //padding: EdgeInsets.only(left: 10,right: 10),
                                           InkWell(
                                             onTap: () {
-                                              print("tapped");
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return OtherProfile(
+                                                    targetID: snapshot.data!
+                                                        .user[i].employeeId);
+                                              }));
                                             },
-                                            child: 
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 10, bottom: 10),
-                                            child: ListTile(
-                                              title: Row(
-                                                children: [
-                                                  Container(
-                                                    width: 50,
-                                                    height: 50,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.grey[600],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              30),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: 5, bottom: 5),
+                                              child: ListTile(
+                                                title: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: 50,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.grey[600],
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(30),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 20,
-                                                  ),
-                                                  Text(
-                                                      snapshot.data!.user[i]
-                                                          .userName,
-                                                      style: TextStyle(
-                                                          fontSize: 18)),
-                                                ],
-                                              ),
-                                              trailing: Text(
-                                                snapshot
-                                                    .data!.user[i].employeeId,
-                                                style: TextStyle(
-                                                    color: Colors.grey[600]),
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Text(
+                                                        snapshot.data!.user[i]
+                                                            .userName,
+                                                        style: TextStyle(
+                                                            fontSize: 18)),
+                                                  ],
+                                                ),
+                                                trailing: Text(
+                                                  snapshot
+                                                      .data!.user[i].employeeId,
+                                                  style: TextStyle(
+                                                      color: Colors.grey[600]),
+                                                ),
                                               ),
                                             ),
-                                          ),
                                           ),
                                         ],
                                       )),
@@ -209,7 +214,7 @@ class _HomeViewState extends State<HomeView> {
                                 ],
                               );
                             },
-                          )
+                          ),
                         ],
                       ),
                     );

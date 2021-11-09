@@ -10,8 +10,9 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 
 class IndividualChat extends StatefulWidget {
-  const IndividualChat({Key? key, required this.chatData}) : super(key: key);
-  final ChatData chatData;
+  const IndividualChat({Key? key, required this.chatID,required this.chatName}) : super(key: key);
+  final String chatID;
+  final String chatName;
 
   @override
   _IndividualChatState createState() => _IndividualChatState();
@@ -40,7 +41,7 @@ class _IndividualChatState extends State<IndividualChat> {
     socket.connect();
 
     // String? tokenStore = await storage.read(key: "token");
-    socket.emit("signin", {sourceChat.id, widget.chatData.id}); //sourceChat pls
+    //socket.emit("signin", {sourceChat.id, widget.chatID.id}); //sourceChat pls
     socket.onConnect((data) {
       print("Connected");
       socket.on("message", (msg) {
@@ -82,7 +83,7 @@ class _IndividualChatState extends State<IndividualChat> {
             backgroundColor: Colors.grey[900],
             elevation: 5,
             title: Text(
-              widget.chatData.name, //<----------------------------------****
+              widget.chatName, //yay
               style: TextStyle(
                 letterSpacing: 4,
               ),
@@ -131,12 +132,13 @@ class _IndividualChatState extends State<IndividualChat> {
                       shrinkWrap: true,
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
-                        if (messages[index].type == "source") {
-                          return OwnMessageCard(
-                              message: messages[index].message);
-                        } else {
-                          return ReplyCard(message: messages[index].message);
-                        }
+                        return OwnMessageCard(message: 'hi');
+                        // if (messages[index].type == "source") {
+                        //   return OwnMessageCard(
+                        //       message: messages[index].message);
+                        // } else {
+                        //   return ReplyCard(message: messages[index].message);
+                        // }
                       }),
                 ),
                 Align(

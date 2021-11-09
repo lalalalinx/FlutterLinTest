@@ -1,12 +1,14 @@
-// ignore_for_file: file_names, prefer_const_literals_to_create_immutables
+// ignore_for_file: file_names, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, prefer_const_constructors, avoid_print
 import 'dart:convert';
 import 'dart:async';
 
 import 'package:chatki_project/JSONtoDART/mutipleChatjson.dart';
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
+import 'package:chatki_project/Model/MutipleChatData.dart';
 //import 'package:chatki_project/Model/chatData.dart';
 import 'chat/ChatList.dart';
+import 'Others/Otherprofile.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -21,21 +23,15 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> {
   final storage = FlutterSecureStorage();
-  late final MultipleChatList multipleChatList;
+  late final ShowMultipleChat multipleChatdd;
 
-    @override
+  @override
   void initState() {
     getMutipleChatData();
     super.initState();
   }
 
-  void storedData() async {
-    //stored = await getMutipleChatData().whenComplete(() {
-    //   setState(() {});
-    // });
-  }
-
-  Future getMutipleChatData() async {
+  Future<ShowMultipleChat> getMutipleChatData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.get(
@@ -47,33 +43,124 @@ class _ChatViewState extends State<ChatView> {
         'refresh-token': refreshToken.toString(),
       },
     );
-    multipleChatList = multipleChatListFromJson(res.body);
+    final showMultipleChat = ShowMultipleChat.fromJson(jsonDecode(res.body));
     if (res.statusCode == 200) {
-      print(multipleChatList.getAllChat[0].chatName); //ตัวอย่างใช้งาน
+      print('yee'); //ตัวอย่างใช้งาน
     } else {
       String output = res.body;
       print(output);
     }
+    return showMultipleChat;
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-                // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //   return IndividualChat();
-                // }));
-              },
-        child: Icon(Icons.chat),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
       ),
-      // body: ListView.builder(
-      //   itemCount: set.length,
-      //   itemBuilder: (context, index) => ChatList(
-      //     chatData: set[index],
-      //   ),
-      // ),
+      child: Scaffold(
+        body: ListView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            Center(
+              child: FutureBuilder(
+                future: getMutipleChatData(),
+                builder: (context, AsyncSnapshot<ShowMultipleChat> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                        height: 500,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 200.0,
+                              ),
+                              CircularProgressIndicator(),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              // ignore: prefer_const_constructors
+                              Text(
+                                'L o a d i n g . . .',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          ),
+                        ));
+                  } else
+                    return Center(
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.getAllChat.length,
+                            itemBuilder: (context, i) {
+                              return Column(
+                                children: [
+                                  Card(
+                                      color: Colors.white,
+                                      margin: EdgeInsets.only(bottom: 5),
+                                      child: Column(
+                                        children: [
+                                          //padding: EdgeInsets.only(left: 10,right: 10),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return IndividualChat(
+                                                    chatID: snapshot.data!
+                                                        .getAllChat[i].chatId,
+                                                        chatName: snapshot.data!
+                                                        .getAllChat[i].chatName,);
+                                              }));
+                                            },
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: 5, bottom: 5),
+                                              child: ListTile(
+                                                leading: CircleAvatar(backgroundColor: Colors.blue,),
+                                                title: Row(
+                                                  children: [
+                                                  
+                                                    Text(
+                                                        snapshot
+                                                            .data!
+                                                            .getAllChat[i]
+                                                            .chatName,
+                                                        style: TextStyle(
+                                                            fontSize: 18)),
+                                                  ],
+                                                ),
+                                                subtitle: Text(snapshot.data!.getAllChat[i].previewChat[0].text.toString(),),
+                                                trailing: Text(
+                                                  snapshot
+                                                      .data!.getAllChat[i].previewChat[0].time.toString(),
+                                                  style: TextStyle(
+                                                      color: Colors.grey[600]),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  //Divider(thickness: 1),
+                                ],
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                    );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

@@ -7,18 +7,18 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-MultipleChatList multipleChatListFromJson(String str) => MultipleChatList.fromJson(json.decode(str));
+ShowMultipleChat multipleChatListFromJson(String str) => ShowMultipleChat.fromJson(json.decode(str));
 
-String multipleChatListToJson(MultipleChatList data) => json.encode(data.toJson());
+String multipleChatListToJson(ShowMultipleChat data) => json.encode(data.toJson());
 
-class MultipleChatList {
-    MultipleChatList({
+class ShowMultipleChat {
+    ShowMultipleChat({
         required this.getAllChat,
     });
 
     List<GetAllChat> getAllChat;
 
-    factory MultipleChatList.fromJson(Map<String, dynamic> json) => MultipleChatList(
+    factory ShowMultipleChat.fromJson(Map<String, dynamic> json) => ShowMultipleChat(
         getAllChat: List<GetAllChat>.from(json["getAllChat"].map((x) => GetAllChat.fromJson(x))),
     );
 
