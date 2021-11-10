@@ -83,10 +83,7 @@ class _OtherProfileState extends State<OtherProfile> {
         backgroundColor: Colors.grey[900],
         leading: IconButton(
             onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                return Home();
-              }));
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.arrow_back_ios,
@@ -170,7 +167,7 @@ class _OtherProfileState extends State<OtherProfile> {
                               Center(
                                 //padding: EdgeInsets.only(left: 40),
                                 child: Text(
-                                  'EmployeeID',
+                                  'Name - Surname',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,

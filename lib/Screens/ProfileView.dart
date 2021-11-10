@@ -156,7 +156,7 @@ class _ProfileViewState extends State<ProfileView> {
                             Center(
                               //padding: EdgeInsets.only(left: 40),
                               child: Text(
-                                'EmployeeID',
+                                'Name - Surname',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,

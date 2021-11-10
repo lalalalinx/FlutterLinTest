@@ -1,12 +1,16 @@
 // ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, dead_code
 
 import 'package:chatki_project/JSONtoDART/ShowSearch.dart';
+import 'package:chatki_project/Screens/Home.dart';
+import 'package:chatki_project/Screens/Others/Otherprofile.dart';
 import 'package:flutter/material.dart';
 
 class Search extends StatefulWidget {
-  const Search({Key? key, required this.searchResult}) : super(key: key);
-  final ShowSearch searchResult;    
-  
+  const Search(
+      {Key? key, required this.searchResult, required this.searchNameString})
+      : super(key: key);
+  final ShowSearch searchResult;
+  final String searchNameString;
 
   @override
   _SearchState createState() => _SearchState();
@@ -16,26 +20,252 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('S e a r c h'),
-          centerTitle: true,
-          backgroundColor: Colors.blue,
-        ),
-        body: Padding(
-          padding:
-              const EdgeInsets.only(top: 35, left: 10, right: 10, bottom: 10),
-          child: ListView(
-            children: [
-              Row(children: [
-                Icon(Icons.search),
-                Text(widget.searchResult.searchName[0].employeeId),
-                SizedBox(width: 20,),
-                Text('Jeremieeeeeee',style: TextStyle(fontSize: 20,color: Colors.blue),),
-              ],),
-              Divider(color: Colors.black,),
-            ],
-          ),
-        ),
-      );
+      appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+            onPressed: () {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return Home();
+      }));
+    },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 25,
+              color: Colors.white,
+            )),
+        title: Text('S e a r c h'),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+      ),
+      body: ListView(
+        physics: BouncingScrollPhysics(),
+        children: [
+          Center(
+            child: FutureBuilder(
+              builder: (context, AsyncSnapshot<ShowSearch> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Container(
+                    height: 500,
+                    child: Center(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 200),
+                          CircularProgressIndicator(),
+                          SizedBox(height: 30),
+                          Text(
+                            'L o a d i n g . . .',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ); // ok
+                } else
+                  return Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          color: Colors.grey[300],
+                          child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 20, left: 20, right: 20, bottom: 0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.search),
+                                      Text(' Result of :'),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(
+                                        '\" ' + widget.searchNameString + ' \"',
+                                        style: TextStyle(
+                                            color: Colors.blue, fontSize: 20),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              )),
+                        ),
+                        SizedBox(
+                                  height: 20,
+                                ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          child: 
+                          Center(
+                            child: Row(
+                              children: [
+                                Icon(Icons.person),
+                                Text(' Person'),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        
+                        ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: widget.searchResult.searchName.length,
+                          itemBuilder: (context, i) {
+                            return Column(
+                              children: [
+                                Card(
+                                  color: Colors.white,
+                                  margin: EdgeInsets.all(5),
+                                  child: Column(
+                                    children: [
+                                      //padding: EdgeInsets.only(left: 10,right: 10),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return OtherProfile(
+                                                targetID: widget.searchResult
+                                                    .searchName[i].employeeId);
+                                          }));
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 5, bottom: 5),
+                                          child: ListTile(
+                                            title: Row(
+                                              children: [
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.grey[600],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                    widget.searchResult
+                                                        .searchName[i].userName,
+                                                    style: TextStyle(
+                                                        fontSize: 18)),
+                                              ],
+                                            ),
+                                            trailing: Text(
+                                              widget.searchResult.searchName[i]
+                                                  .employeeId,
+                                              style: TextStyle(
+                                                  color: Colors.grey[600]),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                //Divider(thickness: 1),
+                              ],
+                            );
+                          },
+                        ),
+                        // group
+                        SizedBox(height: 20,),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          child: 
+                          Center(
+                            child: Row(
+                              children: [
+                                Icon(Icons.group),
+                                Text(' Group'),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: widget.searchResult.searchGroup.length,
+                          itemBuilder: (context, i) {
+                            return Column(
+                              children: [
+                                Card(
+                                  color: Colors.white,
+                                  margin: EdgeInsets.all(5),
+                                  child: Column(
+                                    children: [
+                                      //padding: EdgeInsets.only(left: 10,right: 10),
+                                      InkWell(
+                                        onTap: () {
+                                          // Navigator.push(context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) {
+                                          //   return OtherProfile(
+                                          //       targetID: widget.searchResult
+                                          //           .searchGroup[i].chatName);
+                                          // }));
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 5, bottom: 5),
+                                          child: ListTile(
+                                            title: Row(
+                                              children: [
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.grey[600],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                    widget.searchResult
+                                                        .searchGroup[i].chatName,
+                                                    style: TextStyle(
+                                                        fontSize: 18)),
+                                              ],
+                                            ),
+                                            
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                //Divider(thickness: 1),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+              },
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

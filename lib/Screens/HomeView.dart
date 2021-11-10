@@ -69,8 +69,11 @@ class _HomeViewState extends State<HomeView> {
         });
     final showSearch = showSearchFromJson(res.body);
     if (res.statusCode == 200) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return Search(searchResult: showSearch);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+        return Search(
+          searchResult: showSearch,
+          searchNameString: targetName,
+          );
       }));
     }
   }
@@ -176,6 +179,22 @@ class _HomeViewState extends State<HomeView> {
                           SizedBox(
                             height: 20.0,
                           ),
+                          Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          child: 
+                          Center(
+                            child: Row(
+                              children: [
+                                Icon(Icons.person),
+                                Text(' Person'),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                           ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -241,6 +260,90 @@ class _HomeViewState extends State<HomeView> {
                               );
                             },
                           ),
+                          // group
+                          SizedBox(height: 20),
+                          Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 20, right: 20, bottom: 10),
+                          child: 
+                          Center(
+                            child: Row(
+                              children: [
+                                Icon(Icons.group),
+                                Text(' Group'),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.sendGroup.length,
+                          itemBuilder: (context, i) {
+                            return Column(
+                              children: [
+                                Card(
+                                  color: Colors.white,
+                                  margin: EdgeInsets.all(5),
+                                  child: Column(
+                                    children: [
+                                      //padding: EdgeInsets.only(left: 10,right: 10),
+                                      InkWell(
+                                        onTap: () {
+                                          // Navigator.push(context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) {
+                                          //   return OtherProfile(
+                                          //       targetID: widget.searchResult
+                                          //           .searchName[i].employeeId);
+                                          // }));
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 5, bottom: 5),
+                                          child: ListTile(
+                                            title: Row(
+                                              children: [
+                                                Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.grey[600],
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                    snapshot
+                                                      .data!.sendGroup[i].chatName,
+                                                    style: TextStyle(
+                                                        fontSize: 18)),
+                                              ],
+                                            ),
+                                            // trailing: Text(
+                                            //   snapshot
+                                            //           .data!.sendGroup[i].chatName,
+                                            //   style: TextStyle(
+                                            //       color: Colors.grey[600]),
+                                            // ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                //Divider(thickness: 1),
+                              ],
+                            );
+                          },
+                        ),
                         ],
                       ),
                     );
