@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:chatki_project/Model/HomeViewData.dart';
 import 'package:chatki_project/settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Search/Search.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -50,6 +51,26 @@ class _HomeViewState extends State<HomeView> {
     }
     return showHome;
   }
+
+  // Future searchUser() async{
+  //   final tokenSearch = await storage.read(key: "token");
+  //   final refreshTokenSearch = await storage.read(key: "refreshToken");
+  //   var res = await http.post(
+  //     Uri.parse(
+  //       'http://10.0.2.2:4000/home/search',
+  //     ),
+  //     headers: <String, String>{
+  //       'auth-token': tokenSearch.toString(),
+  //       'refresh-token': refreshTokenSearch.toString(),
+  //     },
+  //     body: <String, String>{
+  //       'userName' :
+  //     }
+  //   );
+  //   final showSearch = ShowHome.fromJson(jsonDecode(res.body));
+  //   String output = res.body;
+  //controller.search
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +125,6 @@ class _HomeViewState extends State<HomeView> {
                                   width: 305,
                                   child: TextFormField(
                                     decoration: const InputDecoration(
-                                      //labelText: 'Search',
                                       hintText: 'Search by Username',
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.only(
@@ -125,8 +145,15 @@ class _HomeViewState extends State<HomeView> {
                                   child: Container(
                                     width: 60,
                                     child: ElevatedButton(
-                                      onPressed: () {
-                                        // <----------------------------
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return Search();
+                                            },
+                                          ),
+                                        );
                                       },
                                       child: Icon(Icons.search),
                                       style: ElevatedButton.styleFrom(
