@@ -1,8 +1,13 @@
 // ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, dead_code
 
+import 'package:chatki_project/JSONtoDART/ShowSearch.dart';
 import 'package:flutter/material.dart';
 
 class Search extends StatefulWidget {
+  const Search({Key? key, required this.searchResult}) : super(key: key);
+  final ShowSearch searchResult;    
+  
+
   @override
   _SearchState createState() => _SearchState();
 }
@@ -23,7 +28,7 @@ class _SearchState extends State<Search> {
             children: [
               Row(children: [
                 Icon(Icons.search),
-                Text('Result of:'),
+                Text(widget.searchResult.searchName[0].employeeId),
                 SizedBox(width: 20,),
                 Text('Jeremieeeeeee',style: TextStyle(fontSize: 20,color: Colors.blue),),
               ],),

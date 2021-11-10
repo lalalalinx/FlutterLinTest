@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:chatki_project/JSONtoDART/HomeJson.dart';
+import 'package:chatki_project/JSONtoDART/ShowSearch.dart';
 import 'package:chatki_project/Login_Register/login.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
 import 'package:chatki_project/settings_page.dart';
@@ -52,26 +53,29 @@ class _HomeViewState extends State<HomeView> {
     return showHome;
   }
 
-  // Future searchUser() async{
-  //   final tokenSearch = await storage.read(key: "token");
-  //   final refreshTokenSearch = await storage.read(key: "refreshToken");
-  //   var res = await http.post(
-  //     Uri.parse(
-  //       'http://10.0.2.2:4000/home/search',
-  //     ),
-  //     headers: <String, String>{
-  //       'auth-token': tokenSearch.toString(),
-  //       'refresh-token': refreshTokenSearch.toString(),
-  //     },
-  //     body: <String, String>{
-  //       'userName' :
-  //     }
-  //   );
-  //   final showSearch = ShowHome.fromJson(jsonDecode(res.body));
-  //   String output = res.body;
-  //controller.search
-  // }
+  Future search(String targetName) async {
+    final tokenSearch = await storage.read(key: "token");
+    final refreshTokenSearch = await storage.read(key: "refreshToken");
+    var res = await http.post(
+        Uri.parse(
+          'http://10.0.2.2:4000/home/search',
+        ),
+        headers: <String, String>{
+          'auth-token': tokenSearch.toString(),
+          'refresh-token': refreshTokenSearch.toString(),
+        },
+        body: <String, String>{
+          'targetName': targetName
+        });
+    final showSearch = showSearchFromJson(res.body);
+    if (res.statusCode == 200) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return Search(searchResult: showSearch);
+      }));
+    }
+  }
 
+  final searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -125,7 +129,7 @@ class _HomeViewState extends State<HomeView> {
                                   width: 305,
                                   child: TextFormField(
                                     decoration: const InputDecoration(
-                                      hintText: 'Search by Username',
+                                      hintText: 'Search',
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(30),
@@ -137,7 +141,7 @@ class _HomeViewState extends State<HomeView> {
                                       contentPadding: EdgeInsets.symmetric(
                                           vertical: 15, horizontal: 15),
                                     ),
-                                    //controller: r,
+                                    controller: searchController,
                                   ),
                                 ),
                                 Padding(
@@ -145,15 +149,8 @@ class _HomeViewState extends State<HomeView> {
                                   child: Container(
                                     width: 60,
                                     child: ElevatedButton(
-                                      onPressed: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return Search();
-                                            },
-                                          ),
-                                        );
+                                      onPressed: () {
+                                        search(searchController.text);
                                       },
                                       child: Icon(Icons.search),
                                       style: ElevatedButton.styleFrom(
