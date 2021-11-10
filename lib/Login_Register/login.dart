@@ -3,6 +3,8 @@
 import 'package:chatki_project/Screens/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'register.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -20,6 +22,7 @@ class _LoginState extends State<Login> {
   final storage = FlutterSecureStorage();
 
   Future login() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var res = await http.post(
         Uri.parse('http://10.0.2.2:4000/login-register/login'),
         headers: <String, String>{
@@ -33,6 +36,8 @@ class _LoginState extends State<Login> {
       Map<String, dynamic> output = jsonDecode(res.body);
       storage.write(key: "token", value: output['token']);
       storage.write(key: "refreshToken", value: output['refreshToken']);
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(output['token']);
+      prefs.setString('employeeID', decodedToken['employeeID']);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return Home();
       }));

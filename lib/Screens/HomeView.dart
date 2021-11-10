@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:chatki_project/Model/HomeViewData.dart';
 import 'package:chatki_project/settings_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -30,6 +31,7 @@ class _HomeViewState extends State<HomeView> {
   Future<ShowHome> getHomeData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     var res = await http.get(
       Uri.parse(
         'http://10.0.2.2:4000/home/origin',
@@ -42,7 +44,7 @@ class _HomeViewState extends State<HomeView> {
     final showHome = ShowHome.fromJson(jsonDecode(res.body));
     String output = res.body;
     if (res.statusCode == 200) {
-      print("yee");
+      print(prefs.getString('employeeID'));
     } else {
       print(output);
     }

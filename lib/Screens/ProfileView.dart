@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:chatki_project/Profile/ProfildWidget.dart';
 import 'package:chatki_project/Profile/EditProfile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -33,7 +32,6 @@ class _ProfileViewState extends State<ProfileView> {
   Future<ProfileData> getProfileData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     var res = await http.get(
       Uri.parse(
         'http://10.0.2.2:4000/profile/view',
@@ -55,7 +53,6 @@ class _ProfileViewState extends State<ProfileView> {
           city: showProfile.view[5],
           street: showProfile.view[6],
           zip: showProfile.view[7]);
-      prefs.setString('employeeID', stored.employeeID);
     } else {
       print(output);
     }
