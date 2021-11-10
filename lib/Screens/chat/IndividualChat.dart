@@ -6,6 +6,7 @@ import 'package:chatki_project/Screens/chat/OwnMessageCard.dart';
 import 'package:chatki_project/Screens/chat/ReplyCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,11 +28,12 @@ class _IndividualChatState extends State<IndividualChat> {
   TextEditingController messageController = TextEditingController();
   @override
   void initState() {
-    // connectSocket();
+    connectSocket();
     super.initState();
   }
 
   Future connectSocket() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     socket = io(
         'http://10.0.2.2:3000/',
         OptionBuilder()
@@ -39,9 +41,9 @@ class _IndividualChatState extends State<IndividualChat> {
             .disableAutoConnect() // disable auto-connection
             .build());
     socket.connect();
-
-    // String? tokenStore = await storage.read(key: "token");
-    //socket.emit("signin", {sourceChat.id, widget.chatID.id}); //sourceChat pls
+    var em = prefs.getString('employeeID');
+    
+    socket.emit("signin", {em, widget.chatID});
     socket.onConnect((data) {
       print("Connected");
       socket.on("message", (msg) {
@@ -132,13 +134,12 @@ class _IndividualChatState extends State<IndividualChat> {
                       shrinkWrap: true,
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
-                        return OwnMessageCard(message: 'hi');
-                        // if (messages[index].type == "source") {
-                        //   return OwnMessageCard(
-                        //       message: messages[index].message);
-                        // } else {
-                        //   return ReplyCard(message: messages[index].message);
-                        // }
+                        if (messages[index].type == "source") {
+                          return OwnMessageCard(
+                              message: messages[index].message);
+                        } else {
+                          return ReplyCard(message: messages[index].message);
+                        }
                       }),
                 ),
                 Align(

@@ -45,7 +45,7 @@ class _ChatViewState extends State<ChatView> {
     );
     final showMultipleChat = ShowMultipleChat.fromJson(jsonDecode(res.body));
     if (res.statusCode == 200) {
-      print('yee'); //ตัวอย่างใช้งาน
+      print('Chat'); 
     } else {
       String output = res.body;
       print(output);
