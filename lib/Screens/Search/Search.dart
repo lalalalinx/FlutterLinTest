@@ -133,7 +133,8 @@ class _SearchState extends State<Search> {
                                                   builder: (context) {
                                             return OtherProfile(
                                                 targetID: widget.searchResult
-                                                    .searchName[i].employeeId);
+                                                    .searchName[i].employeeId,
+                                                    chatName: widget.searchResult.searchName[i].userName);
                                           }));
                                         },
                                         child: Padding(

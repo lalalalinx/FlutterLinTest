@@ -16,8 +16,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class OtherProfile extends StatefulWidget {
-  const OtherProfile({Key? key,required this.targetID}) : super(key: key);
+  const OtherProfile({Key? key,required this.targetID,required this.chatName}) : super(key: key);
   final String targetID;
+  final String chatName;
 
   @override
   _OtherProfileState createState() => _OtherProfileState();
@@ -73,6 +74,7 @@ class _OtherProfileState extends State<OtherProfile> {
       print(output);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -215,7 +215,8 @@ class _HomeViewState extends State<HomeView> {
                                                       builder: (context) {
                                                 return OtherProfile(
                                                     targetID: snapshot.data!
-                                                        .user[i].employeeId);
+                                                        .user[i].employeeId,
+                                                        chatName: snapshot.data!.user[i].userName);
                                               }));
                                             },
                                             child: Padding(
