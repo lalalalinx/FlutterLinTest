@@ -1,5 +1,9 @@
 // ignore_for_file: file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+// sender , reciever
+
+import 'dart:convert';
+
 import 'package:chatki_project/Model/MessageData.dart';
 import 'package:chatki_project/Model/chatData.dart';
 import 'package:chatki_project/Screens/chat/OwnMessageCard.dart';
@@ -11,9 +15,11 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 
 class IndividualChat extends StatefulWidget {
-  const IndividualChat({Key? key, required this.chatID,required this.chatName}) : super(key: key);
+  const IndividualChat({Key? key, required this.chatID, required this.chatName,required this.targetID, })
+      : super(key: key);
   final String chatID;
   final String chatName;
+  final String targetID;
 
   @override
   _IndividualChatState createState() => _IndividualChatState();
@@ -23,7 +29,7 @@ class _IndividualChatState extends State<IndividualChat> {
   late Socket socket;
   final storage = FlutterSecureStorage();
   List<MessageData> messages = [];
-  late ChatData sourceChat;
+  late String employeeID;
 
   TextEditingController messageController = TextEditingController();
   @override
@@ -41,35 +47,30 @@ class _IndividualChatState extends State<IndividualChat> {
             .disableAutoConnect() // disable auto-connection
             .build());
     socket.connect();
-    var em = prefs.getString('employeeID');
-    
-    socket.emit("signin", {em, widget.chatID});
+    employeeID = prefs.getString('employeeID')!;
+    socket.emit("signin", {employeeID, widget.chatID,-1});
+    // socket.on('pastMessage', (data) {
+    //   final pastMessage = pastMessageFromJson(data);
+    // }
+
+    // );
     socket.onConnect((data) {
       print("Connected");
-      socket.on("message", (msg) {
-        setMessage("destination", msg["message"]);
+      socket.on('chat message', (msg) {
+        print(msg);
+        setMessage("destination",msg["message"]);
       });
     });
   }
 
-  Future getEmployeeID() async {
-    String? tokenStore = await storage.read(key: "token");
-    late String tokenn = tokenStore!;
-
-    var res = await http.post(Uri.parse('http://10.0.2.2:3000/indivChat'),
-        headers: <String, String>{
-          'auth-token': tokenn,
-        });
-  }
-
-  void sendMessage(String message, int myId, int targetId) {
+  void sendMessage(String message, String sourceId,String targetId) {
     setMessage("source", message);
-    socket.emit(
-        "message", {"message": message, "myId": myId, "targetId": targetId});
+    socket.emit("chat message", {"message":message, "source":sourceId, "targetId":widget.targetID});
   }
 
   void setMessage(String type, String message) {
-    MessageData messageData = MessageData(type: type, message: message);
+    MessageData messageData =
+        MessageData(type: type, message: message);
     setState(() {
       messages.add(messageData);
     });
@@ -103,6 +104,7 @@ class _IndividualChatState extends State<IndividualChat> {
             ],
             leading: IconButton(
               onPressed: () {
+                socket.onDisconnect((_) => print('Disconnect'));
                 Navigator.pop(context);
               },
               icon: Icon(
@@ -182,7 +184,7 @@ class _IndividualChatState extends State<IndividualChat> {
                               color: Colors.white,
                               icon: Icon(Icons.send),
                               onPressed: () {
-                                sendMessage(messageController.text, 1, 2);
+                                sendMessage(messageController.text, employeeID,widget.targetID);
                                 messageController.clear();
                               },
                             ),

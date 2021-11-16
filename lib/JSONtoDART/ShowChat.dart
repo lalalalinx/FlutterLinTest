@@ -1,24 +1,24 @@
 // To parse this JSON data, do
 //
-//     final multipleChatList = multipleChatListFromJson(jsonString);
+//     final showChat = showChatFromJson(jsonString);
 
 // ignore_for_file: file_names
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-ShowMultipleChat multipleChatListFromJson(String str) => ShowMultipleChat.fromJson(json.decode(str));
+ShowChat showChatFromJson(String str) => ShowChat.fromJson(json.decode(str));
 
-String multipleChatListToJson(ShowMultipleChat data) => json.encode(data.toJson());
+String showChatToJson(ShowChat data) => json.encode(data.toJson());
 
-class ShowMultipleChat {
-    ShowMultipleChat({
+class ShowChat {
+    ShowChat({
         required this.getAllChat,
     });
 
     List<GetAllChat> getAllChat;
 
-    factory ShowMultipleChat.fromJson(Map<String, dynamic> json) => ShowMultipleChat(
+    factory ShowChat.fromJson(Map<String, dynamic> json) => ShowChat(
         getAllChat: List<GetAllChat>.from(json["getAllChat"].map((x) => GetAllChat.fromJson(x))),
     );
 
@@ -31,26 +31,34 @@ class GetAllChat {
     GetAllChat({
         required this.chatId,
         required this.chatName,
+        required this.isGroup,
         required this.id,
+        required this.employeeId,
         required this.previewChat,
     });
 
     String chatId;
     String chatName;
+    bool isGroup;
     String id;
+    String employeeId;
     List<PreviewChat> previewChat;
 
     factory GetAllChat.fromJson(Map<String, dynamic> json) => GetAllChat(
         chatId: json["chatID"],
         chatName: json["chatName"],
+        isGroup: json["isGroup"],
         id: json["_id"],
+        employeeId: json["employeeID"],
         previewChat: List<PreviewChat>.from(json["previewChat"].map((x) => PreviewChat.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "chatID": chatId,
         "chatName": chatName,
+        "isGroup": isGroup,
         "_id": id,
+        "employeeID": employeeId,
         "previewChat": List<dynamic>.from(previewChat.map((x) => x.toJson())),
     };
 }

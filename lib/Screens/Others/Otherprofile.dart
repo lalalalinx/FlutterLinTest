@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:chatki_project/Screens/Home.dart';
 import 'package:chatki_project/Screens/HomeView.dart';
+import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
 
 import 'package:chatki_project/Model/ProfileData.dart'; //list data ของ user
@@ -331,7 +332,11 @@ class _OtherProfileState extends State<OtherProfile> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) {
-                                            return Home(); //<----------ไปหน้าแชทคนนั้นๆ
+                                            return Home();//  return IndividualChat(
+                                            //         chatID: snapshot.data!
+                                            //             .getAllChat[i].chatId,
+                                            //             chatName: snapshot.data!
+                                            //             .getAllChat[i].chatName,); //<----------ไปหน้าแชทคนนั้นๆ
                                           },
                                         ),
                                       );

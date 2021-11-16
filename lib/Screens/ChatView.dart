@@ -2,12 +2,11 @@
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:chatki_project/JSONtoDART/mutipleChatjson.dart';
+import 'package:chatki_project/JSONtoDART/ShowChat.dart';
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/Model/MutipleChatData.dart';
 //import 'package:chatki_project/Model/chatData.dart';
-import 'chat/ChatList.dart';
 import 'Others/Otherprofile.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -23,7 +22,7 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> {
   final storage = FlutterSecureStorage();
-  late final ShowMultipleChat multipleChatdd;
+  late final ShowChat multipleChatdd;
 
   @override
   void initState() {
@@ -31,7 +30,7 @@ class _ChatViewState extends State<ChatView> {
     super.initState();
   }
 
-  Future<ShowMultipleChat> getMutipleChatData() async {
+  Future<ShowChat> getMutipleChatData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.get(
@@ -43,14 +42,15 @@ class _ChatViewState extends State<ChatView> {
         'refresh-token': refreshToken.toString(),
       },
     );
-    final showMultipleChat = ShowMultipleChat.fromJson(jsonDecode(res.body));
+    final showChat = ShowChat.fromJson(jsonDecode(res.body));
+    // final showMultipleChat = ShowMultipleChat.fromJson(jsonDecode(res.body));
     if (res.statusCode == 200) {
       print('Chat'); 
     } else {
       String output = res.body;
       print(output);
     }
-    return showMultipleChat;
+    return showChat;
   }
 
   @override
@@ -66,7 +66,7 @@ class _ChatViewState extends State<ChatView> {
             Center(
               child: FutureBuilder(
                 future: getMutipleChatData(),
-                builder: (context, AsyncSnapshot<ShowMultipleChat> snapshot) {
+                builder: (context, AsyncSnapshot<ShowChat> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Container(
                         height: 500,
@@ -115,7 +115,8 @@ class _ChatViewState extends State<ChatView> {
                                                     chatID: snapshot.data!
                                                         .getAllChat[i].chatId,
                                                         chatName: snapshot.data!
-                                                        .getAllChat[i].chatName,);
+                                                        .getAllChat[i].chatName,
+                                                        targetID: snapshot.data!.getAllChat[i].employeeId);
                                               }));
                                             },
                                             child: Padding(
