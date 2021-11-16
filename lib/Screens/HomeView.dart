@@ -328,12 +328,12 @@ class _HomeViewState extends State<HomeView> {
                                                         fontSize: 18)),
                                               ],
                                             ),
-                                            // trailing: Text(
-                                            //   snapshot
-                                            //           .data!.sendGroup[i].chatName,
-                                            //   style: TextStyle(
-                                            //       color: Colors.grey[600]),
-                                            // ),
+                                            trailing: Text(
+                                              snapshot
+                                                      .data!.sendGroup[i].chatName,
+                                              style: TextStyle(
+                                                  color: Colors.grey[600]),
+                                            ),
                                           ),
                                         ),
                                       ),

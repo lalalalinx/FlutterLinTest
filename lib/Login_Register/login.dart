@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
         return Home();
       }));
     } else {
-      Map<String,dynamic> err = jsonDecode(res.body);
+      Map<String, dynamic> err = jsonDecode(res.body);
       print(err["Error"]);
       showToast("Error: ${err["Error"]}");
     }
@@ -50,10 +50,7 @@ class _LoginState extends State<Login> {
 
   void showToast(String message) {
     Fluttertoast.showToast(
-      msg: message,
-      gravity: ToastGravity.TOP,
-      fontSize: 20
-    );
+        msg: message, gravity: ToastGravity.TOP, fontSize: 20);
   }
 
   //controller
@@ -71,7 +68,14 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 50,
+                    height: 20,
+                  ),
+                  Container(
+                    child: Image.asset("assets/images/arumjoh.png",
+                        height: 150, width: 150),
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   Text(
                     "Login",
@@ -171,10 +175,6 @@ class _LoginState extends State<Login> {
                 }));
               },
             ),
-          ),
-          Container(
-            child: Image.asset("assets/images/arumjoh.png",
-                height: 200, width: 200),
           ),
         ],
       ),

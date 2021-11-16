@@ -1,4 +1,5 @@
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
+import 'package:chatki_project/Screens/createGroup/CreateGroup.dart';
 import 'package:flutter/material.dart';
 import 'Screens/Home.dart';
 import 'Login_Register/login.dart';
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.deepPurple),
-      home: Login(),
+      home: CreateGroup(),
     );
   }
 }
