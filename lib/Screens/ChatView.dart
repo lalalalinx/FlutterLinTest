@@ -104,7 +104,6 @@ class _ChatViewState extends State<ChatView> {
                                                 leading: CircleAvatar(backgroundColor: Colors.blue,),
                                                 title: Row(
                                                   children: [
-                                                  
                                                     Text(
                                                         snapshot
                                                             .data!
@@ -115,9 +114,7 @@ class _ChatViewState extends State<ChatView> {
                                                   ],
                                                 ),
                                                 subtitle: Text(snapshot.data!.getAllChat[i].previewChat[0].text,),
-                                                trailing: Text(
-                                                  snapshot
-                                                      .data!.getAllChat[i].previewChat[0].time.toString(),
+                                                trailing: Text(snapshot.data!.getAllChat[i].previewChat[0].time.hour.toString()+ ":"+ snapshot.data!.getAllChat[i].previewChat[0].time.minute.toString(),
                                                   style: TextStyle(
                                                       color: Colors.grey[600]),
                                                 ),
