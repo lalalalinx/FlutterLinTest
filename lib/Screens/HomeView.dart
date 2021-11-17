@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:chatki_project/JSONtoDART/HomeJson.dart';
+import 'package:chatki_project/JSONtoDART/ShowHome.dart';
 import 'package:chatki_project/JSONtoDART/ShowSearch.dart';
 import 'package:chatki_project/Login_Register/login.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
