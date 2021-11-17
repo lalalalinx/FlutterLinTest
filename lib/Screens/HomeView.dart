@@ -95,29 +95,7 @@ class _HomeViewState extends State<HomeView> {
                 future: getHomeData(),
                 builder: (context, AsyncSnapshot<ShowHome> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Container(
-                      height: 500,
-                      child: Center(
-                        //alignment: Alignment.center,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 200.0,
-                            ),
-                            CircularProgressIndicator(),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            // ignore: prefer_const_constructors
-                            Text(
-                              'L o a d i n g . . .',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+                    return WaitingAction();
                   } else
                     return Center(
                       child: Column(
@@ -355,5 +333,31 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
     );
+  }
+
+  Container WaitingAction() {
+    return Container(
+                    height: 500,
+                    child: Center(
+                      //alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 200.0,
+                          ),
+                          CircularProgressIndicator(),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          // ignore: prefer_const_constructors
+                          Text(
+                            'L o a d i n g . . .',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
   }
 }

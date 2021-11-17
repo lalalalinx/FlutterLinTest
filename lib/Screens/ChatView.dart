@@ -6,7 +6,6 @@ import 'package:chatki_project/JSONtoDART/ShowChat.dart';
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/Model/MutipleChatData.dart';
-//import 'package:chatki_project/Model/chatData.dart';
 import 'Others/Otherprofile.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -43,7 +42,6 @@ class _ChatViewState extends State<ChatView> {
       },
     );
     final showChat = ShowChat.fromJson(jsonDecode(res.body));
-    // final showMultipleChat = ShowMultipleChat.fromJson(jsonDecode(res.body));
     if (res.statusCode == 200) {
       print('Chat'); 
     } else {
@@ -68,27 +66,7 @@ class _ChatViewState extends State<ChatView> {
                 future: getMutipleChatData(),
                 builder: (context, AsyncSnapshot<ShowChat> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Container(
-                        height: 500,
-                        child: Center(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 200.0,
-                              ),
-                              CircularProgressIndicator(),
-                              SizedBox(
-                                height: 30.0,
-                              ),
-                              // ignore: prefer_const_constructors
-                              Text(
-                                'L o a d i n g . . .',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ],
-                          ),
-                        ));
+                    return WaitingAction();
                   } else
                     return Center(
                       child: Column(
@@ -136,7 +114,7 @@ class _ChatViewState extends State<ChatView> {
                                                             fontSize: 18)),
                                                   ],
                                                 ),
-                                                subtitle: Text(snapshot.data!.getAllChat[i].previewChat[0].text.toString(),),
+                                                subtitle: Text(snapshot.data!.getAllChat[i].previewChat[0].text,),
                                                 trailing: Text(
                                                   snapshot
                                                       .data!.getAllChat[i].previewChat[0].time.toString(),
@@ -163,5 +141,29 @@ class _ChatViewState extends State<ChatView> {
         ),
       ),
     );
+  }
+
+  Container WaitingAction() {
+    return Container(
+                      height: 500,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 200.0,
+                            ),
+                            CircularProgressIndicator(),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            // ignore: prefer_const_constructors
+                            Text(
+                              'L o a d i n g . . .',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ));
   }
 }

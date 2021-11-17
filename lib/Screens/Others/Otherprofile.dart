@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:async';
+import 'package:chatki_project/JSONtoDART/ShowOtherChat.dart';
 import 'package:chatki_project/Screens/Home.dart';
 import 'package:chatki_project/Screens/HomeView.dart';
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
@@ -16,7 +17,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class OtherProfile extends StatefulWidget {
-  const OtherProfile({Key? key,required this.targetID,required this.chatName}) : super(key: key);
+  const OtherProfile({Key? key, required this.targetID, required this.chatName})
+      : super(key: key);
   final String targetID;
   final String chatName;
 
@@ -75,6 +77,42 @@ class _OtherProfileState extends State<OtherProfile> {
     }
   }
 
+  Future sentToChat() async {
+    final token = await storage.read(key: "token");
+    final refreshToken = await storage.read(key: "refreshToken");
+    var res = await http.post(
+        Uri.parse(
+          "http://10.0.2.2:4000/home/chat",
+        ),
+        headers: <String, String>{
+          'auth-token': token.toString(),
+          'refresh-token': refreshToken.toString(),
+          'Context-Type': 'application/json;charSet=UTF-8'
+        },
+        body: <String, String>{
+          'receiverID': widget.targetID,
+          'chatName': widget.chatName
+        });
+
+    if (res.statusCode == 200) {
+      final showOtherChat = showOtherChatFromJson(res.body);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+             return IndividualChat(
+                    chatID: showOtherChat.chatId,
+                        chatName: showOtherChat.chatName,
+                        targetID: widget.targetID); //<----------ไปหน้าแชทคนนั้นๆ
+          },
+        ),
+      );
+    }
+    else{
+      String error = res.body;
+      print(error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -330,18 +368,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                   ),
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return Home();//  return IndividualChat(
-                                            //         chatID: snapshot.data!
-                                            //             .getAllChat[i].chatId,
-                                            //             chatName: snapshot.data!
-                                            //             .getAllChat[i].chatName,); //<----------ไปหน้าแชทคนนั้นๆ
-                                          },
-                                        ),
-                                      );
+                                      sentToChat();
                                     },
                                     child: Text(
                                       'C h a t',
