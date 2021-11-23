@@ -24,10 +24,11 @@ class _SearchState extends State<Search> {
         elevation: 0,
         leading: IconButton(
             onPressed: () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return Home();
-      }));
-    },
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return Home();
+              }));
+            },
             icon: Icon(
               Icons.arrow_back_ios,
               size: 25,
@@ -41,205 +42,197 @@ class _SearchState extends State<Search> {
         physics: BouncingScrollPhysics(),
         children: [
           Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  color: Colors.grey[300],
+                  child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 20, left: 20, right: 20, bottom: 0),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.search),
+                              Text(' Result of :'),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                '\" ' + widget.searchNameString + ' \"',
+                                style:
+                                    TextStyle(color: Colors.blue, fontSize: 20),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      )),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 20, right: 20, bottom: 10),
+                  child: Center(
+                    child: Row(
                       children: [
-                        Container(
-                          color: Colors.grey[300],
-                          child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 20, left: 20, right: 20, bottom: 0),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(Icons.search),
-                                      Text(' Result of :'),
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
-                                        '\" ' + widget.searchNameString + ' \"',
-                                        style: TextStyle(
-                                            color: Colors.blue, fontSize: 20),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              )),
-                        ),
+                        Icon(Icons.person),
+                        Text(' Person'),
                         SizedBox(
-                                  height: 20,
-                                ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 10),
-                          child: 
-                          Center(
-                            child: Row(
-                              children: [
-                                Icon(Icons.person),
-                                Text(' Person'),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        
-                        ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: widget.searchResult.searchName.length,
-                          itemBuilder: (context, i) {
-                            return Column(
-                              children: [
-                                Card(
-                                  color: Colors.white,
-                                  margin: EdgeInsets.all(5),
-                                  child: Column(
-                                    children: [
-                                      //padding: EdgeInsets.only(left: 10,right: 10),
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return OtherProfile(
-                                                targetID: widget.searchResult
-                                                    .searchName[i].employeeId,
-                                                    chatName: widget.searchResult.searchName[i].userName);
-                                          }));
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 5, bottom: 5),
-                                          child: ListTile(
-                                            title: Row(
-                                              children: [
-                                                Container(
-                                                  width: 50,
-                                                  height: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.grey[600],
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Text(
-                                                    widget.searchResult
-                                                        .searchName[i].userName,
-                                                    style: TextStyle(
-                                                        fontSize: 18)),
-                                              ],
-                                            ),
-                                            trailing: Text(
-                                              widget.searchResult.searchName[i]
-                                                  .employeeId,
-                                              style: TextStyle(
-                                                  color: Colors.grey[600]),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                //Divider(thickness: 1),
-                              ],
-                            );
-                          },
-                        ),
-                        // group
-                        SizedBox(height: 20,),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 10),
-                          child: 
-                          Center(
-                            child: Row(
-                              children: [
-                                Icon(Icons.group),
-                                Text(' Group'),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: widget.searchResult.searchGroup.length,
-                          itemBuilder: (context, i) {
-                            return Column(
-                              children: [
-                                Card(
-                                  color: Colors.white,
-                                  margin: EdgeInsets.all(5),
-                                  child: Column(
-                                    children: [
-                                      //padding: EdgeInsets.only(left: 10,right: 10),
-                                      InkWell(
-                                        onTap: () {
-                                          // Navigator.push(context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) {
-                                          //   return OtherProfile(
-                                          //       targetID: widget.searchResult
-                                          //           .searchGroup[i].chatName);
-                                          // }));
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 5, bottom: 5),
-                                          child: ListTile(
-                                            title: Row(
-                                              children: [
-                                                Container(
-                                                  width: 50,
-                                                  height: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.grey[600],
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Text(
-                                                    widget.searchResult
-                                                        .searchGroup[i].chatName,
-                                                    style: TextStyle(
-                                                        fontSize: 18)),
-                                              ],
-                                            ),
-                                            
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                //Divider(thickness: 1),
-                              ],
-                            );
-                          },
+                          width: 20,
                         ),
                       ],
                     ),
                   ),
+                ),
+
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: widget.searchResult.searchName.length,
+                  itemBuilder: (context, i) {
+                    return Column(
+                      children: [
+                        Card(
+                          color: Colors.white,
+                          margin: EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              //padding: EdgeInsets.only(left: 10,right: 10),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return OtherProfile(
+                                        targetID: widget.searchResult
+                                            .searchName[i].employeeId,
+                                        chatName: widget.searchResult
+                                            .searchName[i].userName);
+                                  }));
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                                  child: ListTile(
+                                    title: Row(
+                                      children: [
+                                        Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[600],
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Text(
+                                            widget.searchResult.searchName[i]
+                                                .userName,
+                                            style: TextStyle(fontSize: 18)),
+                                      ],
+                                    ),
+                                    trailing: Text(
+                                      widget.searchResult.searchName[i]
+                                          .employeeId,
+                                      style: TextStyle(color: Colors.grey[600]),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        //Divider(thickness: 1),
+                      ],
+                    );
+                  },
+                ),
+                // group
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 20, right: 20, bottom: 10),
+                  child: Center(
+                    child: Row(
+                      children: [
+                        Icon(Icons.group),
+                        Text(' Group'),
+                        SizedBox(
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: widget.searchResult.searchGroup.length,
+                  itemBuilder: (context, i) {
+                    return Column(
+                      children: [
+                        Card(
+                          color: Colors.white,
+                          margin: EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              //padding: EdgeInsets.only(left: 10,right: 10),
+                              InkWell(
+                                onTap: () {
+                                  // Navigator.push(context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) {
+                                  //   return OtherProfile(
+                                  //       targetID: widget.searchResult
+                                  //           .searchGroup[i].chatName);
+                                  // }));
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 5, bottom: 5),
+                                  child: ListTile(
+                                    title: Row(
+                                      children: [
+                                        Container(
+                                          width: 50,
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[600],
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Text(
+                                            widget.searchResult.searchGroup[i]
+                                                .chatName,
+                                            style: TextStyle(fontSize: 18)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        //Divider(thickness: 1),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
