@@ -41,28 +41,6 @@ class _SearchState extends State<Search> {
         physics: BouncingScrollPhysics(),
         children: [
           Center(
-            child: FutureBuilder(
-              builder: (context, AsyncSnapshot<ShowSearch> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Container(
-                    height: 500,
-                    child: Center(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 200),
-                          CircularProgressIndicator(),
-                          SizedBox(height: 30),
-                          Text(
-                            'L o a d i n g . . .',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ); // ok
-                } else
-                  return Center(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -261,10 +239,7 @@ class _SearchState extends State<Search> {
                         ),
                       ],
                     ),
-                  );
-              },
-            ),
-          )
+                  ),
         ],
       ),
     );
