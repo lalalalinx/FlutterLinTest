@@ -2,6 +2,7 @@
 
 // sender , reciever
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:chatki_project/Model/MessageData.dart';
@@ -63,13 +64,13 @@ class _IndividualChatState extends State<IndividualChat> {
         setMessage("destination", data["text"], DateTime.parse(data["time"]));
       }
     });
-    scrollController.animateTo(scrollController.position.maxScrollExtent,duration: Duration(microseconds: 300),curve: Curves.easeOut);
     socket.onConnect((data) {
       print("Connected");
       socket.on('chat message', (msg) {
         print(msg);
         setMessage("destination", msg["message"], DateTime.now());
-        scrollController.animateTo(scrollController.position.maxScrollExtent,duration: Duration(microseconds: 300),curve: Curves.easeOut);
+        scrollController.animateTo(scrollController.position.maxScrollExtent,
+            duration: Duration(microseconds: 300), curve: Curves.easeOut);
       });
     });
   }
@@ -89,9 +90,16 @@ class _IndividualChatState extends State<IndividualChat> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
+    Timer(
+    Duration(seconds: 1),
+    () => scrollController.animateTo(
+  scrollController.position.maxScrollExtent,
+  duration: Duration(seconds: 1),
+  curve: Curves.fastOutSlowIn,
+)
+  );
     return Stack(
       children: [
         Scaffold(
@@ -151,12 +159,10 @@ class _IndividualChatState extends State<IndividualChat> {
                       controller: scrollController,
                       shrinkWrap: true,
                       itemCount: messages.length + 1,
-                      itemBuilder: (context, index) {
-                        if(index == messages.length)
-                        {
-                          return Container(
-                            height: 50
-                          );
+                      itemBuilder: (context, index) {  
+                        if (index == messages.length) {
+                          
+                          return Container(height: 50);
                         }
                         if (messages[index].type == "source") {
                           return OwnMessageCard(
@@ -214,9 +220,13 @@ class _IndividualChatState extends State<IndividualChat> {
                                     color: Colors.white,
                                     icon: Icon(Icons.send),
                                     onPressed: () {
-                                      scrollController.animateTo(scrollController.position.maxScrollExtent,duration: Duration(microseconds: 300),curve: Curves.easeOut);
-                                      sendMessage(messageController.text, employeeID,
-                                          widget.targetID);
+                                      scrollController.animateTo(
+                                          scrollController
+                                              .position.maxScrollExtent,
+                                          duration: Duration(microseconds: 300),
+                                          curve: Curves.easeOut);
+                                      sendMessage(messageController.text,
+                                          employeeID, widget.targetID);
                                       messageController.clear();
                                     },
                                   ),

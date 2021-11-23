@@ -38,6 +38,7 @@ class _SearchState extends State<Search> {
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
+      
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
@@ -91,6 +92,7 @@ class _SearchState extends State<Search> {
                   ),
                 ),
 
+                // ListView for employee
                 ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -176,7 +178,7 @@ class _SearchState extends State<Search> {
                 ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: widget.searchResult.searchGroup.length,
+                  itemCount: widget.searchResult.groups.length,
                   itemBuilder: (context, i) {
                     return Column(
                       children: [
@@ -213,10 +215,7 @@ class _SearchState extends State<Search> {
                                         SizedBox(
                                           width: 20,
                                         ),
-                                        Text(
-                                            widget.searchResult.searchGroup[i]
-                                                .chatName,
-                                            style: TextStyle(fontSize: 18)),
+                                        
                                       ],
                                     ),
                                   ),
