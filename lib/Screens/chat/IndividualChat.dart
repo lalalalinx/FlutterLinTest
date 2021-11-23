@@ -34,8 +34,10 @@ class _IndividualChatState extends State<IndividualChat> {
   final storage = FlutterSecureStorage();
   List<MessageData> messages = [];
   late String employeeID;
+  bool needsScroll = true;
 
   TextEditingController messageController = TextEditingController();
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
     connectSocket();
@@ -54,21 +56,20 @@ class _IndividualChatState extends State<IndividualChat> {
     employeeID = prefs.getString('employeeID')!;
     socket.emit("signin", {employeeID, widget.chatID, -1});
     socket.on('loadUniqueChat', (data) {
-      print(data);
       var username = prefs.getString('username');
-      if(data["sender"] == username) {
+      if (data["sender"] == username) {
         setMessage("source", data["text"], DateTime.parse(data["time"]));
-      }
-      else{
+      } else {
         setMessage("destination", data["text"], DateTime.parse(data["time"]));
       }
-      
     });
+    scrollController.animateTo(scrollController.position.maxScrollExtent,duration: Duration(microseconds: 300),curve: Curves.easeOut);
     socket.onConnect((data) {
       print("Connected");
       socket.on('chat message', (msg) {
         print(msg);
         setMessage("destination", msg["message"], DateTime.now());
+        scrollController.animateTo(scrollController.position.maxScrollExtent,duration: Duration(microseconds: 300),curve: Curves.easeOut);
       });
     });
   }
@@ -80,7 +81,6 @@ class _IndividualChatState extends State<IndividualChat> {
         {"message": message, "source": sourceId, "targetId": widget.targetID});
   }
 
-
   void setMessage(String type, String message, DateTime time) {
     MessageData messageData =
         MessageData(type: type, message: message, time: time);
@@ -88,6 +88,7 @@ class _IndividualChatState extends State<IndividualChat> {
       messages.add(messageData);
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -141,15 +142,22 @@ class _IndividualChatState extends State<IndividualChat> {
           body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: Stack(
+            child: Column(
               children: [
                 //message bubble
-                Container(
-                  height: MediaQuery.of(context).size.height - 50,
+                Expanded(
+                  // height: MediaQuery.of(context).size.height - 50,
                   child: ListView.builder(
+                      controller: scrollController,
                       shrinkWrap: true,
-                      itemCount: messages.length,
+                      itemCount: messages.length + 1,
                       itemBuilder: (context, index) {
+                        if(index == messages.length)
+                        {
+                          return Container(
+                            height: 50
+                          );
+                        }
                         if (messages[index].type == "source") {
                           return OwnMessageCard(
                               message: messages[index].message,
@@ -163,53 +171,62 @@ class _IndividualChatState extends State<IndividualChat> {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Row(
-                    children: [
-                      // Text message field
-                      Container(
-                        width: MediaQuery.of(context).size.width - 55,
-                        color: Colors.grey[900],
-                        child: Card(
-                          margin: EdgeInsets.only(
-                              left: 10, right: 10, bottom: 10, top: 10),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25)),
-                          child: TextFormField(
-                            keyboardType: TextInputType.multiline,
-                            controller: messageController,
-                            maxLines: 5,
-                            minLines: 1,
-                            textAlignVertical: TextAlignVertical.center,
-                            decoration: InputDecoration(
-                              hintText: "Type a message",
-                              contentPadding: EdgeInsets.all(15),
+                  child: Container(
+                    height: 70,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          children: [
+                            // Text message field
+                            Container(
+                              width: MediaQuery.of(context).size.width - 55,
+                              color: Colors.grey[900],
+                              child: Card(
+                                margin: EdgeInsets.only(
+                                    left: 10, right: 10, bottom: 10, top: 10),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25)),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.multiline,
+                                  controller: messageController,
+                                  maxLines: 5,
+                                  minLines: 1,
+                                  textAlignVertical: TextAlignVertical.center,
+                                  decoration: InputDecoration(
+                                    hintText: "Type a message",
+                                    contentPadding: EdgeInsets.all(15),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      // sent button
-                      Container(
-                        width: 55,
-                        height: 69,
-                        color: Colors.grey[900],
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.blue,
-                            radius: 25,
-                            child: IconButton(
-                              color: Colors.white,
-                              icon: Icon(Icons.send),
-                              onPressed: () {
-                                sendMessage(messageController.text, employeeID,
-                                    widget.targetID);
-                                messageController.clear();
-                              },
+                            // sent button
+                            Container(
+                              width: 55,
+                              height: 69,
+                              color: Colors.grey[900],
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.blue,
+                                  radius: 25,
+                                  child: IconButton(
+                                    color: Colors.white,
+                                    icon: Icon(Icons.send),
+                                    onPressed: () {
+                                      scrollController.animateTo(scrollController.position.maxScrollExtent,duration: Duration(microseconds: 300),curve: Curves.easeOut);
+                                      sendMessage(messageController.text, employeeID,
+                                          widget.targetID);
+                                      messageController.clear();
+                                    },
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
