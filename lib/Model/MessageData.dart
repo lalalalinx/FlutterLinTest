@@ -4,5 +4,6 @@
 class MessageData{
   String type;
   String message;
-  MessageData({required this.type, required this.message});
+  DateTime time;
+  MessageData({required this.type, required this.message,required this.time});
 }

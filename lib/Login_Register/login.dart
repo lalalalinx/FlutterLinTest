@@ -38,6 +38,7 @@ class _LoginState extends State<Login> {
       storage.write(key: "refreshToken", value: output['refreshToken']);
       Map<String, dynamic> decodedToken = JwtDecoder.decode(output['token']);
       prefs.setString('employeeID', decodedToken['employeeID']);
+      prefs.setString('username', decodedToken['userName']);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return Home();
       }));

@@ -24,9 +24,9 @@ class _ChatViewState extends State<ChatView> {
 
   @override
   void initState() {
-    setState(() {
-      getMutipleChatData();
-    });
+    // setState(() {
+    //   getMutipleChatData();
+    // });
 
     super.initState();
   }
@@ -101,7 +101,9 @@ class _ChatViewState extends State<ChatView> {
                                                         .data!
                                                         .getAllChat[i]
                                                         .employeeId);
-                                              }));
+                                              })).then((value) => setState(() {
+                                                    getMutipleChatData();
+                                                  }));
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(

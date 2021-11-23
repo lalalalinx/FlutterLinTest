@@ -47,6 +47,7 @@ class _HomeViewState extends State<HomeView> {
     String output = res.body;
     if (res.statusCode == 200) {
       print(prefs.getString('employeeID'));
+      print(prefs.getString('username'));
     } else {
       print(output);
     }

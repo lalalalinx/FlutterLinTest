@@ -15,8 +15,12 @@ import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 
 class IndividualChat extends StatefulWidget {
-  const IndividualChat({Key? key, required this.chatID, required this.chatName,required this.targetID, })
-      : super(key: key);
+  const IndividualChat({
+    Key? key,
+    required this.chatID,
+    required this.chatName,
+    required this.targetID,
+  }) : super(key: key);
   final String chatID;
   final String chatName;
   final String targetID;
@@ -48,29 +52,38 @@ class _IndividualChatState extends State<IndividualChat> {
             .build());
     socket.connect();
     employeeID = prefs.getString('employeeID')!;
-    socket.emit("signin", {employeeID, widget.chatID,-1});
-    // socket.on('pastMessage', (data) {
-    //   final pastMessage = pastMessageFromJson(data);
-    // }
-
-    // );
+    socket.emit("signin", {employeeID, widget.chatID, -1});
+    socket.on('loadUniqueChat', (data) {
+      print(data);
+      var username = prefs.getString('username');
+      if(data["sender"] == username) {
+        setMessage("source", data["text"], DateTime.parse(data["time"]));
+      }
+      else{
+        setMessage("destination", data["text"], DateTime.parse(data["time"]));
+      }
+      
+    });
     socket.onConnect((data) {
       print("Connected");
       socket.on('chat message', (msg) {
         print(msg);
-        setMessage("destination",msg["message"]);
+        setMessage("destination", msg["message"], DateTime.now());
       });
     });
   }
 
-  void sendMessage(String message, String sourceId,String targetId) {
-    setMessage("source", message);
-    socket.emit("chat message", {"message":message, "source":sourceId, "targetId":widget.targetID});
+  void sendMessage(String message, String sourceId, String targetId) {
+    var now = DateTime.now();
+    setMessage("source", message, now);
+    socket.emit("chat message",
+        {"message": message, "source": sourceId, "targetId": widget.targetID});
   }
 
-  void setMessage(String type, String message) {
+
+  void setMessage(String type, String message, DateTime time) {
     MessageData messageData =
-        MessageData(type: type, message: message);
+        MessageData(type: type, message: message, time: time);
     setState(() {
       messages.add(messageData);
     });
@@ -105,6 +118,7 @@ class _IndividualChatState extends State<IndividualChat> {
             leading: IconButton(
               onPressed: () {
                 socket.onDisconnect((_) => print('Disconnect'));
+                print("pop");
                 Navigator.pop(context);
               },
               icon: Icon(
@@ -138,9 +152,12 @@ class _IndividualChatState extends State<IndividualChat> {
                       itemBuilder: (context, index) {
                         if (messages[index].type == "source") {
                           return OwnMessageCard(
-                              message: messages[index].message);
+                              message: messages[index].message,
+                              time: messages[index].time);
                         } else {
-                          return ReplyCard(message: messages[index].message);
+                          return ReplyCard(
+                              message: messages[index].message,
+                              time: messages[index].time);
                         }
                       }),
                 ),
@@ -184,7 +201,8 @@ class _IndividualChatState extends State<IndividualChat> {
                               color: Colors.white,
                               icon: Icon(Icons.send),
                               onPressed: () {
-                                sendMessage(messageController.text, employeeID,widget.targetID);
+                                sendMessage(messageController.text, employeeID,
+                                    widget.targetID);
                                 messageController.clear();
                               },
                             ),
