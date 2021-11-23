@@ -21,15 +21,17 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> {
   final storage = FlutterSecureStorage();
-  late final ShowChat multipleChatdd;
 
   @override
   void initState() {
-    getMutipleChatData();
+    setState(() {
+      getMutipleChatData();
+    });
+
     super.initState();
   }
 
-  Future<ShowChat> getMutipleChatData() async {
+  Future getMutipleChatData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.get(
@@ -41,14 +43,13 @@ class _ChatViewState extends State<ChatView> {
         'refresh-token': refreshToken.toString(),
       },
     );
-    final showChat = ShowChat.fromJson(jsonDecode(res.body));
     if (res.statusCode == 200) {
-      print('Chat'); 
+      final showChat = ShowChat.fromJson(jsonDecode(res.body));
+      return showChat;
     } else {
-      String output = res.body;
-      print(output);
+      String noChat = "no";
+      return noChat;
     }
-    return showChat;
   }
 
   @override
@@ -64,9 +65,11 @@ class _ChatViewState extends State<ChatView> {
             Center(
               child: FutureBuilder(
                 future: getMutipleChatData(),
-                builder: (context, AsyncSnapshot<ShowChat> snapshot) {
+                builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return WaitingAction();
+                  } else if (snapshot.data == "no") {
+                    return Text("No chat");
                   } else
                     return Center(
                       child: Column(
@@ -92,16 +95,21 @@ class _ChatViewState extends State<ChatView> {
                                                 return IndividualChat(
                                                     chatID: snapshot.data!
                                                         .getAllChat[i].chatId,
-                                                        chatName: snapshot.data!
+                                                    chatName: snapshot.data!
                                                         .getAllChat[i].chatName,
-                                                        targetID: snapshot.data!.getAllChat[i].employeeId);
+                                                    targetID: snapshot
+                                                        .data!
+                                                        .getAllChat[i]
+                                                        .employeeId);
                                               }));
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
                                                   top: 5, bottom: 5),
                                               child: ListTile(
-                                                leading: CircleAvatar(backgroundColor: Colors.blue,),
+                                                leading: CircleAvatar(
+                                                  backgroundColor: Colors.blue,
+                                                ),
                                                 title: Row(
                                                   children: [
                                                     Text(
@@ -113,8 +121,26 @@ class _ChatViewState extends State<ChatView> {
                                                             fontSize: 18)),
                                                   ],
                                                 ),
-                                                subtitle: Text(snapshot.data!.getAllChat[i].previewChat[0].text,),
-                                                trailing: Text(snapshot.data!.getAllChat[i].previewChat[0].time.hour.toString()+ ":"+ snapshot.data!.getAllChat[i].previewChat[0].time.minute.toString(),
+                                                subtitle: Text(
+                                                  snapshot.data!.getAllChat[i]
+                                                      .previewChat[0].text,
+                                                ),
+                                                trailing: Text(
+                                                  snapshot
+                                                          .data!
+                                                          .getAllChat[i]
+                                                          .previewChat[0]
+                                                          .time
+                                                          .hour
+                                                          .toString() +
+                                                      ":" +
+                                                      snapshot
+                                                          .data!
+                                                          .getAllChat[i]
+                                                          .previewChat[0]
+                                                          .time
+                                                          .minute
+                                                          .toString(),
                                                   style: TextStyle(
                                                       color: Colors.grey[600]),
                                                 ),
@@ -142,25 +168,25 @@ class _ChatViewState extends State<ChatView> {
 
   Container WaitingAction() {
     return Container(
-                      height: 500,
-                      child: Center(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 200.0,
-                            ),
-                            CircularProgressIndicator(),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            // ignore: prefer_const_constructors
-                            Text(
-                              'L o a d i n g . . .',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ));
+        height: 500,
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 200.0,
+              ),
+              CircularProgressIndicator(),
+              SizedBox(
+                height: 30.0,
+              ),
+              // ignore: prefer_const_constructors
+              Text(
+                'L o a d i n g . . .',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ));
   }
 }
