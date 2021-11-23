@@ -6,6 +6,7 @@ import 'package:chatki_project/JSONtoDART/ShowHome.dart';
 import 'package:chatki_project/JSONtoDART/ShowSearch.dart';
 import 'package:chatki_project/Login_Register/login.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
+import 'package:chatki_project/Screens/createGroup/CreateGroup.dart';
 import 'package:chatki_project/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -74,7 +75,7 @@ class _HomeViewState extends State<HomeView> {
         return Search(
           searchResult: showSearch,
           searchNameString: targetName,
-          );
+        );
       }));
     }
   }
@@ -98,7 +99,8 @@ class _HomeViewState extends State<HomeView> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return WaitingAction();
                   } else
-                    return Center(
+                    return Padding(
+                      padding: EdgeInsets.all(0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -154,26 +156,59 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               ],
                             ),
+                          ), //<---------------------------------search
+
+                          Container(
+                            margin: EdgeInsets.only(left: 210),
+                            width: 170,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return CreateGroup();
+                                }));
+                                // <-----------add MORE here
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Add new Group ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  Icon(Icons.add_circle_outline_sharp),
+                                ],
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.orange[400],
+                                fixedSize: const Size(400, 40),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 20.0,
-                          ),
+                          ), //<----------------------------createGroup
                           Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 10),
-                          child: 
-                          Center(
-                            child: Row(
-                              children: [
-                                Icon(Icons.person),
-                                Text(' Person'),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                              ],
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.person),
+                                  Text(' Person'),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
                           ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
@@ -195,7 +230,8 @@ class _HomeViewState extends State<HomeView> {
                                                 return OtherProfile(
                                                     targetID: snapshot.data!
                                                         .user[i].employeeId,
-                                                        chatName: snapshot.data!.user[i].userName);
+                                                    chatName: snapshot.data!
+                                                        .user[i].userName);
                                               }));
                                             },
                                             child: Padding(
@@ -243,87 +279,88 @@ class _HomeViewState extends State<HomeView> {
                           // group
                           SizedBox(height: 20),
                           Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 20, right: 20, bottom: 10),
-                          child: 
-                          Center(
-                            child: Row(
-                              children: [
-                                Icon(Icons.group),
-                                Text(' Group'),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                              ],
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.group),
+                                  Text(' Group'),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.sendGroup.length,
-                          itemBuilder: (context, i) {
-                            return Column(
-                              children: [
-                                Card(
-                                  color: Colors.white,
-                                  margin: EdgeInsets.all(5),
-                                  child: Column(
-                                    children: [
-                                      //padding: EdgeInsets.only(left: 10,right: 10),
-                                      InkWell(
-                                        onTap: () {
-                                          // Navigator.push(context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) {
-                                          //   return OtherProfile(
-                                          //       targetID: widget.searchResult
-                                          //           .searchName[i].employeeId);
-                                          // }));
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 5, bottom: 5),
-                                          child: ListTile(
-                                            title: Row(
-                                              children: [
-                                                Container(
-                                                  width: 50,
-                                                  height: 50,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.grey[600],
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.sendGroup.length,
+                            itemBuilder: (context, i) {
+                              return Column(
+                                children: [
+                                  Card(
+                                    color: Colors.white,
+                                    margin: EdgeInsets.all(5),
+                                    child: Column(
+                                      children: [
+                                        //padding: EdgeInsets.only(left: 10,right: 10),
+                                        InkWell(
+                                          onTap: () {
+                                            // Navigator.push(context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) {
+                                            //   return OtherProfile(
+                                            //       targetID: widget.searchResult
+                                            //           .searchName[i].employeeId);
+                                            // }));
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 5, bottom: 5),
+                                            child: ListTile(
+                                              title: Row(
+                                                children: [
+                                                  Container(
+                                                    width: 50,
+                                                    height: 50,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.grey[600],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Text(
-                                                    snapshot
-                                                      .data!.sendGroup[i].chatName,
-                                                    style: TextStyle(
-                                                        fontSize: 18)),
-                                              ],
-                                            ),
-                                            trailing: Text(
-                                              snapshot
-                                                      .data!.sendGroup[i].chatName,
-                                              style: TextStyle(
-                                                  color: Colors.grey[600]),
+                                                  SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  Text(
+                                                      snapshot
+                                                          .data!
+                                                          .sendGroup[i]
+                                                          .chatName,
+                                                      style: TextStyle(
+                                                          fontSize: 18)),
+                                                ],
+                                              ),
+                                              trailing: Text(
+                                                snapshot.data!.sendGroup[i]
+                                                    .chatName,
+                                                style: TextStyle(
+                                                    color: Colors.grey[600]),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                //Divider(thickness: 1),
-                              ],
-                            );
-                          },
-                        ),
+                                  //Divider(thickness: 1),
+                                ],
+                              );
+                            },
+                          ),
                         ],
                       ),
                     );
@@ -338,27 +375,27 @@ class _HomeViewState extends State<HomeView> {
 
   Container WaitingAction() {
     return Container(
-                    height: 500,
-                    child: Center(
-                      //alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 200.0,
-                          ),
-                          CircularProgressIndicator(),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                          // ignore: prefer_const_constructors
-                          Text(
-                            'L o a d i n g . . .',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+      height: 500,
+      child: Center(
+        //alignment: Alignment.center,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200.0,
+            ),
+            CircularProgressIndicator(),
+            SizedBox(
+              height: 30.0,
+            ),
+            // ignore: prefer_const_constructors
+            Text(
+              'L o a d i n g . . .',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
