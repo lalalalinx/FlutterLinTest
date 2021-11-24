@@ -22,9 +22,13 @@ class OwnMessageCard extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 constraints: BoxConstraints(
                     maxWidth: MediaQuery.of(context).size.width * 0.6),
-                child: Text(message, style: TextStyle(fontSize: 16)),
+                child: Text(message, style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                  )),
                 decoration: BoxDecoration(
-                    color: Colors.lightBlue[300],
+                    color: Colors.blue,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),
@@ -35,7 +39,7 @@ class OwnMessageCard extends StatelessWidget {
               SizedBox(width: 10),
               CircleAvatar(
                 radius: 15,
-                backgroundColor: Colors.yellow,
+                backgroundColor: Colors.yellow[800],
               ),
               SizedBox(width: 10),
             ],

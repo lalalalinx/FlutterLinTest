@@ -20,15 +20,18 @@ class ReplyCard extends StatelessWidget {
               SizedBox(width: 10),
               CircleAvatar(
                 radius: 15,
-                backgroundColor: Colors.pinkAccent,
+                backgroundColor: Colors.pinkAccent[100],
               ),
               SizedBox(width: 10),
               Container(
                 padding: EdgeInsets.all(10),
                 constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width *0.6),
-                child: Text(message,style: TextStyle(fontSize: 16)),
+                child: Text(message,style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  )),
                 decoration: BoxDecoration(
-                  color: Colors.grey[300], /**** */
+                  color: Colors.grey[200], /**** */
                   borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16), 
                   topRight: Radius.circular(16),
@@ -57,4 +60,3 @@ class ReplyCard extends StatelessWidget {
     );
   }
 }
-

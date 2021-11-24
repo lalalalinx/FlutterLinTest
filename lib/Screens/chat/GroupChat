@@ -15,8 +15,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:http/http.dart' as http;
 
-class IndividualChat extends StatefulWidget {
-  const IndividualChat({
+class GroupChat extends StatefulWidget {
+  const GroupChat({
     Key? key,
     required this.chatID,
     required this.chatName,
@@ -27,10 +27,10 @@ class IndividualChat extends StatefulWidget {
   final String targetID;
 
   @override
-  _IndividualChatState createState() => _IndividualChatState();
+  _GroupChatState createState() => _GroupChatState();
 }
 
-class _IndividualChatState extends State<IndividualChat> {
+class _GroupChatState extends State<GroupChat> {
   late Socket socket;
   final storage = FlutterSecureStorage();
   List<MessageData> messages = [];
