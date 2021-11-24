@@ -14,40 +14,20 @@ String showSearchToJson(ShowSearch data) => json.encode(data.toJson());
 class ShowSearch {
     ShowSearch({
         required this.searchName,
-        required this.searchGroup,
+        required this.groups,
     });
 
     List<SearchName> searchName;
-    List<SearchGroup> searchGroup;
+    List<String> groups;
 
     factory ShowSearch.fromJson(Map<String, dynamic> json) => ShowSearch(
         searchName: List<SearchName>.from(json["searchName"].map((x) => SearchName.fromJson(x))),
-        searchGroup: List<SearchGroup>.from(json["searchGroup"].map((x) => SearchGroup.fromJson(x))),
+        groups: List<String>.from(json["groups"].map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
         "searchName": List<dynamic>.from(searchName.map((x) => x.toJson())),
-        "searchGroup": List<dynamic>.from(searchGroup.map((x) => x.toJson())),
-    };
-}
-
-class SearchGroup {
-    SearchGroup({
-        required this.id,
-        required this.chatName,
-    });
-
-    String id;
-    String chatName;
-
-    factory SearchGroup.fromJson(Map<String, dynamic> json) => SearchGroup(
-        id: json["_id"],
-        chatName: json["chatName"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "_id": id,
-        "chatName": chatName,
+        "groups": List<dynamic>.from(groups.map((x) => x)),
     };
 }
 
