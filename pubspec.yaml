@@ -37,6 +37,7 @@ dependencies:
   fluttertoast: ^8.0.8
   shared_preferences: ^2.0.8
   jwt_decoder: ^2.0.1
+  flutter_local_notifications: ^9.1.2
   image_picker: ^0.8.4+4
   html: ^0.15.0
 
