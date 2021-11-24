@@ -1,5 +1,10 @@
-// ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, non_constant_identifier_names
+// ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, non_constant_identifier_names, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, deprecated_member_use, unnecessary_null_comparison, avoid_web_libraries_in_flutter
 
+//import 'dart:html'; //ในเน็ตบอกให้เอาออกแล้วหายเออเร่อ (คือไรวะเนี้ย)
+//import 'dart:async';
+// import 'package:html/dom.dart';
+// import 'package:html/dom_parsing.dart';
+// import 'package:html/parser.dart';
 import 'package:chatki_project/Model/ProfileData.dart';
 import 'package:chatki_project/Model/ProfileUserData.dart';
 import 'package:chatki_project/Screens/ProfileView.dart';
@@ -8,6 +13,7 @@ import 'package:chatki_project/Profile/ProfildWidget.dart';
 import 'package:chatki_project/Model/EditProfileData.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key, required this.profileDatas}) : super(key: key);
@@ -54,6 +60,8 @@ class _EditProfileState extends State<EditProfile> {
   final cityController = TextEditingController();
   final streetController = TextEditingController();
 
+  late PickedFile _imageFile;
+  final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     final user = ProfileUserData.myUser;
@@ -65,48 +73,71 @@ class _EditProfileState extends State<EditProfile> {
     cityController.text = widget.profileDatas.city;
     streetController.text = widget.profileDatas.street;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-      ),
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            //<---------------------------------------------ยืนยัน edit ตรงนี้
-            editProfile();
-            Navigator.pop(context);
-          },
-          child: Icon(Icons.done),
+    return Scaffold(
+      appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.grey[900],
+          leading: Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    size: 20,
+                    color: Colors.white,
+                  )),
+            ],
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Edit Information',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400, color: Colors.white)),
+              SizedBox(
+                width: 10,
+              ),
+              Icon(Icons.edit),
+              SizedBox(
+                width: 10,
+              ),
+            ],
+          )),
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
         ),
-        body: ListView(
-          physics: BouncingScrollPhysics(),
-          children: [
-            // ProfileWidget(
-            //   image: user.image,
-            //   onClicked: () async {},
-            // ),
-            const SizedBox(height: 20),
-            buildEdit(user),
-          ],
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              //<---------------------------------------------ยืนยัน edit ตรงนี้
+              editProfile();
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.done),
+          ),
+          body: ListView(
+            physics: BouncingScrollPhysics(),
+            children: [
+              SizedBox(height: 20),
+              Container(child: imageProfile(), height: 150, width: 150),
+              buildEdit(user),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget buildEdit(user) => Container(
+        //color: Colors.grey[900],
         padding: EdgeInsets.symmetric(horizontal: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text('Edit Information',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  )),
-            ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 30),
             editForm("Name", userFNameController),
             const SizedBox(height: 15),
             editForm("Surname", userLNameController),
@@ -120,6 +151,7 @@ class _EditProfileState extends State<EditProfile> {
             editForm("Street", streetController),
             const SizedBox(height: 15),
             editForm("ZIP", zipController),
+            const SizedBox(height: 30),
           ],
         ),
       );
@@ -134,6 +166,94 @@ class _EditProfileState extends State<EditProfile> {
         contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
       ),
       controller: controller,
+    );
+  }
+
+
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children: [
+          Text(
+            "Choose Profile photo",
+            style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FlatButton.icon(
+                icon: Icon(Icons.photo_camera),
+                onPressed: () {
+                  takePhoto(ImageSource.camera);
+                },
+                label: Text('Camera'),
+              ),
+              FlatButton.icon(
+                icon: Icon(Icons.photo_library_sharp),
+                onPressed: () {
+                  takePhoto(ImageSource.gallery);
+                },
+                label: Text('Gallery'),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await _picker.getImage(
+      source: source,
+    );
+    setState(() {
+      _imageFile = pickedFile!;
+    });
+  }
+
+  Widget imageProfile() {
+    return Center(
+      child: Stack(
+        children: <Widget>[
+          CircleAvatar(
+            radius: 80,
+            backgroundImage: AssetImage("assets/images/arumjoh.png"),
+            //backgroundImage: FileImage(File(_imageFile.path)),
+            // backgroundImage: _imageFile == null
+            // ? AssetImage("assets/images/arumjoh.png")
+            // : FileImage(File(_imageFile.path)),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: CircleAvatar(
+              backgroundColor: Colors.grey[900],
+              child: InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: ((builder) => bottomSheet()),
+                  );
+                },
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                  //color: Colors.teal,
+                  size: 20,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
