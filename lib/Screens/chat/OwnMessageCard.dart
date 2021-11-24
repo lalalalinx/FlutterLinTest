@@ -1,55 +1,66 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 
 class OwnMessageCard extends StatelessWidget {
-  const OwnMessageCard({Key? key,required this.message,required this.time}) : super(key: key);
+  const OwnMessageCard({Key? key, required this.message, required this.time})
+      : super(key: key);
   final String message;
   final DateTime time;
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: ConstrainedBox(
-        constraints:
-            BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 150),
-        child: Card(
-          elevation:1,
-          shape: RoundedRectangleBorder(
-            borderRadius: 
-            BorderRadius.circular(30),
-            ),
-            color: Colors.blue[400],
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0,top: 10),
-            child: Stack(children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 45,
-                  top: 10,
-                  bottom: 10,
-                ),
-                child: Text(message,
-                    style: TextStyle(
-                      fontSize: 16,
+    return Container(
+      margin: EdgeInsets.only(top: 8),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                padding: EdgeInsets.all(10),
+                constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.6),
+                child: Text(message, style: TextStyle(fontSize: 16)),
+                decoration: BoxDecoration(
+                    color: Colors.lightBlue[300],
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                      bottomLeft: Radius.circular(12), //**** */
+                      bottomRight: Radius.circular(1),
                     )),
               ),
-              Positioned(
-                bottom: 4,
-                right: 13,
-                child: Row(children: [
-                  Text(
-                    time.hour.toString() + ":" + time.minute.toString(),
-                      style: TextStyle(fontSize: 13, color: Colors.blue[800])),
-                  SizedBox(width:5),
-                  
-                ]),
+              SizedBox(width: 10),
+              CircleAvatar(
+                radius: 15,
+                backgroundColor: Colors.yellow,
               ),
-            ])),
+              SizedBox(width: 10),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end, //*****
+              children: [
+                Text(
+                  time.hour.toString() + ":" + time.minute.toString(),
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 12,
+                    letterSpacing: 2,
+                  ),
+                ),
+                SizedBox(width: 50),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-
+//Text(time.hour.toString() + ":" + time.minute.toString(),

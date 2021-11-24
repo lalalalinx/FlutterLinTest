@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_element, dead_code, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 
@@ -7,40 +7,54 @@ class ReplyCard extends StatelessWidget {
   final String message;
   final DateTime time;
 
-  @override
+@override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: ConstrainedBox(
-        constraints:
-            BoxConstraints(maxWidth: MediaQuery.of(context).size.width -150),
-        child: Card(
-            elevation: 1,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            color: Colors.grey[100],
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0,top: 10),
-            child: Stack(children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 42,
-                  top: 10,
-                  bottom: 10,
-                ),
-                child: Text(message,
-                    style: TextStyle(
-                      fontSize: 16,
-                    )),
+    return Container(
+      margin: EdgeInsets.only(top: 8),
+      child: 
+      Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              SizedBox(width: 10),
+              CircleAvatar(
+                radius: 15,
+                backgroundColor: Colors.pinkAccent,
               ),
-              Positioned(
-                bottom: 4,
-                right:14,
-                child: Text(time.hour.toString() + ":" + time.minute.toString(),
-                    style: TextStyle(fontSize: 13, color: Colors.grey[600])),
+              SizedBox(width: 10),
+              Container(
+                padding: EdgeInsets.all(10),
+                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width *0.6),
+                child: Text(message,style: TextStyle(fontSize: 16)),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300], /**** */
+                  borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16), 
+                  topRight: Radius.circular(16),
+                  bottomLeft: Radius.circular(1), //**** */
+                  bottomRight: Radius.circular(12),
+                  )),
               ),
-            ])),
+            ],),
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start, //*****
+                children: [
+                  SizedBox(width: 50),
+                  Text(time.hour.toString() + ":" + time.minute.toString(),
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 12,
+                    letterSpacing: 2,
+                    ),)
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }
 }
+

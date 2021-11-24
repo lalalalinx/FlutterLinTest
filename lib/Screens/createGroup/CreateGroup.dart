@@ -32,7 +32,7 @@ class _CreateGroupState extends State<CreateGroup> {
         });
     if (res.statusCode == 200) {
       print(res.body);
-      showToast("Added new group successfully");
+      showToast("Create new group successfully");
     } else {
       print(res.body.toString());
     }
