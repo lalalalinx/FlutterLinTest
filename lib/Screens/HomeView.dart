@@ -141,7 +141,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                             ListView.builder(
-                              scrollDirection: Axis.vertical,
+                              physics : NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: snapshot.data!.sendGroup.length,
                               itemBuilder: (context, i) {
@@ -231,7 +231,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                             ListView.builder(
-                              scrollDirection: Axis.vertical,
+                              physics : NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: snapshot.data!.user.length,
                               itemBuilder: (context, i) {
