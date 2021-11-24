@@ -104,119 +104,50 @@ class _HomeViewState extends State<HomeView> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 30, bottom: 10, left: 15, right: 5),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 305,
-                                  child: TextFormField(
-                                    decoration: const InputDecoration(
-                                      hintText: 'Search',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
-                                          topRight: Radius.circular(0),
-                                          bottomLeft: Radius.circular(30),
-                                          bottomRight: Radius.circular(0),
-                                        ),
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: 15, horizontal: 15),
-                                    ),
-                                    controller: searchController,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 0),
-                                  child: Container(
-                                    width: 60,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        search(searchController.text);
-                                      },
-                                      child: Icon(Icons.search),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.grey[900],
-                                        fixedSize: const Size(350, 50),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(0),
-                                              topRight: Radius.circular(30),
-                                              bottomLeft: Radius.circular(0),
-                                              bottomRight: Radius.circular(30),
-                                            ),
-                                            side: BorderSide(
-                                                color: Colors.black,
-                                                width: 1.5)),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ), //<---------------------------------search
+                          searchBar(),
+                          addGroupButton(context),
+                          SizedBox(height: 20.0,),
+                          personListView(snapshot),
+                          SizedBox(height: 20),
+                          groupListView(snapshot),
+                        ],
+                      ),
+                    );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
-                          Container(
-                            margin: EdgeInsets.only(left: 210),
-                            width: 170,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return CreateGroup();
-                                }));
-                                // <-----------add MORE here
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Add new Group ',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400,
+  Column groupListView(AsyncSnapshot<ShowHome> snapshot) {
+    return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10, left: 20, right: 20, bottom: 10),
+                              child: Center(
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.group),
+                                    Text(' Group'),
+                                    SizedBox(
+                                      width: 20,
                                     ),
-                                  ),
-                                  Icon(Icons.add_circle_outline_sharp),
-                                ],
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.orange[400],
-                                fixedSize: const Size(400, 40),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
+                                  ],
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ), //<----------------------------createGroup
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            child: Center(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.person),
-                                  Text(' Person'),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.user.length,
-                            itemBuilder: (context, i) {
-                              return Column(
-                                children: [
-                                  Card(
+                            ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.sendGroup.length,
+                              itemBuilder: (context, i) {
+                                return Column(
+                                  children: [
+                                    Card(
                                       color: Colors.white,
                                       margin: EdgeInsets.all(5),
                                       child: Column(
@@ -224,15 +155,13 @@ class _HomeViewState extends State<HomeView> {
                                           //padding: EdgeInsets.only(left: 10,right: 10),
                                           InkWell(
                                             onTap: () {
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) {
-                                                return OtherProfile(
-                                                    targetID: snapshot.data!
-                                                        .user[i].employeeId,
-                                                    chatName: snapshot.data!
-                                                        .user[i].userName);
-                                              }));
+                                              // Navigator.push(context,
+                                              //     MaterialPageRoute(
+                                              //         builder: (context) {
+                                              //   return OtherProfile(
+                                              //       targetID: widget.searchResult
+                                              //           .searchName[i].employeeId);
+                                              // }));
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -246,23 +175,25 @@ class _HomeViewState extends State<HomeView> {
                                                       decoration: BoxDecoration(
                                                         color: Colors.grey[600],
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(30),
+                                                            BorderRadius.circular(
+                                                                30),
                                                       ),
                                                     ),
                                                     SizedBox(
                                                       width: 20,
                                                     ),
                                                     Text(
-                                                        snapshot.data!.user[i]
-                                                            .userName,
+                                                        snapshot
+                                                            .data!
+                                                            .sendGroup[i]
+                                                            .chatName,
                                                         style: TextStyle(
                                                             fontSize: 18)),
                                                   ],
                                                 ),
                                                 trailing: Text(
-                                                  snapshot
-                                                      .data!.user[i].employeeId,
+                                                  snapshot.data!.sendGroup[i]
+                                                      .chatName,
                                                   style: TextStyle(
                                                       color: Colors.grey[600]),
                                                 ),
@@ -270,105 +201,190 @@ class _HomeViewState extends State<HomeView> {
                                             ),
                                           ),
                                         ],
-                                      )),
-                                  //Divider(thickness: 1),
-                                ],
-                              );
-                            },
-                          ),
-                          // group
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            child: Center(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.group),
-                                  Text(' Group'),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                ],
+                                      ),
+                                    ),
+                                    //Divider(thickness: 1),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        );
+  }
+
+  Column personListView(AsyncSnapshot<ShowHome> snapshot) {
+    return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10, left: 20, right: 20, bottom: 10),
+                              child: Center(
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.person),
+                                    Text(' Person'),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.sendGroup.length,
-                            itemBuilder: (context, i) {
-                              return Column(
-                                children: [
-                                  Card(
-                                    color: Colors.white,
-                                    margin: EdgeInsets.all(5),
-                                    child: Column(
-                                      children: [
-                                        //padding: EdgeInsets.only(left: 10,right: 10),
-                                        InkWell(
-                                          onTap: () {
-                                            // Navigator.push(context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) {
-                                            //   return OtherProfile(
-                                            //       targetID: widget.searchResult
-                                            //           .searchName[i].employeeId);
-                                            // }));
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 5, bottom: 5),
-                                            child: ListTile(
-                                              title: Row(
-                                                children: [
-                                                  Container(
-                                                    width: 50,
-                                                    height: 50,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.grey[600],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              30),
-                                                    ),
+                            ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.user.length,
+                              itemBuilder: (context, i) {
+                                return Column(
+                                  children: [
+                                    Card(
+                                        color: Colors.white,
+                                        margin: EdgeInsets.all(5),
+                                        child: Column(
+                                          children: [
+                                            //padding: EdgeInsets.only(left: 10,right: 10),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return OtherProfile(
+                                                      targetID: snapshot.data!
+                                                          .user[i].employeeId,
+                                                      chatName: snapshot.data!
+                                                          .user[i].userName);
+                                                }));
+                                              },
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: 5, bottom: 5),
+                                                child: ListTile(
+                                                  title: Row(
+                                                    children: [
+                                                      Container(
+                                                        width: 50,
+                                                        height: 50,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.grey[600],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(30),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 20,
+                                                      ),
+                                                      Text(
+                                                          snapshot.data!.user[i]
+                                                              .userName,
+                                                          style: TextStyle(
+                                                              fontSize: 18)),
+                                                    ],
                                                   ),
-                                                  SizedBox(
-                                                    width: 20,
+                                                  trailing: Text(
+                                                    snapshot
+                                                        .data!.user[i].employeeId,
+                                                    style: TextStyle(
+                                                        color: Colors.grey[600]),
                                                   ),
-                                                  Text(
-                                                      snapshot
-                                                          .data!
-                                                          .sendGroup[i]
-                                                          .chatName,
-                                                      style: TextStyle(
-                                                          fontSize: 18)),
-                                                ],
-                                              ),
-                                              trailing: Text(
-                                                snapshot.data!.sendGroup[i]
-                                                    .chatName,
-                                                style: TextStyle(
-                                                    color: Colors.grey[600]),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  //Divider(thickness: 1),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                },
+                                          ],
+                                        )),
+                                    //Divider(thickness: 1),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        );
+  }
+
+  Container addGroupButton(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 210),
+      width: 170,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CreateGroup();
+          }));
+          // <-----------add MORE here
+        },
+        child: Row(
+          children: [
+            Text(
+              'Add new Group ',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
               ),
-            )
+            ),
+            Icon(Icons.add_circle_outline_sharp),
           ],
         ),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.orange[400],
+          fixedSize: const Size(400, 40),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding searchBar() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 30, bottom: 10, left: 15, right: 5),
+      child: Row(
+        children: [
+          Container(
+            width: 305,
+            child: TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Search',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(0),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(0),
+                  ),
+                ),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              ),
+              controller: searchController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 0),
+            child: Container(
+              width: 60,
+              child: ElevatedButton(
+                onPressed: () {
+                  search(searchController.text);
+                },
+                child: Icon(Icons.search),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.grey[900],
+                  fixedSize: const Size(350, 50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(0),
+                        topRight: Radius.circular(30),
+                        bottomLeft: Radius.circular(0),
+                        bottomRight: Radius.circular(30),
+                      ),
+                      side: BorderSide(color: Colors.black, width: 1.5)),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
