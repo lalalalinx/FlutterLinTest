@@ -49,57 +49,7 @@ class _HomeState extends State<Home> {
                   iconTheme: IconThemeData(color: Colors.white),
                   textTheme: TextTheme().apply(bodyColor: Colors.white),
                 ),
-                child: PopupMenuButton<int>(
-                  padding: EdgeInsets.all(0.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                  ),
-                  color: Colors.grey[900],
-                  onSelected: (item) => onSelected(context, item),
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      value: 0,
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.settings,
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            'Settings',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    ),
-                    PopupMenuDivider(),
-                    PopupMenuItem(
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      value: 1,
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.logout,
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            'Sign Out',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                child: configButton(context),
               ),
             ],
             //leading: IconButton(icon: Icon(Icons.menu), onPressed: () {}),
@@ -121,6 +71,60 @@ class _HomeState extends State<Home> {
           ),
         ),
       );
+
+  PopupMenuButton<int> configButton(BuildContext context) {
+    return PopupMenuButton<int>(
+                padding: EdgeInsets.all(0.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
+                color: Colors.grey[900],
+                onSelected: (item) => onSelected(context, item),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    value: 0,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.settings,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          'Settings',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PopupMenuDivider(),
+                  PopupMenuItem(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    value: 1,
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.logout,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          'Sign Out',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+  }
 
   void onSelected(BuildContext context, int item) {
     switch (item) {

@@ -35,8 +35,8 @@ class _IndividualChatState extends State<IndividualChat> {
   final storage = FlutterSecureStorage();
   List<MessageData> messages = [];
   late String employeeID;
-  bool needsScroll = true;
 
+  //controller
   TextEditingController messageController = TextEditingController();
   ScrollController scrollController = ScrollController();
   @override
@@ -45,6 +45,7 @@ class _IndividualChatState extends State<IndividualChat> {
     super.initState();
   }
 
+  // connect to socketio and recieve previous message and incoming message
   Future connectSocket() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     socket = io(
@@ -56,6 +57,7 @@ class _IndividualChatState extends State<IndividualChat> {
     socket.connect();
     employeeID = prefs.getString('employeeID')!;
     socket.emit("signin", {employeeID, widget.chatID, -1});
+    //load previous message
     socket.on('loadUniqueChat', (data) {
       var username = prefs.getString('username');
       if (data["sender"] == username) {
@@ -64,6 +66,7 @@ class _IndividualChatState extends State<IndividualChat> {
         setMessage("destination", data["text"], DateTime.parse(data["time"]));
       }
     });
+    //recieve incoming message
     socket.onConnect((data) {
       print("Connected");
       socket.on('chat message', (msg) {
@@ -75,6 +78,7 @@ class _IndividualChatState extends State<IndividualChat> {
     });
   }
 
+  //sent message to socket and set message
   void sendMessage(String message, String sourceId, String targetId) {
     var now = DateTime.now();
     setMessage("source", message, now);
@@ -82,6 +86,7 @@ class _IndividualChatState extends State<IndividualChat> {
         {"message": message, "source": sourceId, "targetId": widget.targetID});
   }
 
+  //set the type of message and stored in message list variable
   void setMessage(String type, String message, DateTime time) {
     MessageData messageData =
         MessageData(type: type, message: message, time: time);
@@ -93,13 +98,12 @@ class _IndividualChatState extends State<IndividualChat> {
   @override
   Widget build(BuildContext context) {
     Timer(
-    Duration(seconds: 1),
-    () => scrollController.animateTo(
-  scrollController.position.maxScrollExtent,
-  duration: Duration(seconds: 1),
-  curve: Curves.fastOutSlowIn,
-)
-  );
+        Duration(seconds: 1),
+        () => scrollController.animateTo(
+              scrollController.position.maxScrollExtent,
+              duration: Duration(seconds: 1),
+              curve: Curves.fastOutSlowIn,
+            ));
     return Stack(
       children: [
         Scaffold(
@@ -159,9 +163,8 @@ class _IndividualChatState extends State<IndividualChat> {
                       controller: scrollController,
                       shrinkWrap: true,
                       itemCount: messages.length + 1,
-                      itemBuilder: (context, index) {  
+                      itemBuilder: (context, index) {
                         if (index == messages.length) {
-                          
                           return Container(height: 50);
                         }
                         if (messages[index].type == "source") {
