@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:chatki_project/JSONtoDART/ShowHome.dart';
 import 'package:chatki_project/JSONtoDART/ShowSearch.dart';
 import 'package:chatki_project/Login_Register/login.dart';
+import 'package:chatki_project/Screens/GroupMember.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
 import 'package:chatki_project/Screens/createGroup/CreateGroup.dart';
 import 'package:chatki_project/settings_page.dart';
@@ -106,7 +107,9 @@ class _HomeViewState extends State<HomeView> {
                         children: [
                           searchBar(),
                           addGroupButton(context),
-                          SizedBox(height: 20.0,),
+                          SizedBox(
+                            height: 20.0,
+                          ),
                           personListView(snapshot),
                           SizedBox(height: 20),
                           groupListView(snapshot),
@@ -124,181 +127,158 @@ class _HomeViewState extends State<HomeView> {
 
   Column groupListView(AsyncSnapshot<ShowHome> snapshot) {
     return Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 10, left: 20, right: 20, bottom: 10),
-                              child: Center(
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.group),
-                                    Text(' Group'),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                  ],
+      children: [
+        Padding(
+          padding:
+              const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+          child: Center(
+            child: Row(
+              children: [
+                Icon(Icons.group),
+                Text(' Group'),
+                SizedBox(
+                  width: 20,
+                ),
+              ],
+            ),
+          ),
+        ),
+        ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: snapshot.data!.sendGroup.length,
+          itemBuilder: (context, i) {
+            return Column(
+              children: [
+                Card(
+                  color: Colors.white,
+                  margin: EdgeInsets.all(5),
+                  child: Column(
+                    children: [
+                      //padding: EdgeInsets.only(left: 10,right: 10),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return GroupMember(
+                                chatID: snapshot.data!.sendGroup[i].chatId);
+                          }));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          child: ListTile(
+                            title: Row(
+                              children: [
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[600],
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
                                 ),
-                              ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(snapshot.data!.sendGroup[i].chatName,
+                                    style: TextStyle(fontSize: 18)),
+                              ],
                             ),
-                            ListView.builder(
-                              physics : NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.sendGroup.length,
-                              itemBuilder: (context, i) {
-                                return Column(
-                                  children: [
-                                    Card(
-                                      color: Colors.white,
-                                      margin: EdgeInsets.all(5),
-                                      child: Column(
-                                        children: [
-                                          //padding: EdgeInsets.only(left: 10,right: 10),
-                                          InkWell(
-                                            onTap: () {
-                                              // Navigator.push(context,
-                                              //     MaterialPageRoute(
-                                              //         builder: (context) {
-                                              //   return OtherProfile(
-                                              //       targetID: widget.searchResult
-                                              //           .searchName[i].employeeId);
-                                              // }));
-                                            },
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 5, bottom: 5),
-                                              child: ListTile(
-                                                title: Row(
-                                                  children: [
-                                                    Container(
-                                                      width: 50,
-                                                      height: 50,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.grey[600],
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                30),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 20,
-                                                    ),
-                                                    Text(
-                                                        snapshot
-                                                            .data!
-                                                            .sendGroup[i]
-                                                            .chatName,
-                                                        style: TextStyle(
-                                                            fontSize: 18)),
-                                                  ],
-                                                ),
-                                                trailing: Text(
-                                                  snapshot.data!.sendGroup[i]
-                                                      .chatName,
-                                                  style: TextStyle(
-                                                      color: Colors.grey[600]),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    //Divider(thickness: 1),
-                                  ],
-                                );
-                              },
+                            trailing: Text(
+                              snapshot.data!.sendGroup[i].chatName,
+                              style: TextStyle(color: Colors.grey[600]),
                             ),
-                          ],
-                        );
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //Divider(thickness: 1),
+              ],
+            );
+          },
+        ),
+      ],
+    );
   }
 
   Column personListView(AsyncSnapshot<ShowHome> snapshot) {
     return Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 10, left: 20, right: 20, bottom: 10),
-                              child: Center(
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.person),
-                                    Text(' Person'),
-                                    SizedBox(
-                                      width: 20,
+      children: [
+        Padding(
+          padding:
+              const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+          child: Center(
+            child: Row(
+              children: [
+                Icon(Icons.person),
+                Text(' Person'),
+                SizedBox(
+                  width: 20,
+                ),
+              ],
+            ),
+          ),
+        ),
+        ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: snapshot.data!.user.length,
+          itemBuilder: (context, i) {
+            return Column(
+              children: [
+                Card(
+                    color: Colors.white,
+                    margin: EdgeInsets.all(5),
+                    child: Column(
+                      children: [
+                        //padding: EdgeInsets.only(left: 10,right: 10),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return OtherProfile(
+                                  targetID: snapshot.data!.user[i].employeeId,
+                                  chatName: snapshot.data!.user[i].userName);
+                            }));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 5, bottom: 5),
+                            child: ListTile(
+                              title: Row(
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[600],
+                                      borderRadius: BorderRadius.circular(30),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(snapshot.data!.user[i].userName,
+                                      style: TextStyle(fontSize: 18)),
+                                ],
+                              ),
+                              trailing: Text(
+                                snapshot.data!.user[i].employeeId,
+                                style: TextStyle(color: Colors.grey[600]),
                               ),
                             ),
-                            ListView.builder(
-                              physics : NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.user.length,
-                              itemBuilder: (context, i) {
-                                return Column(
-                                  children: [
-                                    Card(
-                                        color: Colors.white,
-                                        margin: EdgeInsets.all(5),
-                                        child: Column(
-                                          children: [
-                                            //padding: EdgeInsets.only(left: 10,right: 10),
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return OtherProfile(
-                                                      targetID: snapshot.data!
-                                                          .user[i].employeeId,
-                                                      chatName: snapshot.data!
-                                                          .user[i].userName);
-                                                }));
-                                              },
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: 5, bottom: 5),
-                                                child: ListTile(
-                                                  title: Row(
-                                                    children: [
-                                                      Container(
-                                                        width: 50,
-                                                        height: 50,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.grey[600],
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 20,
-                                                      ),
-                                                      Text(
-                                                          snapshot.data!.user[i]
-                                                              .userName,
-                                                          style: TextStyle(
-                                                              fontSize: 18)),
-                                                    ],
-                                                  ),
-                                                  trailing: Text(
-                                                    snapshot
-                                                        .data!.user[i].employeeId,
-                                                    style: TextStyle(
-                                                        color: Colors.grey[600]),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        )),
-                                    //Divider(thickness: 1),
-                                  ],
-                                );
-                              },
-                            ),
-                          ],
-                        );
+                          ),
+                        ),
+                      ],
+                    )),
+                //Divider(thickness: 1),
+              ],
+            );
+          },
+        ),
+      ],
+    );
   }
 
   Container addGroupButton(BuildContext context) {
