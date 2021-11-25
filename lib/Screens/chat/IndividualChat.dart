@@ -45,7 +45,7 @@ class _IndividualChatState extends State<IndividualChat> {
   Future connectSocket() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     socket = io(
-        'https://chattycat-heroku.herokuapp.com/',
+        'https://chattycat-heroku.herokuapp.com',
         OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .disableAutoConnect() // disable auto-connection
