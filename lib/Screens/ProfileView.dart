@@ -32,7 +32,7 @@ class _ProfileViewState extends State<ProfileView> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.get(
       Uri.parse(
-        'http://10.0.2.2:3000/profile/view',
+        'https://chattycat-heroku.herokuapp.com/profile/view',
       ),
       headers: <String, String>{
         'auth-token': token.toString(),

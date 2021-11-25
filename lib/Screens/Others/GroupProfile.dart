@@ -31,7 +31,7 @@ class _GroupProfileState extends State<GroupProfile> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.post(
         Uri.parse(
-          'http://10.0.2.2:3000/group',
+          'https://chattycat-heroku.herokuapp.com/group',
         ),
         headers: <String, String>{
           'auth-token': token.toString(),

@@ -32,7 +32,7 @@ class _HomeViewState extends State<HomeView> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var res = await http.get(
       Uri.parse(
-        'http://10.0.2.2:3000/home/origin',
+        'https://chattycat-heroku.herokuapp.com/home/origin',
       ),
       headers: <String, String>{
         'auth-token': token.toString(),
@@ -55,7 +55,7 @@ class _HomeViewState extends State<HomeView> {
     final refreshTokenSearch = await storage.read(key: "refreshToken");
     var res = await http.post(
         Uri.parse(
-          'http://10.0.2.2:3000/home/search',
+          'https://chattycat-heroku.herokuapp.com/home/search',
         ),
         headers: <String, String>{
           'auth-token': tokenSearch.toString(),

@@ -21,7 +21,7 @@ class _CreateGroupState extends State<CreateGroup> {
   Future createGroup() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
-    var res = await http.post(Uri.parse('http://10.0.2.2:3000/group/create'),
+    var res = await http.post(Uri.parse('https://chattycat-heroku.herokuapp.com/group/create'),
         headers: <String, String>{
           'auth-token': token.toString(),
           'refresh-token': refreshToken.toString(),

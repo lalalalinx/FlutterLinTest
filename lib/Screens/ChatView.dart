@@ -34,7 +34,7 @@ class _ChatViewState extends State<ChatView> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.get(
       Uri.parse(
-        'http://10.0.2.2:3000/chat',
+        'https://chattycat-heroku.herokuapp.com/chat',
       ),
       headers: <String, String>{
         'auth-token': token.toString(),

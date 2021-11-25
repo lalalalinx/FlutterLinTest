@@ -24,7 +24,7 @@ class _LoginState extends State<Login> {
   Future login() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var res = await http.post(
-        Uri.parse('http://10.0.2.2:3000/login-register/login'),
+        Uri.parse('https://chattycat-heroku.herokuapp.com/login-register/login'),
         headers: <String, String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },
@@ -135,8 +135,8 @@ class _LoginState extends State<Login> {
               onPressed: () {
                 // userNameController.text = 'jeremiee';
                 // passwordController.text = '1234';
-                userNameController.text = 'jat0800';
-                passwordController.text = 'jat0850567878';
+                // userNameController.text = 'jat0800';
+                // passwordController.text = 'jat0850567878';
                 login();
               },
               child: const Text(

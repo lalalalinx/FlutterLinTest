@@ -20,7 +20,7 @@ class _RegisterState extends State<Register> {
 
   Future registerUser() async {
     var res = await http.post(
-        Uri.parse('http://10.0.2.2:3000/login-register/register'),
+        Uri.parse('https://chattycat-heroku.herokuapp.com/login-register/register'),
         headers: <String, String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },
@@ -46,7 +46,7 @@ class _RegisterState extends State<Register> {
 
   Future login() async {
     var res = await http.post(
-        Uri.parse('http://10.0.2.2:4000/login-register/login'),
+        Uri.parse('https://chattycat-heroku.herokuapp.com/login-register/login'),
         headers: <String, String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },

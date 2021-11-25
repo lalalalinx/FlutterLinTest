@@ -44,7 +44,7 @@ class _OtherProfileState extends State<OtherProfile> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.post(
         Uri.parse(
-          'http://10.0.2.2:3000/profile/viewOther',
+          'https://chattycat-heroku.herokuapp.com/profile/viewOther',
         ),
         headers: <String, String>{
           'auth-token': token.toString(),
@@ -78,7 +78,7 @@ class _OtherProfileState extends State<OtherProfile> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.post(
         Uri.parse(
-          "http://10.0.2.2:3000/home/chat",
+          "https://chattycat-heroku.herokuapp.com/home/chat",
         ),
         headers: <String, String>{
           'auth-token': token.toString(),
