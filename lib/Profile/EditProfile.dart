@@ -8,11 +8,7 @@
 import 'dart:io';
 
 import 'package:chatki_project/Model/ProfileData.dart';
-import 'package:chatki_project/Model/ProfileUserData.dart';
-import 'package:chatki_project/Screens/ProfileView.dart';
 import 'package:flutter/material.dart';
-import 'package:chatki_project/Profile/ProfildWidget.dart';
-import 'package:chatki_project/Model/EditProfileData.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -78,7 +74,6 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ProfileUserData.myUser;
     userFNameController.text = widget.profileDatas.userFName;
     userLNameController.text = widget.profileDatas.userLName;
     emailController.text = widget.profileDatas.email;
@@ -137,7 +132,7 @@ class _EditProfileState extends State<EditProfile> {
             children: [
               SizedBox(height: 20),
               Container(child: imageProfile(), height: 150, width: 150),
-              buildEdit(user),
+              eFormInfo(),
             ],
           ),
         ),
@@ -145,7 +140,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget buildEdit(user) => Container(
+  Container eFormInfo() => Container(
         //color: Colors.grey[900],
         padding: EdgeInsets.symmetric(horizontal: 48),
         child: Column(

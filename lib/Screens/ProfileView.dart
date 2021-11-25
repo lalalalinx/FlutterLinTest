@@ -4,10 +4,8 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:chatki_project/Model/ProfileData.dart';
-import 'package:chatki_project/Model/ProfileUserData.dart';
 import 'package:chatki_project/JSONtoDART/ShowProfile.dart';
 import 'package:flutter/material.dart';
-import 'package:chatki_project/Profile/ProfildWidget.dart';
 import 'package:chatki_project/Profile/EditProfile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -110,7 +108,6 @@ class _ProfileViewState extends State<ProfileView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              //height: 200.0,
                               child: Container(
                                 color: Colors.grey[900],
                               ),
@@ -167,22 +164,7 @@ class _ProfileViewState extends State<ProfileView> {
                       );
                   }),
             ),
-
-            //   Text(
-            //     'stored.employeeID',
-            //     style: TextStyle(
-            //       fontSize: 30,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ),
-            // ),
-
-            // ProfileWidget(
-            //   image: user.image,
-            //   onClicked: () async {},
-            // ),
             const SizedBox(height: 24),
-            //buildName(user),
           ],
         ),
       ]),

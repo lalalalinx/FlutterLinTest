@@ -2,7 +2,6 @@
 //hi
 class ProfileData{
   final String employeeID;
-  //final String image;
   final String email;
   final String tel;
   final String userFName;
@@ -13,7 +12,6 @@ class ProfileData{
 
 const ProfileData({
   required this.employeeID,
-  //required this.image,
   required this.email,
   required this.tel,
   required this.userFName,
