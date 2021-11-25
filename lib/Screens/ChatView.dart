@@ -133,6 +133,30 @@ class _ChatViewState extends State<ChatView> {
                                                           .getAllChat[i]
                                                           .previewChat[0]
                                                           .time
+                                                          .day
+                                                          .toString() +
+                                                      "/" +
+                                                      snapshot
+                                                          .data!
+                                                          .getAllChat[i]
+                                                          .previewChat[0]
+                                                          .time
+                                                          .month
+                                                          .toString() +
+                                                      "/" +
+                                                      snapshot
+                                                          .data!
+                                                          .getAllChat[i]
+                                                          .previewChat[0]
+                                                          .time
+                                                          .year
+                                                          .toString() +
+                                                      " " +
+                                                      snapshot
+                                                          .data!
+                                                          .getAllChat[i]
+                                                          .previewChat[0]
+                                                          .time
                                                           .hour
                                                           .toString() +
                                                       ":" +
