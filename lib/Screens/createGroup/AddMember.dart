@@ -37,6 +37,9 @@ class _AddMemberState extends State<AddMember> {
           'targetName': targetName
         });
     final showSearchInvite = showSearchInviteFromJson(res.body);
+    setState(() {
+          searchData.clear();
+        });
     if (res.statusCode == 200) {
       print("OK");
       for (var member in showSearchInvite.searchName) {
