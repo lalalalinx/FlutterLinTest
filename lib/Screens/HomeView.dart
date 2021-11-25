@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var res = await http.get(
       Uri.parse(
-        'http://10.0.2.2:4000/home/origin',
+        'http://10.0.2.2:3000/home/origin',
       ),
       headers: <String, String>{
         'auth-token': token.toString(),

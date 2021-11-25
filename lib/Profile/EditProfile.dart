@@ -58,23 +58,12 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  // Future pictureTest() async{
+  // Future pictureTest(String filepath) async{
   //   final token = await storage.read(key: "token");
   //   final refreshToken = await storage.read(key: "refreshToken");
   //   var res = http.MultipartRequest('POST',Uri.parse('http://10.0.2.2:4000/profile/add/image'));
-  //   // var res = await http.patch(Uri.parse('http://10.0.2.2:4000/profile/add/image'),
-  //   //     headers: <String, String>{
-  //   //       'auth-token': token.toString(),
-  //   //       'refresh-token': refreshToken.toString(),
-  //   //     },
-  //   //     body:{
-  //   //       'img': image
-  //   //     });
-  // if (res.statusCode == 200) {
-  //     print("Correct");
-  //   } else {
-  //     print("Fail");
-  //   }
+  //   res.files.add(await http.MultipartFile.fromPath("img",filepath));
+  //   res.headers.add
   // }
 
   //controller
