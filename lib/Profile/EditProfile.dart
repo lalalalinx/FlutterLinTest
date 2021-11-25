@@ -5,12 +5,15 @@
 // import 'package:html/dom.dart';
 // import 'package:html/dom_parsing.dart';
 // import 'package:html/parser.dart';
+import 'dart:io';
+
 import 'package:chatki_project/Model/ProfileData.dart';
 import 'package:chatki_project/Model/ProfileUserData.dart';
 import 'package:chatki_project/Screens/ProfileView.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/Profile/ProfildWidget.dart';
 import 'package:chatki_project/Model/EditProfileData.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +27,11 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+
   final storage = FlutterSecureStorage();
+  final ImagePicker picker = ImagePicker();
+  late PickedFile imageFile;
+  File? image;
 
   Future editProfile() async {
     final token = await storage.read(key: "token");
@@ -60,8 +67,6 @@ class _EditProfileState extends State<EditProfile> {
   final cityController = TextEditingController();
   final streetController = TextEditingController();
 
-  late PickedFile _imageFile;
-  final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     final user = ProfileUserData.myUser;
@@ -210,26 +215,31 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  void takePhoto(ImageSource source) async {
-    final pickedFile = await _picker.getImage(
-      source: source,
-    );
-    setState(() {
-      _imageFile = pickedFile!;
-    });
+  Future takePhoto(ImageSource source) async {
+    try{
+    final image = await picker.pickImage(source: source);
+    if(image == null) return;
+
+    final imageTemporary = File(image.path);
+    setState(() {this.image = imageTemporary;});
+    } on PlatformException catch (e){
+      print("Failed to pick image: $e");
+    }
   }
 
   Widget imageProfile() {
     return Center(
       child: Stack(
         children: <Widget>[
-          CircleAvatar(
+          // CircleAvatar(
+          //   radius: 80,
+          //   backgroundImage: AssetImage("assets/images/arumjoh.png"),
+          //   // backgroundImage: FileImage(File(_imageFile.path)),
+          //   // backgroundImage: imageFile == null? AssetImage("assets/images/arumjoh.png") :FileImage(File(imageFile.path)) as ImageProvider
+          // ),
+          image!= null ? ClipOval(child: Image.file(image!,width:150,height:150,fit: BoxFit.cover)) : CircleAvatar(
             radius: 80,
             backgroundImage: AssetImage("assets/images/arumjoh.png"),
-            //backgroundImage: FileImage(File(_imageFile.path)),
-            // backgroundImage: _imageFile == null
-            // ? AssetImage("assets/images/arumjoh.png")
-            // : FileImage(File(_imageFile.path)),
           ),
           Positioned(
             bottom: 0,
