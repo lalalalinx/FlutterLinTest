@@ -98,7 +98,77 @@ class _AddMemberState extends State<AddMember> {
                     ],
                   )),
                   const SizedBox(height: 15),
-                      searchBar(),
+                  searchBar(),
+                  //
+                  ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: searchData.length,
+          itemBuilder: (context, i) {
+            return Column(
+              children: [
+                Card(
+                    color: Colors.white,
+                    margin: EdgeInsets.all(5),
+                    child: Column(
+                      children: [
+                        //padding: EdgeInsets.only(left: 10,right: 10),
+                        InkWell(
+                          onTap: () {
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(builder: (context) {
+                            //   return OtherProfile(
+                            //       targetID: snapshot.data!.user[i].employeeId,
+                            //       chatName: snapshot.data!.user[i].userName);
+                            // }));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 5, bottom: 5),
+                            child: ListTile(
+                              title: Row(
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[600],
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(searchData[i].userName,
+                                      style: TextStyle(fontSize: 18)),
+                                ],
+                              ),
+                              trailing: Text(
+                                searchData[i].employeeId,
+                                style: TextStyle(color: Colors.grey[600]),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                //Divider(thickness: 1),
+              ],
+            );
+          },
+        ),
+                  ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: searchData.length,
+                    itemBuilder: (context, i) {
+                      return Column(
+                        children: [
+                          Text(searchData[i].employeeId),
+                          Text(searchData[i].userName),
+                        ],
+                      );
+                    },
+                  ),
                   // SizedBox(
                   //   height: 20,
                   // ),
@@ -128,19 +198,6 @@ class _AddMemberState extends State<AddMember> {
                   // ),
                 ],
               ),
-            ),
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: searchData.length,
-              itemBuilder: (context, i) {
-                return Column(
-                  children: [
-                    Text(searchData[i].employeeId),
-                    Text(searchData[i].userName),
-                  ],
-                );
-              },
             ),
           ],
         ),
@@ -191,7 +248,15 @@ class _AddMemberState extends State<AddMember> {
           child: TextFormField(
             decoration: const InputDecoration(
               hintText: 'Search',
-              border: OutlineInputBorder(
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(0),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(0),
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(0),
