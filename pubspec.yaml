@@ -39,7 +39,6 @@ dependencies:
   jwt_decoder: ^2.0.1
   flutter_local_notifications: ^9.1.2
   image_picker: ^0.8.4+4
-  html: ^0.15.0
 
 
 dev_dependencies:

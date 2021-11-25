@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, non_constant_identifier_names, prefer_const_literals_to_create_immutables
 
+import 'package:chatki_project/JSONtoDART/ShowSearchInvite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +9,6 @@ class AddMember extends StatefulWidget {
   const AddMember({
     Key? key,
   }) : super(key: key);
-  //final ProfileData profileDatas;
 
   @override
   _AddMemberState createState() => _AddMemberState();
@@ -16,86 +16,42 @@ class AddMember extends StatefulWidget {
 
 class _AddMemberState extends State<AddMember> {
   final storage = FlutterSecureStorage();
+  //controller
+  final searchController = TextEditingController();
 
-  // Future editProfile() async {
-  //   final token = await storage.read(key: "token");
-  //   final refreshToken = await storage.read(key: "refreshToken");
-  //   var res = await http.post(Uri.parse('http://10.0.2.2:4000/profile/edit'),
-  //       headers: <String, String>{
-  //         'auth-token': token.toString(),
-  //         'refresh-token': refreshToken.toString(),
-  //         'Context-Type': 'application/json;charSet=UTF-8'
-  //       },
-  //       body: <String, String>{
-  //         'userFName': userFNameController.text,
-  //         'userLName': userLNameController.text,
-  //         'email': emailController.text,
-  //         'tel': telController.text,
-  //         'zip': zipController.text,
-  //         'city': cityController.text,
-  //         'street': streetController.text
-  //       });
-  //   if (res.statusCode == 200) {
-  //     print(res.body);
-  //   } else {
-  //     print(res.body.toString());
-  //   }
-  // }
+  List<SearchName> searchData = [];
 
-  // //controller
-  // final userFNameController = TextEditingController();
-  // final userLNameController = TextEditingController();
-  // final emailController = TextEditingController();
-  // final telController = TextEditingController();
-  // final zipController = TextEditingController();
-  // final cityController = TextEditingController();
-  // final streetController = TextEditingController();
+  Future searchInvite(String targetName) async {
+    final tokenSearch = await storage.read(key: "token");
+    final refreshTokenSearch = await storage.read(key: "refreshToken");
+    var res = await http.post(
+        Uri.parse(
+          'http://10.0.2.2:3000/group/invite/search',
+        ),
+        headers: <String, String>{
+          'auth-token': tokenSearch.toString(),
+          'refresh-token': refreshTokenSearch.toString(),
+          'Context-Type': 'application/json;charSet=UTF-8'
+        },
+        body: <String, String>{
+          'targetName': targetName
+        });
+    final showSearchInvite = showSearchInviteFromJson(res.body);
+    if (res.statusCode == 200) {
+      print("OK");
+      for (var member in showSearchInvite.searchName) {
+        setState(() {
+          searchData.add(member);
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // final user = ProfileUserData.myUser;
-    // userFNameController.text = widget.profileDatas.userFName;
-    // userLNameController.text = widget.profileDatas.userLName;
-    // emailController.text = widget.profileDatas.email;
-    // telController.text = widget.profileDatas.tel;
-    // zipController.text = widget.profileDatas.zip;
-    // cityController.text = widget.profileDatas.city;
-    // streetController.text = widget.profileDatas.street;
-
     return Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.grey[900],
-          leading: Row(
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    size: 20,
-                    color: Colors.white,
-                  )),
-            ],
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Add new member',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                  )),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(Icons.group_add),
-              SizedBox(
-                width: 10,
-              ),
-            ],
-          )),
+      appBar: AddMemberAppBar(context),
       body: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -129,7 +85,6 @@ class _AddMemberState extends State<AddMember> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 30),
-                  
                   Center(
                       child: Row(
                     children: [
@@ -143,120 +98,134 @@ class _AddMemberState extends State<AddMember> {
                     ],
                   )),
                   const SizedBox(height: 15),
-
-                  Row(
-                    children: [
-                      Container(
-                        width: 284,
-                        child: editForm("EmployeeID"),
-                      ),
-                      //SizedBox(width: 4),
-                      IconButton(
-                        icon: Icon(Icons.remove_circle_outline_sharp,size: 30,),
-                        color: Colors.redAccent,
-                        onPressed: () {},
-                      )
-                    ],
-                  ),
-                  //editForm("EmployeeID"),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    //width: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // <-----------add MORE here
-                      },
-                      child: Text(
-                        'Add more member',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green[400],
-                        fixedSize: const Size(400, 40),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          side: BorderSide(color: Colors.green, width: 0.5),
-                        ),
-                      ),
-                    ),
-                  ),
+                      searchBar(),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+                  // SizedBox(
+                  //   //width: 50,
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       // <-----------add MORE here
+                  //     },
+                  //     child: Text(
+                  //       'Add more member',
+                  //       style: TextStyle(
+                  //         fontSize: 16,
+                  //         color: Colors.white,
+                  //         fontWeight: FontWeight.w400,
+                  //       ),
+                  //     ),
+                  //     style: ElevatedButton.styleFrom(
+                  //       primary: Colors.green[400],
+                  //       fixedSize: const Size(400, 40),
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(50),
+                  //         side: BorderSide(color: Colors.green, width: 0.5),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildEdit(user) => Container(
-        padding: EdgeInsets.symmetric(horizontal: 48),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text('Edit Information',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  )),
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: searchData.length,
+              itemBuilder: (context, i) {
+                return Column(
+                  children: [
+                    Text(searchData[i].employeeId),
+                    Text(searchData[i].userName),
+                  ],
+                );
+              },
             ),
-
-            const SizedBox(height: 15),
-            editForm("Group Name"),
-
-            // const SizedBox(height: 15),
-            // editForm("Name", userFNameController),
-            // const SizedBox(height: 15),
-            // editForm("Surname", userLNameController),
-            // const SizedBox(height: 15),
-            // editForm("Email", emailController),
-            // const SizedBox(height: 15),
-            // editForm("Tel", telController),
-            // const SizedBox(height: 15),
-            // editForm("City", cityController),
-            // const SizedBox(height: 15),
-            // editForm("Street", streetController),
-            // const SizedBox(height: 15),
-            // editForm("ZIP", zipController),
           ],
         ),
-      );
-
-  // TextFormField editForm(String hText, TextEditingController controller) {
-  //   return TextFormField(
-  //     decoration: InputDecoration(
-  //       labelText: hText,
-  //       hintText: hText,
-  //       border: OutlineInputBorder(
-  //           borderRadius: BorderRadius.all(Radius.circular(30.0))),
-  //       contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-  //     ),
-  //     controller: controller,
-  //   );
-  // }
-  TextFormField editForm(String hText) {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: hText,
-        hintText: hText,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(30.0))),
-        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
       ),
     );
   }
 
-  // void onDelete(int index){
-  //   setState(() {
-  //     users.removeAt(index);
-  //   });
-  // }
+  AppBar AddMemberAppBar(BuildContext context) {
+    return AppBar(
+        elevation: 0,
+        backgroundColor: Colors.grey[900],
+        leading: Row(
+          children: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                  color: Colors.white,
+                )),
+          ],
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Add new member',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                )),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(Icons.group_add),
+            SizedBox(
+              width: 10,
+            ),
+          ],
+        ));
+  }
+
+  Row searchBar() {
+    return Row(
+      children: [
+        Container(
+          width: 272,
+          child: TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Search',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(0),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(0),
+                ),
+              ),
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+            ),
+            controller: searchController,
+          ),
+        ),
+        Container(
+          width: 60,
+          child: ElevatedButton(
+            onPressed: () {
+              searchInvite(searchController.text);
+            },
+            child: Icon(Icons.search),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.grey[900],
+              fixedSize: const Size(350, 50),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(0),
+                    topRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(0),
+                    bottomRight: Radius.circular(30),
+                  ),
+                  side: BorderSide(color: Colors.black, width: 1.5)),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
