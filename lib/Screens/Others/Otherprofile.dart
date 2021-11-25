@@ -96,7 +96,7 @@ class _OtherProfileState extends State<OtherProfile> {
         context,
         MaterialPageRoute(
           builder: (context) {
-             return IndividualChat(
+            return IndividualChat(
                     chatID: showOtherChat.chatId,
                         chatName: showOtherChat.chatName,
                         targetID: widget.targetID); //<----------ไปหน้าแชทคนนั้นๆ
