@@ -205,153 +205,15 @@ class _OtherProfileState extends State<OtherProfile> {
                                 ),
                               ),
                               SizedBox(height: 20.0),
-                              Center(
-                                //padding: EdgeInsets.only(left: 40),
-                                child: Text(
-                                  'Name - Surname',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.deepPurple,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 10),
-                              Center(
-                                  //padding: EdgeInsets.only(left: 125),
-                                  child: Padding(
-                                padding: EdgeInsets.only(
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: Text(
-                                  stored.userFName + '  ' + stored.userLName,
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey[900],
-                                  ),
-                                ),
-                              )),
+                              DisplayOtherNandL(),
                               SizedBox(height: 10.0),
                               Divider(thickness: 1),
                               SizedBox(height: 20.0),
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  Text(
-                                    'Email :',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.deepPurple,
-                                    ),
-                                  ),
-                                  SizedBox(width: 25.0),
-                                  Text(
-                                    stored.email,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.grey[900],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10.0),
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  Text(
-                                    'Tel :',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.deepPurple,
-                                    ),
-                                  ),
-                                  SizedBox(width: 46.0),
-                                  Text(
-                                    stored.tel,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.grey[900],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              DisplayOtherEmailAndTel(),
                               SizedBox(height: 10.0),
                               Divider(thickness: 1),
                               SizedBox(height: 20.0),
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  Text(
-                                    'City',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.deepPurple,
-                                    ),
-                                  ),
-                                  SizedBox(width: 49.0),
-                                  Text(
-                                    stored.city,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.grey[900],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10.0),
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  Text(
-                                    'Street',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.deepPurple,
-                                    ),
-                                  ),
-                                  SizedBox(width: 31.0),
-                                  Text(
-                                    stored.street,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.grey[900],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10.0),
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  Text(
-                                    'ZIP',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.deepPurple,
-                                    ),
-                                  ),
-                                  SizedBox(width: 50.0),
-                                  Text(
-                                    stored.zip,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.grey[900],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              DisplayOtherAddress(),
                               Padding(
                                 //ปุ่ม 'chat' ด้านล่าง
                                 padding: const EdgeInsets.symmetric(
@@ -402,5 +264,120 @@ class _OtherProfileState extends State<OtherProfile> {
         ),
       ),
     );
+  }
+
+  Column DisplayOtherAddress() {
+    return Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(width: 40.0),
+                                    staticText("City"),
+                                    SizedBox(width: 49.0),
+                                    infoOtherText(stored.city),
+                                  ],
+                                ),
+                                SizedBox(height: 10.0),
+                                Row(
+                                  children: [
+                                    SizedBox(width: 40.0),
+                                    staticText("Street"),
+                                    SizedBox(width: 31.0),
+                                    infoOtherText(stored.street),
+                                  ],
+                                ),
+                                SizedBox(height: 10.0),
+                                Row(
+                                  children: [
+                                    SizedBox(width: 40.0),
+                                    staticText("ZIP"),
+                                    SizedBox(width: 50.0),
+                                    infoOtherText(stored.zip),
+                                  ],
+                                ),
+                              ],
+                            );
+  }
+
+  Column DisplayOtherEmailAndTel() {
+    return Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(width: 40.0),
+                                    staticText("Email"),
+                                    SizedBox(width: 25.0),
+                                    infoOtherText(stored.email),
+                                    
+                                  ],
+                                ),
+                                SizedBox(height: 10.0),
+                                Row(
+                                  children: [
+                                    SizedBox(width: 40.0),
+                                    staticText("Tel"),
+                                    SizedBox(width: 46.0),
+                                    infoOtherText(stored.tel),
+                                  ],
+                                ),
+                              ],
+                            );
+  }
+
+  Text staticText(String text) {
+    return Text(
+                                    '$text :',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.deepPurple,
+                                    ),
+                                  );
+  }
+
+  Text infoOtherText(String text) {
+    return Text(
+                                    text,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey[900],
+                                    ),
+                                  );
+  }
+
+  Column DisplayOtherNandL() {
+    return Column(
+                              children: [
+                                Center(
+                                  //padding: EdgeInsets.only(left: 40),
+                                  child: Text(
+                                    'Name - Surname',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.deepPurple,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Center(
+                                    //padding: EdgeInsets.only(left: 125),
+                                    child: Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  child: Text(
+                                    stored.userFName + '  ' + stored.userLName,
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey[900],
+                                    ),
+                                  ),
+                                )),
+                              ],
+                            );
   }
 }
