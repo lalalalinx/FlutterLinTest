@@ -215,7 +215,9 @@ class _SearchState extends State<Search> {
                                         SizedBox(
                                           width: 20,
                                         ),
-                                        
+                                        Text(
+                                            widget.searchResult.groups[i],
+                                            style: TextStyle(fontSize: 18)),
                                       ],
                                     ),
                                   ),
