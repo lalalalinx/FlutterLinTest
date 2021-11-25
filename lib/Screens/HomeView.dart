@@ -61,7 +61,7 @@ class _HomeViewState extends State<HomeView> {
     final refreshTokenSearch = await storage.read(key: "refreshToken");
     var res = await http.post(
         Uri.parse(
-          'http://10.0.2.2:4000/home/search',
+          'http://10.0.2.2:3000/home/search',
         ),
         headers: <String, String>{
           'auth-token': tokenSearch.toString(),

@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.delete(
       Uri.parse(
-        'http://10.0.2.2:4000/login-register/logout',
+        'http://10.0.2.2:3000/login-register/logout',
       ),
       headers: <String, String>{
         'auth-token': token.toString(),

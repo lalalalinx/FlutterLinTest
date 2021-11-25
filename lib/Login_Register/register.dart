@@ -20,7 +20,7 @@ class _RegisterState extends State<Register> {
 
   Future registerUser() async {
     var res = await http.post(
-        Uri.parse('http://10.0.2.2:4000/login-register/register'),
+        Uri.parse('http://10.0.2.2:3000/login-register/register'),
         headers: <String, String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },

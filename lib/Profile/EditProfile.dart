@@ -31,12 +31,12 @@ class _EditProfileState extends State<EditProfile> {
   final storage = FlutterSecureStorage();
   final ImagePicker picker = ImagePicker();
   late PickedFile imageFile;
-  File? image;
+  
 
   Future editProfile() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
-    var res = await http.post(Uri.parse('http://10.0.2.2:4000/profile/edit'),
+    var res = await http.post(Uri.parse('http://10.0.2.2:3000/profile/edit'),
         headers: <String, String>{
           'auth-token': token.toString(),
           'refresh-token': refreshToken.toString(),
@@ -58,6 +58,25 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  // Future pictureTest() async{
+  //   final token = await storage.read(key: "token");
+  //   final refreshToken = await storage.read(key: "refreshToken");
+  //   var res = http.MultipartRequest('POST',Uri.parse('http://10.0.2.2:4000/profile/add/image'));
+  //   // var res = await http.patch(Uri.parse('http://10.0.2.2:4000/profile/add/image'),
+  //   //     headers: <String, String>{
+  //   //       'auth-token': token.toString(),
+  //   //       'refresh-token': refreshToken.toString(),
+  //   //     },
+  //   //     body:{
+  //   //       'img': image
+  //   //     });
+  // if (res.statusCode == 200) {
+  //     print("Correct");
+  //   } else {
+  //     print("Fail");
+  //   }
+  // }
+
   //controller
   final userFNameController = TextEditingController();
   final userLNameController = TextEditingController();
@@ -66,6 +85,7 @@ class _EditProfileState extends State<EditProfile> {
   final zipController = TextEditingController();
   final cityController = TextEditingController();
   final streetController = TextEditingController();
+  File? image;
 
   @override
   Widget build(BuildContext context) {
@@ -222,6 +242,7 @@ class _EditProfileState extends State<EditProfile> {
 
     final imageTemporary = File(image.path);
     setState(() {this.image = imageTemporary;});
+    // pictureTest();
     } on PlatformException catch (e){
       print("Failed to pick image: $e");
     }

@@ -34,7 +34,7 @@ class _ProfileViewState extends State<ProfileView> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.get(
       Uri.parse(
-        'http://10.0.2.2:4000/profile/view',
+        'http://10.0.2.2:3000/profile/view',
       ),
       headers: <String, String>{
         'auth-token': token.toString(),

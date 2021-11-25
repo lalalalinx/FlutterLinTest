@@ -48,7 +48,7 @@ class _OtherProfileState extends State<OtherProfile> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.post(
         Uri.parse(
-          'http://10.0.2.2:4000/profile/viewOther',
+          'http://10.0.2.2:3000/profile/viewOther',
         ),
         headers: <String, String>{
           'auth-token': token.toString(),
@@ -82,7 +82,7 @@ class _OtherProfileState extends State<OtherProfile> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.post(
         Uri.parse(
-          "http://10.0.2.2:4000/home/chat",
+          "http://10.0.2.2:3000/home/chat",
         ),
         headers: <String, String>{
           'auth-token': token.toString(),

@@ -27,7 +27,7 @@ class _GroupMemberState extends State<GroupMember> {
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.post(
         Uri.parse(
-          'http://10.0.2.2:4000/group',
+          'http://10.0.2.2:3000/group',
         ),
         headers: <String, String>{
           'auth-token': token.toString(),

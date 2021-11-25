@@ -24,7 +24,7 @@ class _LoginState extends State<Login> {
   Future login() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var res = await http.post(
-        Uri.parse('http://10.0.2.2:4000/login-register/login'),
+        Uri.parse('http://10.0.2.2:3000/login-register/login'),
         headers: <String, String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },
@@ -133,8 +133,8 @@ class _LoginState extends State<Login> {
             padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
             child: ElevatedButton(
               onPressed: () {
-                userNameController.text = 'jeremiee';
-                passwordController.text = '1234';
+                // userNameController.text = 'jeremiee';
+                // passwordController.text = '1234';
                 login();
               },
               child: const Text(
