@@ -3,13 +3,9 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:chatki_project/JSONtoDART/ShowOtherChat.dart';
-import 'package:chatki_project/Screens/Home.dart';
-import 'package:chatki_project/Screens/HomeView.dart';
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
-
 import 'package:chatki_project/Model/ProfileData.dart'; //list data ของ user
-import 'package:chatki_project/Model/ProfileUserData.dart'; //kiki
 import 'package:chatki_project/JSONtoDART/ShowProfile.dart'; //๋JSON
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

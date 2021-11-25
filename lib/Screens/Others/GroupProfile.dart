@@ -2,7 +2,6 @@
 
 import 'package:chatki_project/JSONtoDART/ShowGroupMember.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
-import 'package:chatki_project/Screens/chat/GroupChat.dart';
 import 'package:chatki_project/Screens/createGroup/AddMember.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

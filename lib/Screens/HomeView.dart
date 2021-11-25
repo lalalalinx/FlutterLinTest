@@ -4,17 +4,12 @@ import 'dart:convert';
 
 import 'package:chatki_project/JSONtoDART/ShowHome.dart';
 import 'package:chatki_project/JSONtoDART/ShowSearch.dart';
-import 'package:chatki_project/Login_Register/login.dart';
 import 'package:chatki_project/Screens/Others/GroupProfile.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
 import 'package:chatki_project/Screens/createGroup/CreateGroup.dart';
-import 'package:chatki_project/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:chatki_project/Model/HomeViewData.dart';
-import 'package:chatki_project/settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Search/Search.dart';
 
@@ -25,7 +20,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final storage = FlutterSecureStorage();
-  late final HomeViewData homedd;
 
   @override
   void initState() {

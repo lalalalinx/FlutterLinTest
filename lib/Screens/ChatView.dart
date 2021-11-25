@@ -5,8 +5,6 @@ import 'dart:async';
 import 'package:chatki_project/JSONtoDART/ShowChat.dart';
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
-import 'package:chatki_project/Model/MutipleChatData.dart';
-import 'Others/Otherprofile.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 

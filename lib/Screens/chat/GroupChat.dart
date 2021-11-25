@@ -3,17 +3,14 @@
 // sender , reciever
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:chatki_project/Model/MessageData.dart';
-import 'package:chatki_project/Model/chatData.dart';
 import 'package:chatki_project/Screens/chat/OwnMessageCard.dart';
 import 'package:chatki_project/Screens/chat/ReplyCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:http/http.dart' as http;
 
 class GroupChat extends StatefulWidget {
   const GroupChat({
