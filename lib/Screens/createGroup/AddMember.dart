@@ -53,144 +53,111 @@ class _AddMemberState extends State<AddMember> {
       backgroundColor: Colors.grey[900],
       appBar: AddMemberAppBar(context),
       body: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        child: Stack(
+        color: Colors.grey[100],
+        child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
-            Scaffold(
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  //<---------------------------------------------ยืนยัน create ตรงนี้
-                  //editProfile();
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.done),
-              ),
-              body: ListView(
-                physics: BouncingScrollPhysics(),
-                children: [
-                  // ProfileWidget(
-                  //   image: user.image,
-                  //   onClicked: () async {},
-                  // ),
-                  const SizedBox(height: 20),
-                  //buildEdit(user),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 30),
-                  Center(
-                      child: Row(
-                    children: [
-                      Text('Member  ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          )),
-                      Icon(Icons.group),
-                    ],
-                  )),
-                  const SizedBox(height: 15),
-                  searchBar(),
-                  SizedBox(height: 20),
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: searchData.length,
-                    itemBuilder: (context, i) {
-                      return Column(
-                        children: [
-                          Card(
-                              color: Colors.white,
-                              margin: EdgeInsets.all(5),
-                              child: Column(
-                                children: [
-                                  //padding: EdgeInsets.only(left: 10,right: 10),
-                                  InkWell(
-                                    onTap: () {
-                                      // Navigator.push(context,
-                                      //     MaterialPageRoute(builder: (context) {
-                                      //   return OtherProfile(
-                                      //       targetID: snapshot.data!.user[i].employeeId,
-                                      //       chatName: snapshot.data!.user[i].userName);
-                                      // }));
-                                    },
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 5, bottom: 5),
-                                      child: ListTile(
-                                        title: Row(
-                                          children: [
-                                            Container(
-                                              width: 50,
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey[600],
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
+        Container(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 30),
+                    searchBar(),
+                    SizedBox(height: 20),
+                    ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: searchData.length,
+                      itemBuilder: (context, i) {
+                        return Column(
+                          children: [
+                            Card(
+                                color: Colors.white,
+                                margin: EdgeInsets.all(5),
+                                child: Column(
+                                  children: [
+                                    //padding: EdgeInsets.only(left: 10,right: 10),
+                                    InkWell(
+                                      onTap: () {
+                                        // Navigator.push(context,
+                                        //     MaterialPageRoute(builder: (context) {
+                                        //   return OtherProfile(
+                                        //       targetID: snapshot.data!.user[i].employeeId,
+                                        //       chatName: snapshot.data!.user[i].userName);
+                                        // }));
+                                      },
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.only(top: 5, bottom: 5),
+                                        child: ListTile(
+                                          title: Row(
+                                            children: [
+                                              Container(
+                                                width: 50,
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey[600],
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text(searchData[i].userName,
-                                                style: TextStyle(fontSize: 18)),
-                                          ],
-                                        ),
-                                        trailing: Text(
-                                          searchData[i].employeeId,
-                                          style: TextStyle(
-                                              color: Colors.grey[600]),
+                                              SizedBox(
+                                                width: 20,
+                                              ),
+                                              Text(searchData[i].userName,
+                                                  style: TextStyle(fontSize: 18)),
+                                            ],
+                                          ),
+                                          trailing: Text(
+                                            searchData[i].employeeId,
+                                            style: TextStyle(
+                                                color: Colors.grey[600]),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              )),
-                          //Divider(thickness: 1),
-                        ],
-                      );
-                    },
-                  ),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // SizedBox(
-                  //   //width: 50,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       // <-----------add MORE here
-                  //     },
-                  //     child: Text(
-                  //       'Add more member',
-                  //       style: TextStyle(
-                  //         fontSize: 16,
-                  //         color: Colors.white,
-                  //         fontWeight: FontWeight.w400,
-                  //       ),
-                  //     ),
-                  //     style: ElevatedButton.styleFrom(
-                  //       primary: Colors.green[400],
-                  //       fixedSize: const Size(400, 40),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(50),
-                  //         side: BorderSide(color: Colors.green, width: 0.5),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
+                                  ],
+                                )),
+                            //Divider(thickness: 1),
+                          ],
+                        );
+                      },
+                    ),
+                    
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+                    // SizedBox(
+                    //   //width: 50,
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       // <-----------add MORE here
+                    //     },
+                    //     child: Text(
+                    //       'Add more member',
+                    //       style: TextStyle(
+                    //         fontSize: 16,
+                    //         color: Colors.white,
+                    //         fontWeight: FontWeight.w400,
+                    //       ),
+                    //     ),
+                    //     style: ElevatedButton.styleFrom(
+                    //       primary: Colors.green[400],
+                    //       fixedSize: const Size(400, 40),
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(50),
+                    //         side: BorderSide(color: Colors.green, width: 0.5),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
       ),
     );
   }
