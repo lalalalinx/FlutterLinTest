@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:chatki_project/JSONtoDART/ShowHome.dart';
 import 'package:chatki_project/JSONtoDART/ShowSearch.dart';
 import 'package:chatki_project/Login_Register/login.dart';
-import 'package:chatki_project/Screens/GroupMember.dart';
+import 'package:chatki_project/Screens/Others/GroupProfile.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
 import 'package:chatki_project/Screens/createGroup/CreateGroup.dart';
 import 'package:chatki_project/settings_page.dart';
@@ -160,8 +160,10 @@ class _HomeViewState extends State<HomeView> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return GroupMember(
-                                chatID: snapshot.data!.sendGroup[i].chatId);
+                            return GroupProfile(
+                              chatID: snapshot.data!.sendGroup[i].chatId,
+                              groupName: snapshot.data!.sendGroup[i].chatName,
+                            );
                           }));
                         },
                         child: Padding(

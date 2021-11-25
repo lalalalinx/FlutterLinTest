@@ -135,6 +135,8 @@ class _LoginState extends State<Login> {
               onPressed: () {
                 // userNameController.text = 'jeremiee';
                 // passwordController.text = '1234';
+                userNameController.text = 'jat0800';
+                passwordController.text = 'jat0850567878';
                 login();
               },
               child: const Text(
