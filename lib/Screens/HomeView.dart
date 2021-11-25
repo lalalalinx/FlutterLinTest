@@ -107,9 +107,6 @@ class _HomeViewState extends State<HomeView> {
                         children: [
                           searchBar(),
                           addGroupButton(context),
-                          SizedBox(
-                            height: 20.0,
-                          ),
                           personListView(snapshot),
                           SizedBox(height: 20),
                           groupListView(snapshot),
