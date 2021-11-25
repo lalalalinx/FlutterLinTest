@@ -107,7 +107,7 @@ class _GroupProfileState extends State<GroupProfile> {
                                 child: Container(
                                   color: Colors.grey[900],
                                   child: Padding(
-                                    padding: EdgeInsets.only(top: 30),
+                                    padding: EdgeInsets.only(top: 10),
                                     child: Center(
                                       child: Column(
                                         children: [
@@ -145,7 +145,7 @@ class _GroupProfileState extends State<GroupProfile> {
                                           Container(
                                             alignment: Alignment.topCenter,
                                             color: Colors.grey[900],
-                                            height: 50,
+                                            height: 30,
                                             child: Text(
                                               widget.groupName,
                                               style: TextStyle(
@@ -155,6 +155,51 @@ class _GroupProfileState extends State<GroupProfile> {
                                               ),
                                             ),
                                           ), /////////
+                                          Padding(
+                                            //ปุ่ม 'chat'--------------------------
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 20.0,
+                                                horizontal: 110),
+                                            child: Container(
+                                              decoration: ShapeDecoration(
+                                                shape: shape,
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Colors.orange,
+                                                    Colors.pink,
+                                                  ],
+                                                ),
+                                              ),
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  //sentToChat();
+                                                },
+                                                child: Text(
+                                                  'C h a t',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                                style: ElevatedButton.styleFrom(
+                                                  //primary: Colors.deepPurple[700],
+                                                  fixedSize:
+                                                      const Size(200, 50),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50),
+                                                  ),
+                                                  tapTargetSize:
+                                                      MaterialTapTargetSize
+                                                          .shrinkWrap,
+                                                  primary: Colors.transparent,
+                                                  shadowColor:
+                                                      Colors.transparent,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -164,17 +209,17 @@ class _GroupProfileState extends State<GroupProfile> {
                               SizedBox(height: 20.0),
                               Row(
                                 children: [
-                                  SizedBox(width: 40.0),
+                                  SizedBox(width: 30.0),
+                                  Icon(Icons.group, size: 25),
+                                  SizedBox(width: 10.0),
                                   Text(
                                     'Member :',
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.black,
                                     ),
                                   ),
-                                  SizedBox(width: 10.0),
-                                  Icon(Icons.group),
                                   //SizedBox(width: 10.0),
                                   addMemberButton(context),
                                 ],
@@ -189,7 +234,7 @@ class _GroupProfileState extends State<GroupProfile> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 40),
+                                            horizontal: 16),
                                         child: Card(
                                             shape: shape,
                                             color: Colors.white,
@@ -258,45 +303,6 @@ class _GroupProfileState extends State<GroupProfile> {
                                   );
                                 },
                               ),
-                              Padding(
-                                //ปุ่ม 'chat' ด้านล่าง
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 30.0, horizontal: 110),
-                                child: Container(
-                                  decoration: ShapeDecoration(
-                                    shape: shape,
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.orange,
-                                        Colors.pink,
-                                      ],
-                                    ),
-                                  ),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      //sentToChat();
-                                    },
-                                    child: Text(
-                                      'C h a t',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      //primary: Colors.deepPurple[700],
-                                      fixedSize: const Size(200, 50),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      primary: Colors.transparent,
-                                      shadowColor: Colors.transparent,
-                                    ),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         );
@@ -309,10 +315,11 @@ class _GroupProfileState extends State<GroupProfile> {
       ),
     );
   }
-    Container addMemberButton(BuildContext context) {
+
+  Container addMemberButton(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 40),
-      width: 155,
+      margin: EdgeInsets.only(left: 85),
+      width: 136,
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -325,16 +332,16 @@ class _GroupProfileState extends State<GroupProfile> {
             Text(
               'Add Member ',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            Icon(Icons.add_circle_outline_sharp),
+            Icon(Icons.add_circle_outline_sharp, size: 20),
           ],
         ),
         style: ElevatedButton.styleFrom(
-          primary: Colors.orange[400],
+          primary: Colors.lightBlue,
           fixedSize: const Size(400, 40),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),

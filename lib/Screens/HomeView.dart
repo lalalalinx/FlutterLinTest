@@ -107,9 +107,6 @@ class _HomeViewState extends State<HomeView> {
                         children: [
                           searchBar(),
                           addGroupButton(context),
-                          SizedBox(
-                            height: 20.0,
-                          ),
                           personListView(snapshot),
                           SizedBox(height: 20),
                           groupListView(snapshot),
@@ -328,7 +325,15 @@ class _HomeViewState extends State<HomeView> {
             child: TextFormField(
               decoration: const InputDecoration(
                 hintText: 'Search',
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(0),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(0),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(0),
