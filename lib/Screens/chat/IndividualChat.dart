@@ -68,13 +68,11 @@ class _IndividualChatState extends State<IndividualChat> {
       print("Connected");
       socket.on('chat message', (msg) {
         print(msg);
-        if(scrollController.hasClients)
-        {
-        scrollController.animateTo(scrollController.position.maxScrollExtent,
-            duration: Duration(microseconds: 300), curve: Curves.easeOut);
+        if (scrollController.hasClients) {
+          scrollController.animateTo(scrollController.position.maxScrollExtent,
+              duration: Duration(microseconds: 300), curve: Curves.easeOut);
         }
         setMessage("destination", msg["message"], DateTime.now());
-        
       });
     });
   }
@@ -100,18 +98,12 @@ class _IndividualChatState extends State<IndividualChat> {
 
   @override
   Widget build(BuildContext context) {
-    if (firstTime == true) {
-      Timer(
-          Duration(seconds: 1),
-          () => scrollController.animateTo(
-              scrollController.position.maxScrollExtent,
-              duration: Duration(seconds: 1),
-              curve: Curves.fastOutSlowIn));
-      setState(() {
-        firstTime = false;
-      });
-    }
-
+    Timer(
+        Duration(seconds: 1),
+        () => scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: Duration(seconds: 1),
+            curve: Curves.fastOutSlowIn));
     return Stack(
       children: [
         Scaffold(
