@@ -4,6 +4,8 @@
 
 import 'dart:async';
 import 'package:chatki_project/Model/MessageData.dart';
+import 'package:chatki_project/Screens/ChatView.dart';
+import 'package:chatki_project/Screens/Home.dart';
 import 'package:chatki_project/Screens/chat/OwnMessageCard.dart';
 import 'package:chatki_project/Screens/chat/ReplyCard.dart';
 import 'package:flutter/material.dart';
@@ -31,62 +33,83 @@ class _IndividualChatState extends State<IndividualChat> {
   final storage = FlutterSecureStorage();
   List<MessageData> messages = [];
   late String employeeID;
-  bool firstTime = true;
 
   //controller
   TextEditingController messageController = TextEditingController();
-  ScrollController scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     connectSocket();
     super.initState();
   }
 
+  @override
+  void dispose() {
+    socket.disconnect();
+    super.dispose();
+  }
+
   // connect to socketio and recieve previous message and incoming message
   Future connectSocket() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     socket = io(
-        'https://chattycat-heroku.herokuapp.com',
-        OptionBuilder()
-            .setTransports(['websocket']) // for Flutter or Dart VM
-            .disableAutoConnect() // disable auto-connection
-            .build());
+        'https://chattycat-heroku.herokuapp.com',<String, dynamic>{
+         'transports': ['websocket'],
+         'autoConnect': false,
+         'forceNew':true,
+        });
+
+
     socket.connect();
+    socket.onConnect((data) {print("Connected");});
     employeeID = prefs.getString('employeeID')!;
     socket.emit("signin", {employeeID, widget.chatID, -1});
-    //load previous message
+    // load previous message
+
     socket.on('loadUniqueChat', (data) {
       var username = prefs.getString('username');
       if (data["sender"] == username) {
-        setMessage("source", data["text"], DateTime.parse(data["time"]));
+            print("sender $mounted");
+        loadMessage("source", data["text"], DateTime.parse(data["time"]));
       } else {
-        setMessage("destination", data["text"], DateTime.parse(data["time"]));
+        print("reciever :$mounted");
+        loadMessage("destination", data["text"], DateTime.parse(data["time"]));
       }
     });
-    //recieve incoming message
-    socket.onConnect((data) {
-      print("Connected");
-      socket.on('chat message', (msg) {
+    socket.on('chat message', (msg) {
         print(msg);
-        if (scrollController.hasClients) {
-          scrollController.animateTo(scrollController.position.maxScrollExtent,
-              duration: Duration(microseconds: 300), curve: Curves.easeOut);
-        }
-        setMessage("destination", msg["message"], DateTime.now());
+        loadMessage("destination", msg["message"], DateTime.now());
+        WidgetsBinding.instance!.addPostFrameCallback((_) {
+          if (scrollController.hasClients) {
+            scrollController.animateTo(
+                scrollController.position.maxScrollExtent,
+                duration: Duration(microseconds: 300),
+                curve: Curves.easeOut);
+          }
+        });
       });
-    });
   }
 
   //sent message to socket and set message
   void sendMessage(String message, String sourceId, String targetId) {
     var now = DateTime.now();
-    setMessage("source", message, now);
+    loadMessage("source", message, now);
     socket.emit("chat message",
         {"message": message, "source": sourceId, "targetId": widget.targetID});
   }
 
   //set the type of message and stored in message list variable
   void setMessage(String type, String message, DateTime time) {
+    MessageData messageData =
+        MessageData(type: type, message: message, time: time);
+    setState(() {
+      messages.add(messageData);
+    });
+  }
+
+  void loadMessage(String type, String message, DateTime time) {
     MessageData messageData =
         MessageData(type: type, message: message, time: time);
     if (mounted) {
@@ -98,12 +121,7 @@ class _IndividualChatState extends State<IndividualChat> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(
-        Duration(seconds: 1),
-        () => scrollController.animateTo(
-            scrollController.position.maxScrollExtent,
-            duration: Duration(seconds: 1),
-            curve: Curves.fastOutSlowIn));
+    scrollToBottom();
     return Stack(
       children: [
         Scaffold(
@@ -120,12 +138,13 @@ class _IndividualChatState extends State<IndividualChat> {
             centerTitle: true,
             leading: IconButton(
               onPressed: () {
-                socket.emit('disconnect');
                 socket.onDisconnect((_) => print('Disconnect'));
-                firstTime = false;
                 print("pop");
                 messages.clear();
                 Navigator.pop(context);
+                // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //   return Home();
+                // }));
               },
               icon: Icon(
                 Icons.arrow_back_ios,
@@ -239,5 +258,14 @@ class _IndividualChatState extends State<IndividualChat> {
         ),
       ],
     );
+  }
+
+  void scrollToBottom() {
+    Timer(
+        Duration(seconds: 1),
+        () => scrollController.animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: Duration(microseconds: 300),
+            curve: Curves.easeOut));
   }
 }
