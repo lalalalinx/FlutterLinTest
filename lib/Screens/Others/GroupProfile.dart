@@ -322,7 +322,7 @@ class _GroupProfileState extends State<GroupProfile> {
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return AddMember(chatID:widget.chatID);
+            return AddMember(chatID:widget.chatID,groupName:widget.groupName);
           }));
           // <-----------add MORE here
         },

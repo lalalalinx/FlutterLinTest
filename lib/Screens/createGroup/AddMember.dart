@@ -11,9 +11,10 @@ import 'package:http/http.dart' as http;
 
 class AddMember extends StatefulWidget {
   const AddMember({
-    Key? key,required this.chatID
+    Key? key,required this.chatID,required this.groupName
   }) : super(key: key);
   final String chatID;
+  final String groupName;
 
   @override
   _AddMemberState createState() => _AddMemberState();
@@ -69,7 +70,8 @@ class _AddMemberState extends State<AddMember> {
         },
         body: <String, String>{
           'targetID': targetID,
-          'chatID': widget.chatID
+          'chatID': widget.chatID,
+          'chatName': widget.groupName
         });
     
     // setState(() {
