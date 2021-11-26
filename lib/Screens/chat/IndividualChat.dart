@@ -140,7 +140,6 @@ class _IndividualChatState extends State<IndividualChat> {
               onPressed: () {
                 socket.onDisconnect((_) => print('Disconnect'));
                 print("pop");
-                messages.clear();
                 Navigator.pop(context);
                 // Navigator.push(context, MaterialPageRoute(builder: (context) {
                 //   return Home();
