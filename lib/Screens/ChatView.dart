@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:async';
 
 import 'package:chatki_project/JSONtoDART/ShowChat.dart';
+import 'package:chatki_project/Screens/chat/GroupChat.dart';
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
 
@@ -87,21 +88,50 @@ class _ChatViewState extends State<ChatView> {
                                           //padding: EdgeInsets.only(left: 10,right: 10),
                                           InkWell(
                                             onTap: () {
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) {
-                                                return IndividualChat(
-                                                    chatID: snapshot.data!
-                                                        .getAllChat[i].chatId,
-                                                    chatName: snapshot.data!
-                                                        .getAllChat[i].chatName,
-                                                    targetID: snapshot
-                                                        .data!
-                                                        .getAllChat[i]
-                                                        .employeeId);
-                                              })).then((value) => setState(() {
-                                                    getMutipleChatData();
-                                                  }));
+                                              if (snapshot.data!.getAllChat[i]
+                                                      .isGroup ==
+                                                  true) {
+                                                    print(snapshot.data!
+                                                          .getAllChat[i].chatId);
+                                                          print(snapshot
+                                                          .data!
+                                                          .getAllChat[i]
+                                                          .chatName);
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return GroupChat(
+                                                      chatID: snapshot.data!
+                                                          .getAllChat[i].chatId,
+                                                      chatName: snapshot
+                                                          .data!
+                                                          .getAllChat[i]
+                                                          .chatName,
+                                                      );
+                                                })).then(
+                                                    (value) => setState(() {
+                                                          getMutipleChatData();
+                                                        }));
+                                              } else {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return IndividualChat(
+                                                      chatID: snapshot.data!
+                                                          .getAllChat[i].chatId,
+                                                      chatName: snapshot
+                                                          .data!
+                                                          .getAllChat[i]
+                                                          .chatName,
+                                                      targetID: snapshot
+                                                          .data!
+                                                          .getAllChat[i]
+                                                          .employeeId);
+                                                })).then(
+                                                    (value) => setState(() {
+                                                          getMutipleChatData();
+                                                        }));
+                                              }
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(

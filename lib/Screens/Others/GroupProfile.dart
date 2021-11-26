@@ -2,6 +2,7 @@
 
 import 'package:chatki_project/JSONtoDART/ShowGroupMember.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
+import 'package:chatki_project/Screens/chat/GroupChat.dart';
 import 'package:chatki_project/Screens/createGroup/AddMember.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -171,7 +172,14 @@ class _GroupProfileState extends State<GroupProfile> {
                                               ),
                                               child: ElevatedButton(
                                                 onPressed: () {
-                                                  //sentToChat();
+                                                  Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                                  return GroupChat(
+                                                      chatID: widget.chatID,
+                                                      chatName: widget.groupName,
+                                                      );
+                                                }));
                                                 },
                                                 child: Text(
                                                   'C h a t',

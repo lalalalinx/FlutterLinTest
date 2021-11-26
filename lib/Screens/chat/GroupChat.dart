@@ -17,11 +17,9 @@ class GroupChat extends StatefulWidget {
     Key? key,
     required this.chatID,
     required this.chatName,
-    required this.targetID,
   }) : super(key: key);
   final String chatID;
   final String chatName;
-  final String targetID;
 
   @override
   _GroupChatState createState() => _GroupChatState();
@@ -32,6 +30,7 @@ class _GroupChatState extends State<GroupChat> {
   final storage = FlutterSecureStorage();
   List<MessageData> messages = [];
   late String employeeID;
+  late String username;
 
   //controller
   TextEditingController messageController = TextEditingController();
@@ -53,10 +52,10 @@ class _GroupChatState extends State<GroupChat> {
             .build());
     socket.connect();
     employeeID = prefs.getString('employeeID')!;
+    username = prefs.getString('username')!;
     socket.emit("signin", {employeeID, widget.chatID, -1});
     //load previous message
     socket.on('loadUniqueChat', (data) {
-      var username = prefs.getString('username');
       if (data["sender"] == username) {
         setMessage("source", data["text"], DateTime.parse(data["time"]));
       } else {
@@ -66,9 +65,9 @@ class _GroupChatState extends State<GroupChat> {
     //recieve incoming message
     socket.onConnect((data) {
       print("Connected");
-      socket.on('chat message', (msg) {
+      socket.on('group message', (msg) {
         print(msg);
-        if (msg["source"] != employeeID) {
+        if (msg["sender"] != username) {
           setMessage("destination", msg["message"], DateTime.now());
           scrollController.animateTo(scrollController.position.maxScrollExtent,
               duration: Duration(microseconds: 300), curve: Curves.easeOut);
@@ -78,11 +77,10 @@ class _GroupChatState extends State<GroupChat> {
   }
 
   //sent message to socket and set message
-  void sendMessage(String message, String sourceId, String targetId) {
+  void sendMessage(String message, String sender) {
     var now = DateTime.now();
     setMessage("source", message, now);
-    socket.emit("chat message",
-        {"message": message, "source": sourceId, "targetId": widget.targetID});
+    socket.emit("group message", {"message": message, "sender": sender});
   }
 
   //set the type of message and stored in message list variable
@@ -117,16 +115,6 @@ class _GroupChatState extends State<GroupChat> {
               ),
             ),
             centerTitle: true,
-            // actions: [
-            //   Padding(
-            //     padding: const EdgeInsets.only(right: 5),
-            //     child: CircleAvatar(
-            //       backgroundColor: Colors.black,
-            //       radius: 23,
-            //       //onPressed: () {},
-            //     ),
-            //   ),
-            // ],
             leading: IconButton(
               onPressed: () {
                 socket.onDisconnect((_) => print('Disconnect'));
@@ -149,7 +137,6 @@ class _GroupChatState extends State<GroupChat> {
               ),
             ),
           ),
-          //backgroundColor: Colors.blueGrey,
           body: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -157,7 +144,6 @@ class _GroupChatState extends State<GroupChat> {
               children: [
                 //message bubble
                 Expanded(
-                  // height: MediaQuery.of(context).size.height - 50,
                   child: ListView.builder(
                       controller: scrollController,
                       shrinkWrap: true,
@@ -225,8 +211,8 @@ class _GroupChatState extends State<GroupChat> {
                                               duration:
                                                   Duration(microseconds: 300),
                                               curve: Curves.easeOut);
-                                          sendMessage(messageController.text,
-                                              employeeID, widget.targetID);
+                                          sendMessage(
+                                              messageController.text, username);
                                           messageController.clear();
                                         },
                                       ),
@@ -236,86 +222,9 @@ class _GroupChatState extends State<GroupChat> {
                               ),
                             ),
                           ),
-                          // CircleAvatar(
-                          //   backgroundColor: Colors.grey[900],
-                          //   child: Icon(
-                          //     Icons.send,
-                          //     color: Colors.white,
-                          //     ),
-                          //     ),
                         ],
                       ),
-                    )
-
-                    // CircleAvatar(
-                    //         backgroundColor: Colors.grey[900],
-                    //         child: Icon(
-                    //           Icons.send,
-                    //           color: Colors.white,
-                    //           ),)
-
-                    // child: Container(
-                    //   height: 70,
-                    //   child: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.end,
-                    //     children: [
-                    //       Row(
-                    //         children: [
-                    //           // Text message field
-                    //           Container(
-                    //             width: MediaQuery.of(context).size.width - 55,
-                    //             color: Colors.grey[900],
-                    //             child: Card(
-                    //               margin: EdgeInsets.only(
-                    //                   left: 10, right: 10, bottom: 10, top: 10),
-                    //               shape: RoundedRectangleBorder(
-                    //                   borderRadius: BorderRadius.circular(25)),
-                    //               child: TextFormField(
-                    //                 keyboardType: TextInputType.multiline,
-                    //                 controller: messageController,
-                    //                 maxLines: 5,
-                    //                 minLines: 1,
-                    //                 textAlignVertical: TextAlignVertical.center,
-                    //                 decoration: InputDecoration(
-                    //                   hintText: "Type a message",
-                    //                   contentPadding: EdgeInsets.all(15),
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //           // sent button
-                    //           Container(
-                    //             width: 55,
-                    //             height: 69,
-                    //             color: Colors.grey[900],
-                    //             child: Padding(
-                    //               padding: const EdgeInsets.only(right: 5),
-                    //               child: CircleAvatar(
-                    //                 backgroundColor: Colors.blue,
-                    //                 radius: 25,
-                    //                 child: IconButton(
-                    //                   color: Colors.white,
-                    //                   icon: Icon(Icons.send),
-                    //                   onPressed: () {
-                    //                     scrollController.animateTo(
-                    //                         scrollController
-                    //                             .position.maxScrollExtent,
-                    //                         duration: Duration(microseconds: 300),
-                    //                         curve: Curves.easeOut);
-                    //                     sendMessage(messageController.text,
-                    //                         employeeID, widget.targetID);
-                    //                     messageController.clear();
-                    //                   },
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    ),
+                    )),
               ],
             ),
           ),
