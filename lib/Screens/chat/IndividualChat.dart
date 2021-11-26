@@ -11,7 +11,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
-// asdasdsdfsdfs
 class IndividualChat extends StatefulWidget {
   const IndividualChat({
     Key? key,
@@ -32,6 +31,7 @@ class _IndividualChatState extends State<IndividualChat> {
   final storage = FlutterSecureStorage();
   List<MessageData> messages = [];
   late String employeeID;
+  bool firstTime = true;
 
   //controller
   TextEditingController messageController = TextEditingController();
@@ -68,9 +68,13 @@ class _IndividualChatState extends State<IndividualChat> {
       print("Connected");
       socket.on('chat message', (msg) {
         print(msg);
-        setMessage("destination", msg["message"], DateTime.now());
+        if(scrollController.hasClients)
+        {
         scrollController.animateTo(scrollController.position.maxScrollExtent,
             duration: Duration(microseconds: 300), curve: Curves.easeOut);
+        }
+        setMessage("destination", msg["message"], DateTime.now());
+        
       });
     });
   }
@@ -96,13 +100,18 @@ class _IndividualChatState extends State<IndividualChat> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(
-        Duration(seconds: 1),
-        () => scrollController.animateTo(
+    if (firstTime == true) {
+      Timer(
+          Duration(seconds: 1),
+          () => scrollController.animateTo(
               scrollController.position.maxScrollExtent,
               duration: Duration(seconds: 1),
-              curve: Curves.fastOutSlowIn,
-            ));
+              curve: Curves.fastOutSlowIn));
+      setState(() {
+        firstTime = false;
+      });
+    }
+
     return Stack(
       children: [
         Scaffold(
@@ -117,20 +126,13 @@ class _IndividualChatState extends State<IndividualChat> {
               ),
             ),
             centerTitle: true,
-            // actions: [
-            //   Padding(
-            //     padding: const EdgeInsets.only(right: 5),
-            //     child: CircleAvatar(
-            //       backgroundColor: Colors.black,
-            //       radius: 23,
-            //       //onPressed: () {},
-            //     ),
-            //   ),
-            // ],
             leading: IconButton(
               onPressed: () {
+                socket.emit('disconnect');
                 socket.onDisconnect((_) => print('Disconnect'));
+                firstTime = false;
                 print("pop");
+                messages.clear();
                 Navigator.pop(context);
               },
               icon: Icon(
@@ -236,86 +238,9 @@ class _IndividualChatState extends State<IndividualChat> {
                               ),
                             ),
                           ),
-                          // CircleAvatar(
-                          //   backgroundColor: Colors.grey[900],
-                          //   child: Icon(
-                          //     Icons.send,
-                          //     color: Colors.white,
-                          //     ),
-                          //     ),
                         ],
                       ),
-                    )
-
-                    // CircleAvatar(
-                    //         backgroundColor: Colors.grey[900],
-                    //         child: Icon(
-                    //           Icons.send,
-                    //           color: Colors.white,
-                    //           ),)
-
-                    // child: Container(
-                    //   height: 70,
-                    //   child: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.end,
-                    //     children: [
-                    //       Row(
-                    //         children: [
-                    //           // Text message field
-                    //           Container(
-                    //             width: MediaQuery.of(context).size.width - 55,
-                    //             color: Colors.grey[900],
-                    //             child: Card(
-                    //               margin: EdgeInsets.only(
-                    //                   left: 10, right: 10, bottom: 10, top: 10),
-                    //               shape: RoundedRectangleBorder(
-                    //                   borderRadius: BorderRadius.circular(25)),
-                    //               child: TextFormField(
-                    //                 keyboardType: TextInputType.multiline,
-                    //                 controller: messageController,
-                    //                 maxLines: 5,
-                    //                 minLines: 1,
-                    //                 textAlignVertical: TextAlignVertical.center,
-                    //                 decoration: InputDecoration(
-                    //                   hintText: "Type a message",
-                    //                   contentPadding: EdgeInsets.all(15),
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //           // sent button
-                    //           Container(
-                    //             width: 55,
-                    //             height: 69,
-                    //             color: Colors.grey[900],
-                    //             child: Padding(
-                    //               padding: const EdgeInsets.only(right: 5),
-                    //               child: CircleAvatar(
-                    //                 backgroundColor: Colors.blue,
-                    //                 radius: 25,
-                    //                 child: IconButton(
-                    //                   color: Colors.white,
-                    //                   icon: Icon(Icons.send),
-                    //                   onPressed: () {
-                    //                     scrollController.animateTo(
-                    //                         scrollController
-                    //                             .position.maxScrollExtent,
-                    //                         duration: Duration(microseconds: 300),
-                    //                         curve: Curves.easeOut);
-                    //                     sendMessage(messageController.text,
-                    //                         employeeID, widget.targetID);
-                    //                     messageController.clear();
-                    //                   },
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    ),
+                    )),
               ],
             ),
           ),

@@ -117,8 +117,10 @@ class _GroupChatState extends State<GroupChat> {
             centerTitle: true,
             leading: IconButton(
               onPressed: () {
+                socket.emit('disconnect');
                 socket.onDisconnect((_) => print('Disconnect'));
                 print("pop");
+                messages.clear();
                 Navigator.pop(context);
               },
               icon: Icon(
