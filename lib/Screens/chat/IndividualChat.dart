@@ -11,6 +11,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
+
 class IndividualChat extends StatefulWidget {
   const IndividualChat({
     Key? key,
@@ -86,9 +87,11 @@ class _IndividualChatState extends State<IndividualChat> {
   void setMessage(String type, String message, DateTime time) {
     MessageData messageData =
         MessageData(type: type, message: message, time: time);
-    setState(() {
-      messages.add(messageData);
-    });
+    if (mounted) {
+      setState(() {
+        messages.add(messageData);
+      });
+    }
   }
 
   @override
@@ -175,140 +178,144 @@ class _IndividualChatState extends State<IndividualChat> {
                       }),
                 ),
                 Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 100,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: 100,
-                            width: 100,
-                            margin: EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Row(children: [
-                              Expanded(
-                                child: TextFormField(
-                                  keyboardType: TextInputType.multiline,
-                                  controller: messageController,
-                                  maxLines: 5,
-                                  minLines: 1,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: " Type a message ...",
-                              hintStyle: TextStyle(color: Colors.grey[500]),
-                                    contentPadding: EdgeInsets.all(15),
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 100,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              margin: EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.multiline,
+                                      controller: messageController,
+                                      maxLines: 5,
+                                      minLines: 1,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: " Type a message ...",
+                                        hintStyle:
+                                            TextStyle(color: Colors.grey[500]),
+                                        contentPadding: EdgeInsets.all(15),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ), 
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.blue[600],
-                                  child: IconButton(
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.blue[600],
+                                      child: IconButton(
                                         color: Colors.white,
                                         icon: Icon(Icons.send),
                                         onPressed: () {
                                           scrollController.animateTo(
                                               scrollController
                                                   .position.maxScrollExtent,
-                                              duration: Duration(microseconds: 300),
+                                              duration:
+                                                  Duration(microseconds: 300),
                                               curve: Curves.easeOut);
                                           sendMessage(messageController.text,
                                               employeeID, widget.targetID);
                                           messageController.clear();
                                         },
                                       ),
-                                ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],),
+                            ),
                           ),
-                          
-                        ),
-                        // CircleAvatar(
-                        //   backgroundColor: Colors.grey[900],
-                        //   child: Icon(
-                        //     Icons.send,
-                        //     color: Colors.white,
-                        //     ),
-                        //     ),
-                      ],),
-                  )
+                          // CircleAvatar(
+                          //   backgroundColor: Colors.grey[900],
+                          //   child: Icon(
+                          //     Icons.send,
+                          //     color: Colors.white,
+                          //     ),
+                          //     ),
+                        ],
+                      ),
+                    )
 
-                  // CircleAvatar(
-                  //         backgroundColor: Colors.grey[900],
-                  //         child: Icon(
-                  //           Icons.send,
-                  //           color: Colors.white,
-                  //           ),)
+                    // CircleAvatar(
+                    //         backgroundColor: Colors.grey[900],
+                    //         child: Icon(
+                    //           Icons.send,
+                    //           color: Colors.white,
+                    //           ),)
 
-
-                  // child: Container(
-                  //   height: 70,
-                  //   child: Column(
-                  //     mainAxisAlignment: MainAxisAlignment.end,
-                  //     children: [
-                  //       Row(
-                  //         children: [
-                  //           // Text message field
-                  //           Container(
-                  //             width: MediaQuery.of(context).size.width - 55,
-                  //             color: Colors.grey[900],
-                  //             child: Card(
-                  //               margin: EdgeInsets.only(
-                  //                   left: 10, right: 10, bottom: 10, top: 10),
-                  //               shape: RoundedRectangleBorder(
-                  //                   borderRadius: BorderRadius.circular(25)),
-                  //               child: TextFormField(
-                  //                 keyboardType: TextInputType.multiline,
-                  //                 controller: messageController,
-                  //                 maxLines: 5,
-                  //                 minLines: 1,
-                  //                 textAlignVertical: TextAlignVertical.center,
-                  //                 decoration: InputDecoration(
-                  //                   hintText: "Type a message",
-                  //                   contentPadding: EdgeInsets.all(15),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           // sent button
-                  //           Container(
-                  //             width: 55,
-                  //             height: 69,
-                  //             color: Colors.grey[900],
-                  //             child: Padding(
-                  //               padding: const EdgeInsets.only(right: 5),
-                  //               child: CircleAvatar(
-                  //                 backgroundColor: Colors.blue,
-                  //                 radius: 25,
-                  //                 child: IconButton(
-                  //                   color: Colors.white,
-                  //                   icon: Icon(Icons.send),
-                  //                   onPressed: () {
-                  //                     scrollController.animateTo(
-                  //                         scrollController
-                  //                             .position.maxScrollExtent,
-                  //                         duration: Duration(microseconds: 300),
-                  //                         curve: Curves.easeOut);
-                  //                     sendMessage(messageController.text,
-                  //                         employeeID, widget.targetID);
-                  //                     messageController.clear();
-                  //                   },
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                ),
+                    // child: Container(
+                    //   height: 70,
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.end,
+                    //     children: [
+                    //       Row(
+                    //         children: [
+                    //           // Text message field
+                    //           Container(
+                    //             width: MediaQuery.of(context).size.width - 55,
+                    //             color: Colors.grey[900],
+                    //             child: Card(
+                    //               margin: EdgeInsets.only(
+                    //                   left: 10, right: 10, bottom: 10, top: 10),
+                    //               shape: RoundedRectangleBorder(
+                    //                   borderRadius: BorderRadius.circular(25)),
+                    //               child: TextFormField(
+                    //                 keyboardType: TextInputType.multiline,
+                    //                 controller: messageController,
+                    //                 maxLines: 5,
+                    //                 minLines: 1,
+                    //                 textAlignVertical: TextAlignVertical.center,
+                    //                 decoration: InputDecoration(
+                    //                   hintText: "Type a message",
+                    //                   contentPadding: EdgeInsets.all(15),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           // sent button
+                    //           Container(
+                    //             width: 55,
+                    //             height: 69,
+                    //             color: Colors.grey[900],
+                    //             child: Padding(
+                    //               padding: const EdgeInsets.only(right: 5),
+                    //               child: CircleAvatar(
+                    //                 backgroundColor: Colors.blue,
+                    //                 radius: 25,
+                    //                 child: IconButton(
+                    //                   color: Colors.white,
+                    //                   icon: Icon(Icons.send),
+                    //                   onPressed: () {
+                    //                     scrollController.animateTo(
+                    //                         scrollController
+                    //                             .position.maxScrollExtent,
+                    //                         duration: Duration(microseconds: 300),
+                    //                         curve: Curves.easeOut);
+                    //                     sendMessage(messageController.text,
+                    //                         employeeID, widget.targetID);
+                    //                     messageController.clear();
+                    //                   },
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    ),
               ],
             ),
           ),
