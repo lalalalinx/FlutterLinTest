@@ -39,6 +39,8 @@ class _OtherProfileState extends State<OtherProfile> {
     });
   }
 
+  //This function get a target user information via API
+  //return proflie class data
   Future getProfileData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");

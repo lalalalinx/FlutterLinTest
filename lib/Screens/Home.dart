@@ -20,6 +20,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final storage = FlutterSecureStorage();
 
+  //This function will delete the user token and refresh-token
   void logout() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");

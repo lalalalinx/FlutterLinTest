@@ -27,6 +27,8 @@ class _ProfileViewState extends State<ProfileView> {
     super.initState();
   }
 
+  //This function get a current user information via API
+  //return proflie class data
   Future<ProfileData> getProfileData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
