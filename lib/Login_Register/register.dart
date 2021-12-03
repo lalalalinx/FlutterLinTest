@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
+// register new user page
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -13,7 +13,6 @@ class Register extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
 }
-
 class _RegisterState extends State<Register> {
   final formkey = GlobalKey<FormState>();
   final storage = FlutterSecureStorage();
@@ -174,9 +173,10 @@ class _RegisterState extends State<Register> {
               ),
             ),
           ),
-        ));
+        ),);
   }
 
+  // register form style
   TextFormField registerForm(String hText, TextEditingController controller) {
     return TextFormField(
       decoration: InputDecoration(

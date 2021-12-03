@@ -1,5 +1,5 @@
-// ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, dead_code
-
+// ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, dead_code, avoid_print, non_constant_identifier_names
+// show ProfileView
 import 'dart:convert';
 import 'dart:async';
 
@@ -64,21 +64,31 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return EditProfile(profileDatas: stored);
-          })).then((value) => setState(() {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return EditProfile(profileDatas: stored);
+              },
+            ),
+          ).then(
+            (value) => setState(
+              () {
                 getProfileData();
-              }));
+              },
+            ),
+          );
         },
         child: Icon(Icons.edit),
       ),
-      body: Column(children: [
-        ListView(
-          shrinkWrap: true,
-          physics: BouncingScrollPhysics(),
-          children: [
-            Center(
-              child: FutureBuilder(
+      body: Column(
+        children: [
+          ListView(
+            shrinkWrap: true,
+            physics: BouncingScrollPhysics(),
+            children: [
+              Center(
+                child: FutureBuilder(
                   future: getProfileData(),
                   builder: (context, AsyncSnapshot<ProfileData> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -164,128 +174,132 @@ class _ProfileViewState extends State<ProfileView> {
                           ],
                         ),
                       );
-                  }),
-            ),
-            const SizedBox(height: 24),
-          ],
-        ),
-      ]),
+                  },
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
+  //show address section 
   Column DisplayAddress(AsyncSnapshot<ProfileData> snapshot) {
     return Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  staticText("City"),
-                                  SizedBox(width: 49.0),
-                                  infoText(snapshot.data!.city),
-                                ],
-                              ),
-                              SizedBox(height: 10.0),
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  staticText("Street"),
-                                  SizedBox(width: 31.0),
-                                  infoText(snapshot.data!.street),
-                                ],
-                              ),
-                              SizedBox(height: 10.0),
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  staticText("ZIP"),
-                                  SizedBox(width: 50.0),
-                                  infoText(snapshot.data!.zip),
-                                ],
-                              ),
-                            ],
-                          );
+      children: [
+        Row(
+          children: [
+            SizedBox(width: 40.0),
+            staticText("City"),
+            SizedBox(width: 49.0),
+            infoText(snapshot.data!.city),
+          ],
+        ),
+        SizedBox(height: 10.0),
+        Row(
+          children: [
+            SizedBox(width: 40.0),
+            staticText("Street"),
+            SizedBox(width: 31.0),
+            infoText(snapshot.data!.street),
+          ],
+        ),
+        SizedBox(height: 10.0),
+        Row(
+          children: [
+            SizedBox(width: 40.0),
+            staticText("ZIP"),
+            SizedBox(width: 50.0),
+            infoText(snapshot.data!.zip),
+          ],
+        ),
+      ],
+    );
   }
 
+  //show email section 
   Column DisplayEmailAndTel(AsyncSnapshot<ProfileData> snapshot) {
     return Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  staticText("Email"),
-                                  SizedBox(width: 25.0),
-                                  infoText(snapshot.data!.email),
-                                ],
-                              ),
-                              SizedBox(height: 10.0),
-                              Row(
-                                children: [
-                                  SizedBox(width: 40.0),
-                                  staticText("Tel"),
-                                  SizedBox(width: 46.0),
-                                  infoText(snapshot.data!.tel),
-                                ],
-                              ),
-                            ],
-                          );
+      children: [
+        Row(
+          children: [
+            SizedBox(width: 40.0),
+            staticText("Email"),
+            SizedBox(width: 25.0),
+            infoText(snapshot.data!.email),
+          ],
+        ),
+        SizedBox(height: 10.0),
+        Row(
+          children: [
+            SizedBox(width: 40.0),
+            staticText("Tel"),
+            SizedBox(width: 46.0),
+            infoText(snapshot.data!.tel),
+          ],
+        ),
+      ],
+    );
   }
 
+  //show name and surname section 
   Column DisplayNameAndLastName(AsyncSnapshot<ProfileData> snapshot) {
     return Column(
-                            children: [
-                              Center(
-                                //padding: EdgeInsets.only(left: 40),
-                                child: Text(
-                                  'Name - Surname',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.deepPurple,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 10),
-                              Center(
-                                  //padding: EdgeInsets.only(left: 125),
-                                  child: Padding(
-                                padding: EdgeInsets.only(
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: Text(
-                                  snapshot.data!.userFName +
-                                      '  ' +
-                                      snapshot.data!.userLName,
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey[900],
-                                  ),
-                                ),
-                              )),
-                            ],
-                          );
+      children: [
+        Center(
+          child: Text(
+            'Name - Surname',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.deepPurple,
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
+        Center(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: Text(
+              snapshot.data!.userFName + '  ' + snapshot.data!.userLName,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey[900],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
-    Text infoText(String info) {
+  // set text style
+  Text infoText(String info) {
     return Text(
-                                  info,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey[900],
-                                  ),
-                                );
+      info,
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+        color: Colors.grey[900],
+      ),
+    );
   }
 
+  //set text style
   Text staticText(String text) {
     return Text(
-                                  '$text :',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.deepPurple,
-                                  ),
-                                );
+      '$text :',
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
+        color: Colors.deepPurple,
+      ),
+    );
   }
 }

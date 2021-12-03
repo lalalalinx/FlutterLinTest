@@ -1,7 +1,6 @@
 // To parse this JSON data, do
 //
 //     final showChat = showChatFromJson(jsonString);
-
 // ignore_for_file: file_names
 
 import 'package:meta/meta.dart';

@@ -1,5 +1,5 @@
 // ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
-
+// Tabbarview consist of HomeView(), ChatView(), ProfileView(),
 import 'package:chatki_project/Login_Register/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

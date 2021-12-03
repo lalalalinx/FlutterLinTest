@@ -1,4 +1,5 @@
-// ignore_for_file: file_names, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, prefer_const_constructors, avoid_print
+// ignore_for_file: file_names, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, prefer_const_constructors, avoid_print, sized_box_for_whitespace, non_constant_identifier_names
+// Show ChatView
 import 'dart:convert';
 import 'dart:async';
 
@@ -23,10 +24,6 @@ class _ChatViewState extends State<ChatView> {
 
   @override
   void initState() {
-    // setState(() {
-    //   getMutipleChatData();
-    // });
-
     super.initState();
   }
 
@@ -83,129 +80,136 @@ class _ChatViewState extends State<ChatView> {
                               return Column(
                                 children: [
                                   Card(
-                                      color: Colors.white,
-                                      margin: EdgeInsets.only(bottom: 5),
-                                      child: Column(
-                                        children: [
-                                          //padding: EdgeInsets.only(left: 10,right: 10),
-                                          InkWell(
-                                            onTap: () {
-                                              if (snapshot.data!.getAllChat[i]
-                                                      .isGroup ==
-                                                  true) {
-                                                    print(snapshot.data!
-                                                          .getAllChat[i].chatId);
-                                                          print(snapshot
-                                                          .data!
-                                                          .getAllChat[i]
-                                                          .chatName);
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return GroupChat(
+                                    color: Colors.white,
+                                    margin: EdgeInsets.only(bottom: 5),
+                                    child: Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            if (snapshot.data!.getAllChat[i]
+                                                    .isGroup ==
+                                                true) {
+                                              print(snapshot
+                                                  .data!.getAllChat[i].chatId);
+                                              print(snapshot.data!.getAllChat[i]
+                                                  .chatName);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return GroupChat(
                                                       chatID: snapshot.data!
                                                           .getAllChat[i].chatId,
                                                       chatName: snapshot
                                                           .data!
                                                           .getAllChat[i]
                                                           .chatName,
-                                                      );
-                                                })).then(
-                                                    (value) => setState(() {
-                                                          getMutipleChatData();
-                                                        }));
-                                              } else {
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return IndividualChat(
-                                                      chatID: snapshot.data!
-                                                          .getAllChat[i].chatId,
-                                                      chatName: snapshot
-                                                          .data!
-                                                          .getAllChat[i]
-                                                          .chatName,
-                                                      targetID: snapshot
-                                                          .data!
-                                                          .getAllChat[i]
-                                                          .employeeId);
-                                                })).then(
-                                                    (value) => setState(() {
-                                                          getMutipleChatData();
-                                                        }));
-                                              }
-                                            },
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 5, bottom: 5),
-                                              child: ListTile(
-                                                leading: CircleAvatar(
-                                                  backgroundColor: Colors.blue,
+                                                    );
+                                                  },
                                                 ),
-                                                title: Row(
-                                                  children: [
-                                                    Text(
-                                                        snapshot
+                                              ).then(
+                                                (value) => setState(
+                                                  () {
+                                                    getMutipleChatData();
+                                                  },
+                                                ),
+                                              );
+                                            } else {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return IndividualChat(
+                                                        chatID: snapshot
+                                                            .data!
+                                                            .getAllChat[i]
+                                                            .chatId,
+                                                        chatName: snapshot
                                                             .data!
                                                             .getAllChat[i]
                                                             .chatName,
-                                                        style: TextStyle(
-                                                            fontSize: 18)),
-                                                  ],
+                                                        targetID: snapshot
+                                                            .data!
+                                                            .getAllChat[i]
+                                                            .employeeId);
+                                                  },
                                                 ),
-                                                subtitle: Text(
-                                                  snapshot.data!.getAllChat[i]
-                                                      .previewChat[0].text,
+                                              ).then(
+                                                (value) => setState(
+                                                  () {
+                                                    getMutipleChatData();
+                                                  },
                                                 ),
-                                                trailing: Text(
-                                                  snapshot
-                                                          .data!
-                                                          .getAllChat[i]
-                                                          .previewChat[0]
-                                                          .time
-                                                          .day
-                                                          .toString() +
-                                                      "/" +
+                                              );
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 5, bottom: 5),
+                                            child: ListTile(
+                                              leading: CircleAvatar(
+                                                backgroundColor: Colors.blue,
+                                              ),
+                                              title: Row(
+                                                children: [
+                                                  Text(
                                                       snapshot
                                                           .data!
                                                           .getAllChat[i]
-                                                          .previewChat[0]
-                                                          .time
-                                                          .month
-                                                          .toString() +
-                                                      "/" +
-                                                      snapshot
-                                                          .data!
-                                                          .getAllChat[i]
-                                                          .previewChat[0]
-                                                          .time
-                                                          .year
-                                                          .toString() +
-                                                      " " +
-                                                      snapshot
-                                                          .data!
-                                                          .getAllChat[i]
-                                                          .previewChat[0]
-                                                          .time
-                                                          .hour
-                                                          .toString() +
-                                                      ":" +
-                                                      snapshot
-                                                          .data!
-                                                          .getAllChat[i]
-                                                          .previewChat[0]
-                                                          .time
-                                                          .minute
-                                                          .toString(),
-                                                  style: TextStyle(
-                                                      color: Colors.grey[600]),
-                                                ),
+                                                          .chatName,
+                                                      style: TextStyle(
+                                                          fontSize: 18)),
+                                                ],
+                                              ),
+                                              subtitle: Text(
+                                                snapshot.data!.getAllChat[i]
+                                                    .previewChat[0].text,
+                                              ),
+                                              trailing: Text(
+                                                snapshot.data!.getAllChat[i]
+                                                        .previewChat[0].time.day
+                                                        .toString() +
+                                                    "/" +
+                                                    snapshot
+                                                        .data!
+                                                        .getAllChat[i]
+                                                        .previewChat[0]
+                                                        .time
+                                                        .month
+                                                        .toString() +
+                                                    "/" +
+                                                    snapshot
+                                                        .data!
+                                                        .getAllChat[i]
+                                                        .previewChat[0]
+                                                        .time
+                                                        .year
+                                                        .toString() +
+                                                    " " +
+                                                    snapshot
+                                                        .data!
+                                                        .getAllChat[i]
+                                                        .previewChat[0]
+                                                        .time
+                                                        .hour
+                                                        .toString() +
+                                                    ":" +
+                                                    snapshot
+                                                        .data!
+                                                        .getAllChat[i]
+                                                        .previewChat[0]
+                                                        .time
+                                                        .minute
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    color: Colors.grey[600]),
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      )),
-                                  //Divider(thickness: 1),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               );
                             },
@@ -224,25 +228,25 @@ class _ChatViewState extends State<ChatView> {
 
   Container WaitingAction() {
     return Container(
-        height: 500,
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 200.0,
-              ),
-              CircularProgressIndicator(),
-              SizedBox(
-                height: 30.0,
-              ),
-              // ignore: prefer_const_constructors
-              Text(
-                'L o a d i n g . . .',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
-              ),
-            ],
-          ),
-        ));
+      height: 500,
+      child: Center(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200.0,
+            ),
+            CircularProgressIndicator(),
+            SizedBox(
+              height: 30.0,
+            ),
+            Text(
+              'L o a d i n g . . .',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

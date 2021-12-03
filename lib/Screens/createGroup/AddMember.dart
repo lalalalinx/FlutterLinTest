@@ -1,5 +1,5 @@
 // ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, non_constant_identifier_names, prefer_const_literals_to_create_immutables, deprecated_member_use
-
+// add member page (search for add)
 import 'dart:convert';
 
 import 'package:chatki_project/JSONtoDART/ShowSearchInvite.dart';
@@ -10,9 +10,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class AddMember extends StatefulWidget {
-  const AddMember({
-    Key? key,required this.chatID,required this.groupName
-  }) : super(key: key);
+  const AddMember({Key? key, required this.chatID, required this.groupName})
+      : super(key: key);
   final String chatID;
   final String groupName;
 
@@ -75,18 +74,17 @@ class _AddMemberState extends State<AddMember> {
           'chatID': widget.chatID,
           'chatName': widget.groupName
         });
-    
+
     if (res.statusCode == 200) {
       var output = jsonDecode(res.body);
       showToast(output['messages']);
     }
   }
 
-    void showToast(String message) {
+  void showToast(String message) {
     Fluttertoast.showToast(
         msg: message, gravity: ToastGravity.TOP, fontSize: 20);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -115,72 +113,78 @@ class _AddMemberState extends State<AddMember> {
                       return Column(
                         children: [
                           Card(
-                              color: Colors.white,
-                              margin: EdgeInsets.all(5),
-                              child: Column(
-                                children: [
-                                  //padding: EdgeInsets.only(left: 10,right: 10),
-                                  InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text("Confirm?"),
-                                              content:
-                                                  Text("Add this employee?"),
-                                              actions: [
-                                                FlatButton(
-                                                    onPressed: () {Navigator.pop(context);},
-                                                    child: Text('No',style: TextStyle(color: Colors.deepPurple),)),
-                                                FlatButton(
-                                                    onPressed: () {
-                                                      invite(searchData[i].employeeId);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text('Yes',style: TextStyle(color: Colors.deepPurple))),
-                                              ],
-                                            );
-                                          });
-                                      // Navigator.push(context,
-                                      //     MaterialPageRoute(builder: (context) {
-                                      //   return OtherProfile(
-                                      //       targetID: snapshot.data!.user[i].employeeId,
-                                      //       chatName: snapshot.data!.user[i].userName);
-                                      // }));
-                                    },
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 5, bottom: 5),
-                                      child: ListTile(
-                                        title: Row(
-                                          children: [
-                                            Container(
-                                              width: 50,
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey[600],
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
+                            color: Colors.white,
+                            margin: EdgeInsets.all(5),
+                            child: Column(
+                              children: [
+                                // aleartDialog 
+                                InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("Confirm?"),
+                                          content: Text("Add this employee?"),
+                                          actions: [
+                                            FlatButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  'No',
+                                                  style: TextStyle(
+                                                      color: Colors.deepPurple),
+                                                )),
+                                            FlatButton(
+                                              onPressed: () {
+                                                invite(
+                                                    searchData[i].employeeId);
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                'Yes',
+                                                style: TextStyle(
+                                                    color: Colors.deepPurple),
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Text(searchData[i].userName,
-                                                style: TextStyle(fontSize: 18)),
                                           ],
-                                        ),
-                                        trailing: Text(
-                                          searchData[i].employeeId,
-                                          style: TextStyle(
-                                              color: Colors.grey[600]),
-                                        ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 5, bottom: 5),
+                                    child: ListTile(
+                                      title: Row(
+                                        children: [
+                                          Container(
+                                            width: 50,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[600],
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(searchData[i].userName,
+                                              style: TextStyle(fontSize: 18)),
+                                        ],
+                                      ),
+                                      trailing: Text(
+                                        searchData[i].employeeId,
+                                        style:
+                                            TextStyle(color: Colors.grey[600]),
                                       ),
                                     ),
                                   ),
-                                ],
-                              )),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       );
                     },
@@ -194,41 +198,47 @@ class _AddMemberState extends State<AddMember> {
     );
   }
 
+  // Header for page call 'AppBar'
   AppBar AddMemberAppBar(BuildContext context) {
     return AppBar(
-        elevation: 0,
-        backgroundColor: Colors.grey[900],
-        leading: Row(
-          children: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                  color: Colors.white,
-                )),
-          ],
-        ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Add new member',
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                )),
-            SizedBox(
-              width: 10,
+      elevation: 0,
+      backgroundColor: Colors.grey[900],
+      leading: Row(
+        children: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+              color: Colors.white,
             ),
-            Icon(Icons.group_add),
-            SizedBox(
-              width: 10,
+          ),
+        ],
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Add new member',
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
             ),
-          ],
-        ));
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Icon(Icons.group_add),
+          SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
+    );
   }
 
+  // searchbar
   Row searchBar() {
     return Row(
       children: [

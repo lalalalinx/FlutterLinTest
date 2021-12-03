@@ -1,5 +1,5 @@
 // ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, non_constant_identifier_names, prefer_const_literals_to_create_immutables, unused_import
-
+// create group page
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,7 +9,6 @@ class CreateGroup extends StatefulWidget {
   const CreateGroup({
     Key? key,
   }) : super(key: key);
-  //final ProfileData profileDatas;
 
   @override
   _CreateGroupState createState() => _CreateGroupState();
@@ -17,11 +16,12 @@ class CreateGroup extends StatefulWidget {
 
 class _CreateGroupState extends State<CreateGroup> {
   final storage = FlutterSecureStorage();
-  
+
   Future createGroup() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
-    var res = await http.post(Uri.parse('https://chattycat-heroku.herokuapp.com/group/create'),
+    var res = await http.post(
+        Uri.parse('https://chattycat-heroku.herokuapp.com/group/create'),
         headers: <String, String>{
           'auth-token': token.toString(),
           'refresh-token': refreshToken.toString(),
@@ -37,6 +37,7 @@ class _CreateGroupState extends State<CreateGroup> {
       print(res.body.toString());
     }
   }
+
   void showToast(String message) {
     Fluttertoast.showToast(
         msg: message, gravity: ToastGravity.TOP, fontSize: 20);
@@ -47,40 +48,43 @@ class _CreateGroupState extends State<CreateGroup> {
 
   @override
   Widget build(BuildContext context) {
-    //chatNameController.text = widget.profileDatas.chatName;
-
     return Scaffold(
       appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.grey[900],
-          leading: Row(
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    size: 20,
-                    color: Colors.white,
-                  )),
-            ],
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Create new group',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400, color: Colors.orange[400])),
-              SizedBox(
-                width: 10,
+        elevation: 0,
+        backgroundColor: Colors.grey[900],
+        leading: Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+                color: Colors.white,
               ),
-              Icon(Icons.group_add,color: Colors.orange[400],),
-              SizedBox(
-                width: 10,
-              ),
-            ],
-          )),
+            ),
+          ],
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Create new group',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400, color: Colors.orange[400])),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(
+              Icons.group_add,
+              color: Colors.orange[400],
+            ),
+            SizedBox(
+              width: 10,
+            ),
+          ],
+        ),
+      ),
       body: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -109,17 +113,18 @@ class _CreateGroupState extends State<CreateGroup> {
                 children: [
                   const SizedBox(height: 30),
                   Center(
-                      child: Row(
-                    children: [
-                      Text('Edit Group Profile ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          )),
-                      Icon(Icons.edit),
-                    ],
-                  )),
+                    child: Row(
+                      children: [
+                        Text('Edit Group Profile ',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            )),
+                        Icon(Icons.edit),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 15),
                   editForm("Group Name", chatNameController),
                   SizedBox(height: 30),
@@ -132,6 +137,7 @@ class _CreateGroupState extends State<CreateGroup> {
     );
   }
 
+  // edit form
   TextFormField editForm(String hText, TextEditingController controller) {
     return TextFormField(
       decoration: InputDecoration(

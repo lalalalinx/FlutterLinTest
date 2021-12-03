@@ -166,67 +166,67 @@ class _GroupChatState extends State<GroupChat> {
                       }),
                 ),
                 Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 100,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              margin: EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.multiline,
-                                      controller: messageController,
-                                      maxLines: 5,
-                                      minLines: 1,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: " Type a message ...",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey[500]),
-                                        contentPadding: EdgeInsets.all(15),
-                                      ),
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: 100,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            margin: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.multiline,
+                                    controller: messageController,
+                                    maxLines: 5,
+                                    minLines: 1,
+                                    textAlignVertical: TextAlignVertical.center,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: " Type a message ...",
+                                      hintStyle:
+                                          TextStyle(color: Colors.grey[500]),
+                                      contentPadding: EdgeInsets.all(15),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.blue[600],
-                                      child: IconButton(
-                                        color: Colors.white,
-                                        icon: Icon(Icons.send),
-                                        onPressed: () {
-                                          scrollController.animateTo(
-                                              scrollController
-                                                  .position.maxScrollExtent,
-                                              duration:
-                                                  Duration(microseconds: 300),
-                                              curve: Curves.easeOut);
-                                          sendMessage(
-                                              messageController.text, username);
-                                          messageController.clear();
-                                        },
-                                      ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.blue[600],
+                                    child: IconButton(
+                                      color: Colors.white,
+                                      icon: Icon(Icons.send),
+                                      onPressed: () {
+                                        scrollController.animateTo(
+                                            scrollController
+                                                .position.maxScrollExtent,
+                                            duration:
+                                                Duration(microseconds: 300),
+                                            curve: Curves.easeOut);
+                                        sendMessage(
+                                            messageController.text, username);
+                                        messageController.clear();
+                                      },
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    )),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

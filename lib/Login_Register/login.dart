@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
+// Login page
 import 'package:chatki_project/Screens/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -53,7 +53,6 @@ class _LoginState extends State<Login> {
     }
   }
 
-  
   void showToast(String message) {
     Fluttertoast.showToast(
         msg: message, gravity: ToastGravity.TOP, fontSize: 20);
@@ -65,24 +64,20 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.fromLTRB(25, 55, 25, 0),
-      child: Column(
-        children: [
-          Form(
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(25, 55, 25, 0),
+        child: Column(
+          children: [
+            Form(
               key: formkey,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   Container(
                     child: Image.asset("assets/images/arumjoh.png",
                         height: 150, width: 150),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   Text(
                     "Login",
                     style: TextStyle(
@@ -90,9 +85,7 @@ class _LoginState extends State<Login> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   Text(
                     "Welcome to อรุ่มเจ๊าะ",
                     style: TextStyle(
@@ -100,9 +93,7 @@ class _LoginState extends State<Login> {
                       color: Colors.grey[700],
                     ),
                   ),
-                  SizedBox(
-                    height: 50.0,
-                  ),
+                  SizedBox(height: 50.0),
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Username',
@@ -114,9 +105,7 @@ class _LoginState extends State<Login> {
                     ),
                     controller: userNameController,
                   ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
+                  SizedBox(height: 30.0),
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Password',
@@ -130,58 +119,63 @@ class _LoginState extends State<Login> {
                     obscureText: true,
                   ),
                 ],
-              )),
-          SizedBox(
-            height: 15.0,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
-            child: ElevatedButton(
-              onPressed: () {
-                login();
-              },
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-                fixedSize: const Size(350, 50),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    side: BorderSide(color: Colors.black, width: 1.5)),
               ),
             ),
-          ),
-          Text("- OR -", style: TextStyle(color: Colors.black)),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
-            child: ElevatedButton(
-              child: const Text(
-                'Register',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
+            SizedBox(height: 15.0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+              child: ElevatedButton(
+                onPressed: () {
+                  login();
+                },
+                child: const Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                  fixedSize: const Size(350, 50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      side: BorderSide(color: Colors.black, width: 1.5)),
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                fixedSize: const Size(350, 50),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    side: BorderSide(color: Colors.black, width: 1.5)),
-              ),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Register();
-                }));
-              },
             ),
-          ),
-        ],
+            Text("- OR -", style: TextStyle(color: Colors.black)),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+              child: ElevatedButton(
+                child: const Text(
+                  'Register',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  fixedSize: const Size(350, 50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                      side: BorderSide(color: Colors.black, width: 1.5)),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Register();
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

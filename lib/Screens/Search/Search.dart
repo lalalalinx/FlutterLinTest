@@ -1,7 +1,8 @@
 // ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, dead_code
-
+// result of search page
 import 'package:chatki_project/JSONtoDART/ShowSearch.dart';
 import 'package:chatki_project/Screens/Home.dart';
+import 'package:chatki_project/Screens/Others/GroupProfile.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
 import 'package:flutter/material.dart';
 
@@ -24,10 +25,14 @@ class _SearchState extends State<Search> {
         elevation: 0,
         leading: IconButton(
             onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                return Home();
-              }));
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return Home();
+                  },
+                ),
+              );
             },
             icon: Icon(
               Icons.arrow_back_ios,
@@ -38,7 +43,6 @@ class _SearchState extends State<Search> {
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
-      
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
@@ -49,29 +53,30 @@ class _SearchState extends State<Search> {
                 Container(
                   color: Colors.grey[300],
                   child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 20, left: 20, right: 20, bottom: 0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.search),
-                              Text(' Result of :'),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                '\" ' + widget.searchNameString + ' \"',
-                                style:
-                                    TextStyle(color: Colors.blue, fontSize: 20),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      )),
+                    padding: const EdgeInsets.only(
+                        top: 20, left: 20, right: 20, bottom: 0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.search),
+                            Text(' Result of :'),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              '\" ' + widget.searchNameString + ' \"',
+                              style:
+                                  TextStyle(color: Colors.blue, fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -91,8 +96,6 @@ class _SearchState extends State<Search> {
                     ),
                   ),
                 ),
-
-                // ListView for employee
                 ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -105,17 +108,20 @@ class _SearchState extends State<Search> {
                           margin: EdgeInsets.all(5),
                           child: Column(
                             children: [
-                              //padding: EdgeInsets.only(left: 10,right: 10),
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return OtherProfile(
-                                        targetID: widget.searchResult
-                                            .searchName[i].employeeId,
-                                        chatName: widget.searchResult
-                                            .searchName[i].userName);
-                                  }));
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return OtherProfile(
+                                            targetID: widget.searchResult
+                                                .searchName[i].employeeId,
+                                            chatName: widget.searchResult
+                                                .searchName[i].userName);
+                                      },
+                                    ),
+                                  );
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -151,7 +157,6 @@ class _SearchState extends State<Search> {
                             ],
                           ),
                         ),
-                        //Divider(thickness: 1),
                       ],
                     );
                   },
@@ -187,15 +192,14 @@ class _SearchState extends State<Search> {
                           margin: EdgeInsets.all(5),
                           child: Column(
                             children: [
-                              //padding: EdgeInsets.only(left: 10,right: 10),
                               InkWell(
                                 onTap: () {
                                   // Navigator.push(context,
                                   //     MaterialPageRoute(
                                   //         builder: (context) {
-                                  //   return OtherProfile(
-                                  //       targetID: widget.searchResult
-                                  //           .searchGroup[i].chatName);
+                                  //   return GroupProfile(
+                                  //       groupName: widget.searchResult
+                                  //           .groups[i]);
                                   // }));
                                 },
                                 child: Padding(
@@ -215,8 +219,7 @@ class _SearchState extends State<Search> {
                                         SizedBox(
                                           width: 20,
                                         ),
-                                        Text(
-                                            widget.searchResult.groups[i],
+                                        Text(widget.searchResult.groups[i],
                                             style: TextStyle(fontSize: 18)),
                                       ],
                                     ),
@@ -226,7 +229,6 @@ class _SearchState extends State<Search> {
                             ],
                           ),
                         ),
-                        //Divider(thickness: 1),
                       ],
                     );
                   },

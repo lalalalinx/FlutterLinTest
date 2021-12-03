@@ -1,5 +1,5 @@
 // ignore_for_file: file_names, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, sized_box_for_whitespace, prefer_const_constructors, duplicate_ignore, void_checks
-
+// Show Homepage
 import 'dart:convert';
 
 import 'package:chatki_project/JSONtoDART/ShowHome.dart';
@@ -68,12 +68,17 @@ class _HomeViewState extends State<HomeView> {
         });
     final showSearch = showSearchFromJson(res.body);
     if (res.statusCode == 200) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return Search(
-          searchResult: showSearch,
-          searchNameString: targetName,
-        );
-      }));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return Search(
+              searchResult: showSearch,
+              searchNameString: targetName,
+            );
+          },
+        ),
+      );
     }
   }
 
@@ -86,7 +91,6 @@ class _HomeViewState extends State<HomeView> {
       ),
       child: Scaffold(
         body: ListView(
-          //scrollDirection: Axis.horizontal,
           physics: BouncingScrollPhysics(),
           children: [
             Center(
@@ -111,13 +115,14 @@ class _HomeViewState extends State<HomeView> {
                     );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
+  // show list of group
   Column groupListView(AsyncSnapshot<ShowHome> snapshot) {
     return Column(
       children: [
@@ -148,16 +153,20 @@ class _HomeViewState extends State<HomeView> {
                   margin: EdgeInsets.all(5),
                   child: Column(
                     children: [
-                      //padding: EdgeInsets.only(left: 10,right: 10),
                       InkWell(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return GroupProfile(
-                              chatID: snapshot.data!.sendGroup[i].chatId,
-                              groupName: snapshot.data!.sendGroup[i].chatName,
-                            );
-                          }));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return GroupProfile(
+                                  chatID: snapshot.data!.sendGroup[i].chatId,
+                                  groupName:
+                                      snapshot.data!.sendGroup[i].chatName,
+                                );
+                              },
+                            ),
+                          );
                         },
                         child: Padding(
                           padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -189,7 +198,6 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
                 ),
-                //Divider(thickness: 1),
               ],
             );
           },
@@ -224,50 +232,53 @@ class _HomeViewState extends State<HomeView> {
             return Column(
               children: [
                 Card(
-                    color: Colors.white,
-                    margin: EdgeInsets.all(5),
-                    child: Column(
-                      children: [
-                        //padding: EdgeInsets.only(left: 10,right: 10),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return OtherProfile(
-                                  targetID: snapshot.data!.user[i].employeeId,
-                                  chatName: snapshot.data!.user[i].userName);
-                            }));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 5, bottom: 5),
-                            child: ListTile(
-                              title: Row(
-                                children: [
-                                  Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[600],
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
+                  color: Colors.white,
+                  margin: EdgeInsets.all(5),
+                  child: Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return OtherProfile(
+                                    targetID: snapshot.data!.user[i].employeeId,
+                                    chatName: snapshot.data!.user[i].userName);
+                              },
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          child: ListTile(
+                            title: Row(
+                              children: [
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[600],
+                                    borderRadius: BorderRadius.circular(30),
                                   ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(snapshot.data!.user[i].userName,
-                                      style: TextStyle(fontSize: 18)),
-                                ],
-                              ),
-                              trailing: Text(
-                                snapshot.data!.user[i].employeeId,
-                                style: TextStyle(color: Colors.grey[600]),
-                              ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(snapshot.data!.user[i].userName,
+                                    style: TextStyle(fontSize: 18)),
+                              ],
+                            ),
+                            trailing: Text(
+                              snapshot.data!.user[i].employeeId,
+                              style: TextStyle(color: Colors.grey[600]),
                             ),
                           ),
                         ),
-                      ],
-                    )),
-                //Divider(thickness: 1),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           },
@@ -276,16 +287,21 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  // Button add new group
   Container addGroupButton(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 210),
       width: 170,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return CreateGroup();
-          }));
-          // <-----------add MORE here
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return CreateGroup();
+              },
+            ),
+          );
         },
         child: Row(
           children: [
@@ -311,6 +327,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  // search bar
   Padding searchBar() {
     return Padding(
       padding: const EdgeInsets.only(top: 30, bottom: 10, left: 15, right: 5),
@@ -372,11 +389,11 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  // loading animation while wait action
   Container WaitingAction() {
     return Container(
       height: 500,
       child: Center(
-        //alignment: Alignment.center,
         child: Column(
           children: [
             SizedBox(
@@ -386,7 +403,6 @@ class _HomeViewState extends State<HomeView> {
             SizedBox(
               height: 30.0,
             ),
-            // ignore: prefer_const_constructors
             Text(
               'L o a d i n g . . .',
               textAlign: TextAlign.center,

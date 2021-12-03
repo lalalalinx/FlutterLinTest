@@ -1,5 +1,5 @@
 // ignore_for_file: file_names, prefer_const_constructors, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables
-
+// show group profile view
 import 'package:chatki_project/JSONtoDART/ShowGroupMember.dart';
 import 'package:chatki_project/Screens/Others/Otherprofile.dart';
 import 'package:chatki_project/Screens/chat/GroupChat.dart';
@@ -53,8 +53,6 @@ class _GroupProfileState extends State<GroupProfile> {
     return showGroupMember;
   }
 
-//////// รอกด
-
   @override
   final shape = StadiumBorder();
   Widget build(BuildContext context) {
@@ -64,14 +62,15 @@ class _GroupProfileState extends State<GroupProfile> {
         elevation: 0,
         backgroundColor: Colors.grey[900],
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 25,
-              color: Colors.white,
-            )),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 25,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -83,177 +82,173 @@ class _GroupProfileState extends State<GroupProfile> {
             children: [
               Center(
                 child: FutureBuilder(
-                    future: getGroupProfile(),
-                    builder: (context, AsyncSnapshot<List> snapshot) {
-                      if (snapshot.data == null) {
-                        return Container(
-                          height: 500,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'L o a d i n g . . .',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 20),
-                            ),
+                  future: getGroupProfile(),
+                  builder: (context, AsyncSnapshot<List> snapshot) {
+                    if (snapshot.data == null) {
+                      return Container(
+                        height: 500,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'L o a d i n g . . .',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 20),
                           ),
-                        );
-                      } else
-                        return Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                //height: 200.0,
-                                child: Container(
-                                  color: Colors.grey[900],
-                                  child: Padding(
-                                    padding: EdgeInsets.only(top: 10),
-                                    child: Center(
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: 170,
-                                            height: 170,
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey[900],
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: NetworkImage(
-                                                    'https://cdn.shopify.com/s/files/1/0050/3349/2553/articles/Alpacas_in_field_22_N21_2000x.jpg?v=1589368550'),
-                                              ),
+                        ),
+                      );
+                    } else
+                      return Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              child: Container(
+                                color: Colors.grey[900],
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Center(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 170,
+                                          height: 170,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[900],
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  'https://cdn.shopify.com/s/files/1/0050/3349/2553/articles/Alpacas_in_field_22_N21_2000x.jpg?v=1589368550'),
                                             ),
                                           ),
-                                          SizedBox(height: 20.0),
-                                          Container(
-                                            alignment: Alignment.center,
-                                            color: Colors.grey[900],
-                                            child: Row(
-                                              children: [
-                                                SizedBox(width: 40.0),
-                                                Text(
-                                                  'Group Name :',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w300,
-                                                    color: Colors.grey[600],
-                                                  ),
+                                        ),
+                                        SizedBox(height: 20.0),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          color: Colors.grey[900],
+                                          child: Row(
+                                            children: [
+                                              SizedBox(width: 40.0),
+                                              Text(
+                                                'Group Name :',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w300,
+                                                  color: Colors.grey[600],
                                                 ),
-                                              ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          alignment: Alignment.topCenter,
+                                          color: Colors.grey[900],
+                                          height: 30,
+                                          child: Text(
+                                            widget.groupName,
+                                            style: TextStyle(
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.orange[300],
                                             ),
                                           ),
-                                          Container(
-                                            alignment: Alignment.topCenter,
-                                            color: Colors.grey[900],
-                                            height: 30,
-                                            child: Text(
-                                              widget.groupName,
-                                              style: TextStyle(
-                                                fontSize: 23,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.orange[300],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 20.0, horizontal: 110),
+                                          child: Container(
+                                            decoration: ShapeDecoration(
+                                              shape: shape,
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.orange,
+                                                  Colors.pink,
+                                                ],
                                               ),
                                             ),
-                                          ), /////////
-                                          Padding(
-                                            //ปุ่ม 'chat'--------------------------
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 20.0,
-                                                horizontal: 110),
-                                            child: Container(
-                                              decoration: ShapeDecoration(
-                                                shape: shape,
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Colors.orange,
-                                                    Colors.pink,
-                                                  ],
-                                                ),
-                                              ),
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return GroupChat(
-                                                      chatID: widget.chatID,
-                                                      chatName: widget.groupName,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return GroupChat(
+                                                        chatID: widget.chatID,
+                                                        chatName:
+                                                            widget.groupName,
                                                       );
-                                                }));
-                                                },
-                                                child: Text(
-                                                  'C h a t',
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w400,
+                                                    },
                                                   ),
+                                                );
+                                              },
+                                              child: Text(
+                                                'C h a t',
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
-                                                style: ElevatedButton.styleFrom(
-                                                  //primary: Colors.deepPurple[700],
-                                                  fixedSize:
-                                                      const Size(200, 50),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                  ),
-                                                  tapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                  primary: Colors.transparent,
-                                                  shadowColor:
-                                                      Colors.transparent,
+                                              ),
+                                              style: ElevatedButton.styleFrom(
+                                                fixedSize: const Size(200, 50),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
                                                 ),
+                                                tapTargetSize:
+                                                    MaterialTapTargetSize
+                                                        .shrinkWrap,
+                                                primary: Colors.transparent,
+                                                shadowColor: Colors.transparent,
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 20.0),
-                              Row(
-                                children: [
-                                  SizedBox(width: 30.0),
-                                  Icon(Icons.group, size: 25),
-                                  SizedBox(width: 10.0),
-                                  Text(
-                                    'Member :',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
+                            ),
+                            SizedBox(height: 20.0),
+                            Row(
+                              children: [
+                                SizedBox(width: 30.0),
+                                Icon(Icons.group, size: 25),
+                                SizedBox(width: 10.0),
+                                Text(
+                                  'Member :',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
                                   ),
-                                  //SizedBox(width: 10.0),
-                                  addMemberButton(context),
-                                ],
-                              ),
-                              SizedBox(height: 10.0),
-                              ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, i) {
-                                  return Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16),
-                                        child: Card(
-                                            shape: shape,
-                                            color: Colors.white,
-                                            margin: EdgeInsets.all(5),
-                                            child: Column(
-                                              children: [
-                                                //padding: EdgeInsets.only(left: 10,right: 10),
-                                                InkWell(
-                                                  onTap: () {
-                                                    Navigator.push(context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) {
+                                ),
+                                addMemberButton(context),
+                              ],
+                            ),
+                            SizedBox(height: 10.0),
+                            ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, i) {
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Card(
+                                        shape: shape,
+                                        color: Colors.white,
+                                        margin: EdgeInsets.all(5),
+                                        child: Column(
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) {
                                                       return OtherProfile(
                                                           targetID: snapshot
                                                               .data![i]
@@ -261,59 +256,61 @@ class _GroupProfileState extends State<GroupProfile> {
                                                           chatName: snapshot
                                                               .data![i]
                                                               .userName);
-                                                    }));
-                                                  },
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 5, bottom: 5),
-                                                    child: ListTile(
-                                                      title: Row(
-                                                        children: [
-                                                          Container(
-                                                            width: 50,
-                                                            height: 50,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Colors
-                                                                  .grey[600],
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          30),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 20,
-                                                          ),
-                                                          Text(
-                                                              snapshot.data![i]
-                                                                  .userName,
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      18)),
-                                                        ],
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: 5, bottom: 5),
+                                                child: ListTile(
+                                                  title: Row(
+                                                    children: [
+                                                      Container(
+                                                        width: 50,
+                                                        height: 50,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              Colors.grey[600],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(30),
+                                                        ),
                                                       ),
-                                                      trailing: Text(
-                                                        snapshot.data![i]
-                                                            .employeeId,
-                                                        style: TextStyle(
-                                                            color: Colors
-                                                                .grey[600]),
+                                                      SizedBox(
+                                                        width: 20,
                                                       ),
-                                                    ),
+                                                      Text(
+                                                          snapshot.data![i]
+                                                              .userName,
+                                                          style: TextStyle(
+                                                              fontSize: 18)),
+                                                    ],
+                                                  ),
+                                                  trailing: Text(
+                                                    snapshot
+                                                        .data![i].employeeId,
+                                                    style: TextStyle(
+                                                        color:
+                                                            Colors.grey[600]),
                                                   ),
                                                 ),
-                                              ],
-                                            )),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ],
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                    }),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                  },
+                ),
               ),
               const SizedBox(height: 24),
             ],
@@ -323,16 +320,22 @@ class _GroupProfileState extends State<GroupProfile> {
     );
   }
 
+  // button add new member for group
   Container addMemberButton(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 85),
       width: 136,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return AddMember(chatID:widget.chatID,groupName:widget.groupName);
-          }));
-          // <-----------add MORE here
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return AddMember(
+                    chatID: widget.chatID, groupName: widget.groupName);
+              },
+            ),
+          );
         },
         child: Row(
           children: [

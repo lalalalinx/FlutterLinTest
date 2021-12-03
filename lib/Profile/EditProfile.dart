@@ -1,10 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors, unused_local_variable, non_constant_identifier_names, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, deprecated_member_use, unnecessary_null_comparison, avoid_web_libraries_in_flutter
+// edit profile page
 
-//import 'dart:html'; //ในเน็ตบอกให้เอาออกแล้วหายเออเร่อ (คือไรวะเนี้ย)
-//import 'dart:async';
-// import 'package:html/dom.dart';
-// import 'package:html/dom_parsing.dart';
-// import 'package:html/parser.dart';
 import 'dart:io';
 
 import 'package:chatki_project/Model/ProfileData.dart';
@@ -21,7 +17,6 @@ class EditProfile extends StatefulWidget {
   @override
   _EditProfileState createState() => _EditProfileState();
 }
-
 class _EditProfileState extends State<EditProfile> {
 
   final storage = FlutterSecureStorage();
@@ -54,14 +49,6 @@ class _EditProfileState extends State<EditProfile> {
       print(res.body.toString());
     }
   }
-
-  // Future pictureTest(String filepath) async{
-  //   final token = await storage.read(key: "token");
-  //   final refreshToken = await storage.read(key: "refreshToken");
-  //   var res = http.MultipartRequest('POST',Uri.parse('http://10.0.2.2:4000/profile/add/image'));
-  //   res.files.add(await http.MultipartFile.fromPath("img",filepath));
-  //   res.headers.add
-  // }
 
   //controller
   final userFNameController = TextEditingController();
@@ -97,7 +84,7 @@ class _EditProfileState extends State<EditProfile> {
                     Icons.arrow_back_ios,
                     size: 20,
                     color: Colors.white,
-                  )),
+                  ),),
             ],
           ),
           title: Row(
@@ -114,7 +101,7 @@ class _EditProfileState extends State<EditProfile> {
                 width: 10,
               ),
             ],
-          )),
+          ),),
       body: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -141,8 +128,8 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  // edit form
   Container eFormInfo() => Container(
-        //color: Colors.grey[900],
         padding: EdgeInsets.symmetric(horizontal: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,6 +153,7 @@ class _EditProfileState extends State<EditProfile> {
         ),
       );
 
+  // edit form style
   TextFormField editForm(String hText, TextEditingController controller) {
     return TextFormField(
       decoration: InputDecoration(
@@ -178,8 +166,6 @@ class _EditProfileState extends State<EditProfile> {
       controller: controller,
     );
   }
-
-
 
   Widget bottomSheet() {
     return Container(
@@ -220,6 +206,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  // take a photo part
   Future takePhoto(ImageSource source) async {
     try{
     final image = await picker.pickImage(source: source);
@@ -233,16 +220,11 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  // call a photo part
   Widget imageProfile() {
     return Center(
       child: Stack(
         children: <Widget>[
-          // CircleAvatar(
-          //   radius: 80,
-          //   backgroundImage: AssetImage("assets/images/arumjoh.png"),
-          //   // backgroundImage: FileImage(File(_imageFile.path)),
-          //   // backgroundImage: imageFile == null? AssetImage("assets/images/arumjoh.png") :FileImage(File(imageFile.path)) as ImageProvider
-          // ),
           image!= null ? ClipOval(child: Image.file(image!,width:150,height:150,fit: BoxFit.cover)) : CircleAvatar(
             radius: 80,
             backgroundImage: AssetImage("assets/images/arumjoh.png"),
@@ -262,7 +244,6 @@ class _EditProfileState extends State<EditProfile> {
                 child: Icon(
                   Icons.edit,
                   color: Colors.white,
-                  //color: Colors.teal,
                   size: 20,
                 ),
               ),
