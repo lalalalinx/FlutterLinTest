@@ -66,5 +66,3 @@ class OwnMessageCard extends StatelessWidget {
     );
   }
 }
-
-//Text(time.hour.toString() + ":" + time.minute.toString(),

@@ -17,7 +17,7 @@ class CreateGroup extends StatefulWidget {
 
 class _CreateGroupState extends State<CreateGroup> {
   final storage = FlutterSecureStorage();
-
+  
   Future createGroup() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");

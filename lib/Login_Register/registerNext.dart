@@ -18,6 +18,7 @@ class _RegisterNextState extends State<RegisterNext> {
   final formkey = GlobalKey<FormState>();
   final storage = FlutterSecureStorage();
 
+  //this function save personal information to the database
   Future savePersonalInfo() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");

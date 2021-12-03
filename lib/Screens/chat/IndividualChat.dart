@@ -53,43 +53,42 @@ class _IndividualChatState extends State<IndividualChat> {
   // connect to socketio and recieve previous message and incoming message
   Future connectSocket() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    socket = io(
-        'https://chattycat-heroku.herokuapp.com',<String, dynamic>{
-         'transports': ['websocket'],
-         'autoConnect': false,
-         'forceNew':true,
-        });
-
+    socket = io('https://chattycat-heroku.herokuapp.com', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+      'forceNew': true,
+    });
 
     socket.connect();
-    socket.onConnect((data) {print("Connected");});
+    socket.onConnect((data) {
+      print("Connected");
+    });
     employeeID = prefs.getString('employeeID')!;
     socket.emit("signin", {employeeID, widget.chatID, -1});
-    // load previous message
 
+    // load previous message
     socket.on('loadUniqueChat', (data) {
       var username = prefs.getString('username');
       if (data["sender"] == username) {
-            print("sender $mounted");
+        print("sender $mounted");
         loadMessage("source", data["text"], DateTime.parse(data["time"]));
       } else {
         print("reciever :$mounted");
         loadMessage("destination", data["text"], DateTime.parse(data["time"]));
       }
     });
+
+    // recieve incoming message
     socket.on('chat message', (msg) {
-        print(msg);
-        loadMessage("destination", msg["message"], DateTime.now());
-        WidgetsBinding.instance!.addPostFrameCallback((_) {
-          if (scrollController.hasClients) {
-            scrollController.animateTo(
-                scrollController.position.maxScrollExtent,
-                duration: Duration(microseconds: 300),
-                curve: Curves.easeOut);
-          }
-        });
+      print(msg);
+      loadMessage("destination", msg["message"], DateTime.now());
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        if (scrollController.hasClients) {
+          scrollController.animateTo(scrollController.position.maxScrollExtent,
+              duration: Duration(microseconds: 300), curve: Curves.easeOut);
+        }
       });
+    });
   }
 
   //sent message to socket and set message
@@ -101,14 +100,6 @@ class _IndividualChatState extends State<IndividualChat> {
   }
 
   //set the type of message and stored in message list variable
-  void setMessage(String type, String message, DateTime time) {
-    MessageData messageData =
-        MessageData(type: type, message: message, time: time);
-    setState(() {
-      messages.add(messageData);
-    });
-  }
-
   void loadMessage(String type, String message, DateTime time) {
     MessageData messageData =
         MessageData(type: type, message: message, time: time);

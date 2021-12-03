@@ -18,6 +18,7 @@ class _RegisterState extends State<Register> {
   final formkey = GlobalKey<FormState>();
   final storage = FlutterSecureStorage();
 
+  //Register function sent register information via API and sent respond back
   Future registerUser() async {
     var res = await http.post(
         Uri.parse('https://chattycat-heroku.herokuapp.com/login-register/register'),
@@ -44,6 +45,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
+  //use function login to prevent when user register half way done and exit the program
   Future login() async {
     var res = await http.post(
         Uri.parse('https://chattycat-heroku.herokuapp.com/login-register/login'),

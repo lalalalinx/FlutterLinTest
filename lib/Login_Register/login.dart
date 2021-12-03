@@ -21,10 +21,14 @@ class _LoginState extends State<Login> {
   final formkey = GlobalKey<FormState>();
   final storage = FlutterSecureStorage();
 
+  //This function get username and password to past to backend via API and get respond
+  //Stored token and refresh-token in flutter_secure_storage
+  //Stored employeeID and username in shared preferance
   Future login() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var res = await http.post(
-        Uri.parse('https://chattycat-heroku.herokuapp.com/login-register/login'),
+        Uri.parse(
+            'https://chattycat-heroku.herokuapp.com/login-register/login'),
         headers: <String, String>{
           'Context-Type': 'application/json;charSet=UTF-8'
         },
@@ -49,6 +53,7 @@ class _LoginState extends State<Login> {
     }
   }
 
+  
   void showToast(String message) {
     Fluttertoast.showToast(
         msg: message, gravity: ToastGravity.TOP, fontSize: 20);
@@ -133,10 +138,6 @@ class _LoginState extends State<Login> {
             padding: const EdgeInsets.fromLTRB(0, 30, 0, 10),
             child: ElevatedButton(
               onPressed: () {
-                // userNameController.text = 'jeremiee';
-                // passwordController.text = '1234';
-                // userNameController.text = 'jat0800';
-                // passwordController.text = 'jat0850567878';
                 login();
               },
               child: const Text(

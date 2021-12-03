@@ -30,6 +30,8 @@ class _ChatViewState extends State<ChatView> {
     super.initState();
   }
 
+  //this function get list of current user chat history
+  //if no chat history then it will display no chat
   Future getMutipleChatData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");

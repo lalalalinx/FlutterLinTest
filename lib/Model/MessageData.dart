@@ -1,6 +1,6 @@
 
 // ignore_for_file: file_names
-//ใช้
+// message class 
 
 class MessageData{
   String type;

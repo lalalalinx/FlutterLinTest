@@ -26,6 +26,8 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
   }
 
+  // this function get all username and group that current user are in the
+  // return list of username and group
   Future<ShowHome> getHomeData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");

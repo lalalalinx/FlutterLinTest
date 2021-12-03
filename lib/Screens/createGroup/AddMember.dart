@@ -24,9 +24,10 @@ class _AddMemberState extends State<AddMember> {
   final storage = FlutterSecureStorage();
   //controller
   final searchController = TextEditingController();
-
   List<SearchName> searchData = [];
 
+  // this function search for other user to add to the group
+  // return list of user that backend found
   Future searchInvite(String targetName) async {
     final tokenSearch = await storage.read(key: "token");
     final refreshTokenSearch = await storage.read(key: "refreshToken");
@@ -56,6 +57,7 @@ class _AddMemberState extends State<AddMember> {
     }
   }
 
+  // this function add the target user to the group
   Future invite(String targetID) async {
     final tokenSearch = await storage.read(key: "token");
     final refreshTokenSearch = await storage.read(key: "refreshToken");
@@ -74,9 +76,6 @@ class _AddMemberState extends State<AddMember> {
           'chatName': widget.groupName
         });
     
-    // setState(() {
-    //   searchData.clear();
-    // });
     if (res.statusCode == 200) {
       var output = jsonDecode(res.body);
       showToast(output['messages']);
@@ -182,7 +181,6 @@ class _AddMemberState extends State<AddMember> {
                                   ),
                                 ],
                               )),
-                          //Divider(thickness: 1),
                         ],
                       );
                     },

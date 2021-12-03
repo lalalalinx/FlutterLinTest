@@ -29,6 +29,7 @@ class _EditProfileState extends State<EditProfile> {
   late PickedFile imageFile;
   
 
+  //this function edit the personal information of the user
   Future editProfile() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
