@@ -7,6 +7,7 @@ import 'package:chatki_project/Screens/chat/IndividualChat.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/Model/ProfileData.dart'; //list data ของ user
 import 'package:chatki_project/JSONtoDART/ShowProfile.dart'; //๋JSON
+import 'package:chatki_project/Components.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -100,7 +101,7 @@ class _OtherProfileState extends State<OtherProfile> {
             return IndividualChat(
                 chatID: showOtherChat.chatId,
                 chatName: showOtherChat.chatName,
-                targetID: widget.targetID); //<----------ไปหน้าแชทคนนั้นๆ
+                targetID: widget.targetID); 
           },
         ),
       );
@@ -141,18 +142,8 @@ class _OtherProfileState extends State<OtherProfile> {
                 child: FutureBuilder(
                   future: getProfileData(),
                   builder: (context, snapshot) {
-                    if (snapshot.data == null) {
-                      return Container(
-                        height: 500,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'L o a d i n g . . .',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      );
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Components.waitingAction();
                     } else
                       return Center(
                         child: Column(
@@ -176,8 +167,7 @@ class _OtherProfileState extends State<OtherProfile> {
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            'https://files.eventpass.co/eventpass-api/files/1629791258776-46229AD3-D72F-483A-B699-7D7C49B3946B.jpeg'),
+                                        image: AssetImage("assets/images/everyone's profile.jpg"),
                                       ),
                                     ),
                                   ),
@@ -262,6 +252,21 @@ class _OtherProfileState extends State<OtherProfile> {
       ),
     );
   }
+
+  // // waitingAction
+  // Container waitingAction() {
+  //   return Container(
+  //     height: 500,
+  //     child: Align(
+  //       alignment: Alignment.center,
+  //       child: Text(
+  //         'L o a d i n g . . .',
+  //         textAlign: TextAlign.center,
+  //         style: TextStyle(fontSize: 20),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   //show address section
   Column DisplayOtherAddress() {

@@ -117,8 +117,8 @@ class _GroupProfileState extends State<GroupProfile> {
                                             shape: BoxShape.circle,
                                             image: DecorationImage(
                                               fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                  'https://cdn.shopify.com/s/files/1/0050/3349/2553/articles/Alpacas_in_field_22_N21_2000x.jpg?v=1589368550'),
+                                              image: AssetImage(
+                                                  "assets/images/every groups' profile.jpg"),
                                             ),
                                           ),
                                         ),
@@ -219,7 +219,7 @@ class _GroupProfileState extends State<GroupProfile> {
                                   'Member :',
                                   style: TextStyle(
                                     fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -272,10 +272,15 @@ class _GroupProfileState extends State<GroupProfile> {
                                                         decoration:
                                                             BoxDecoration(
                                                           color:
-                                                              Colors.grey[600],
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
+                                                              Colors.grey[900],
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          image:
+                                                              DecorationImage(
+                                                            fit: BoxFit.cover,
+                                                            image: AssetImage(
+                                                                "assets/images/everyone's profile.jpg"),
+                                                          ),
                                                         ),
                                                       ),
                                                       SizedBox(

@@ -73,7 +73,7 @@ class _ChatViewState extends State<ChatView> {
                       child: Column(
                         children: [
                           ListView.builder(
-                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: snapshot.data!.getAllChat.length,
                             itemBuilder: (context, i) {
@@ -148,7 +148,12 @@ class _ChatViewState extends State<ChatView> {
                                                 top: 5, bottom: 5),
                                             child: ListTile(
                                               leading: CircleAvatar(
-                                                backgroundColor: Colors.blue,
+                                                backgroundImage: snapshot.data!
+                                                        .getAllChat[i].isGroup
+                                                    ? AssetImage(
+                                                        "assets/images/every groups' profile.jpg")
+                                                    : AssetImage(
+                                                        "assets/images/everyone's profile.jpg"),
                                               ),
                                               title: Row(
                                                 children: [
@@ -219,14 +224,14 @@ class _ChatViewState extends State<ChatView> {
                     );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
-////
+//Waiting action
   Container WaitingAction() {
     return Container(
       height: 500,

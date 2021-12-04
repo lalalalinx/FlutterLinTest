@@ -137,8 +137,7 @@ class _ProfileViewState extends State<ProfileView> {
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            'https://files.eventpass.co/eventpass-api/files/1629791258776-46229AD3-D72F-483A-B699-7D7C49B3946B.jpeg'),
+                                        image: AssetImage("assets/images/everyone's profile.jpg"),
                                       ),
                                     ),
                                   ),
@@ -185,7 +184,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  //show address section 
+  //show address section
   Column DisplayAddress(AsyncSnapshot<ProfileData> snapshot) {
     return Column(
       children: [
@@ -219,7 +218,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  //show email section 
+  //show email section
   Column DisplayEmailAndTel(AsyncSnapshot<ProfileData> snapshot) {
     return Column(
       children: [
@@ -244,7 +243,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  //show name and surname section 
+  //show name and surname section
   Column DisplayNameAndLastName(AsyncSnapshot<ProfileData> snapshot) {
     return Column(
       children: [

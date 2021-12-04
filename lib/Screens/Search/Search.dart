@@ -97,7 +97,7 @@ class _SearchState extends State<Search> {
                   ),
                 ),
                 ListView.builder(
-                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: widget.searchResult.searchName.length,
                   itemBuilder: (context, i) {
@@ -132,9 +132,12 @@ class _SearchState extends State<Search> {
                                           width: 50,
                                           height: 50,
                                           decoration: BoxDecoration(
-                                            color: Colors.grey[600],
-                                            borderRadius:
-                                                BorderRadius.circular(30),
+                                            color: Colors.grey[900],
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage("assets/images/everyone's profile.jpg"),
+                                            ),
                                           ),
                                         ),
                                         SizedBox(
@@ -181,7 +184,7 @@ class _SearchState extends State<Search> {
                   ),
                 ),
                 ListView.builder(
-                  scrollDirection: Axis.vertical,
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: widget.searchResult.groups.length,
                   itemBuilder: (context, i) {
@@ -216,9 +219,12 @@ class _SearchState extends State<Search> {
                                           width: 50,
                                           height: 50,
                                           decoration: BoxDecoration(
-                                            color: Colors.grey[600],
-                                            borderRadius:
-                                                BorderRadius.circular(30),
+                                            color: Colors.grey[900],
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage("assets/images/every groups' profile.jpg"),
+                                            ),
                                           ),
                                         ),
                                         SizedBox(

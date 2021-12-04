@@ -117,7 +117,7 @@ class _AddMemberState extends State<AddMember> {
                             margin: EdgeInsets.all(5),
                             child: Column(
                               children: [
-                                // aleartDialog 
+                                // aleartDialog
                                 InkWell(
                                   onTap: () {
                                     showDialog(
@@ -159,12 +159,15 @@ class _AddMemberState extends State<AddMember> {
                                       title: Row(
                                         children: [
                                           Container(
-                                            width: 50,
-                                            height: 50,
+                                            width: 170,
+                                            height: 170,
                                             decoration: BoxDecoration(
-                                              color: Colors.grey[600],
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
+                                              color: Colors.grey[900],
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: AssetImage("assets/images/everyone's profile.jpg"),
+                                              ),
                                             ),
                                           ),
                                           SizedBox(

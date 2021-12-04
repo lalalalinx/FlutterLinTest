@@ -43,7 +43,8 @@ class OwnMessageCard extends StatelessWidget {
               SizedBox(width: 10),
               CircleAvatar(
                 radius: 15,
-                backgroundColor: Colors.yellow[800],
+                backgroundImage:
+                    AssetImage("assets/images/everyone's profile.jpg"),
               ),
               SizedBox(width: 10),
             ],

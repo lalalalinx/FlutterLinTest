@@ -17,18 +17,18 @@ class EditProfile extends StatefulWidget {
   @override
   _EditProfileState createState() => _EditProfileState();
 }
-class _EditProfileState extends State<EditProfile> {
 
+class _EditProfileState extends State<EditProfile> {
   final storage = FlutterSecureStorage();
   final ImagePicker picker = ImagePicker();
   late PickedFile imageFile;
-  
 
   //this function edit the personal information of the user
   Future editProfile() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
-    var res = await http.post(Uri.parse('https://chattycat-heroku.herokuapp.com/profile/edit'),
+    var res = await http.post(
+        Uri.parse('https://chattycat-heroku.herokuapp.com/profile/edit'),
         headers: <String, String>{
           'auth-token': token.toString(),
           'refresh-token': refreshToken.toString(),
@@ -72,36 +72,38 @@ class _EditProfileState extends State<EditProfile> {
 
     return Scaffold(
       appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.grey[900],
-          leading: Row(
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    size: 20,
-                    color: Colors.white,
-                  ),),
-            ],
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Edit Information',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400, color: Colors.white)),
-              SizedBox(
-                width: 10,
+        elevation: 0,
+        backgroundColor: Colors.grey[900],
+        leading: Row(
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 20,
+                color: Colors.white,
               ),
-              Icon(Icons.edit),
-              SizedBox(
-                width: 10,
-              ),
-            ],
-          ),),
+            ),
+          ],
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Edit Information',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400, color: Colors.white)),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(Icons.edit),
+            SizedBox(
+              width: 10,
+            ),
+          ],
+        ),
+      ),
       body: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -109,7 +111,6 @@ class _EditProfileState extends State<EditProfile> {
         child: Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              //<---------------------------------------------ยืนยัน edit ตรงนี้
               editProfile();
               Navigator.pop(context);
             },
@@ -208,14 +209,16 @@ class _EditProfileState extends State<EditProfile> {
 
   // take a photo part
   Future takePhoto(ImageSource source) async {
-    try{
-    final image = await picker.pickImage(source: source);
-    if(image == null) return;
+    try {
+      final image = await picker.pickImage(source: source);
+      if (image == null) return;
 
-    final imageTemporary = File(image.path);
-    setState(() {this.image = imageTemporary;});
-    // pictureTest();
-    } on PlatformException catch (e){
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.image = imageTemporary;
+      });
+      // pictureTest();
+    } on PlatformException catch (e) {
       print("Failed to pick image: $e");
     }
   }
@@ -225,10 +228,15 @@ class _EditProfileState extends State<EditProfile> {
     return Center(
       child: Stack(
         children: <Widget>[
-          image!= null ? ClipOval(child: Image.file(image!,width:150,height:150,fit: BoxFit.cover)) : CircleAvatar(
-            radius: 80,
-            backgroundImage: AssetImage("assets/images/arumjoh.png"),
-          ),
+          image != null
+              ? ClipOval(
+                  child: Image.file(image!,
+                      width: 150, height: 150, fit: BoxFit.cover))
+              : CircleAvatar(
+                  radius: 80,
+                  backgroundImage:
+                      AssetImage("assets/images/everyone's profile.jpg"),
+                ),
           Positioned(
             bottom: 0,
             right: 0,

@@ -177,8 +177,13 @@ class _HomeViewState extends State<HomeView> {
                                   width: 50,
                                   height: 50,
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[600],
-                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.grey[900],
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          "assets/images/every groups' profile.jpg"),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -206,6 +211,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  // show list of person
   Column personListView(AsyncSnapshot<ShowHome> snapshot) {
     return Column(
       children: [
@@ -258,8 +264,13 @@ class _HomeViewState extends State<HomeView> {
                                   width: 50,
                                   height: 50,
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[600],
-                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.grey[900],
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          "assets/images/everyone's profile.jpg"),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
