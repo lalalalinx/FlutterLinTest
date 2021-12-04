@@ -194,13 +194,18 @@ class _SearchState extends State<Search> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  // Navigator.push(context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) {
-                                  //   return GroupProfile(
-                                  //       groupName: widget.searchResult
-                                  //           .groups[i]);
-                                  // }));
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return GroupProfile(
+                                            groupName: widget.searchResult
+                                                .groups[i].chatName,
+                                            chatID: widget
+                                                .searchResult.groups[i].chatID);
+                                      },
+                                    ),
+                                  );
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -219,7 +224,9 @@ class _SearchState extends State<Search> {
                                         SizedBox(
                                           width: 20,
                                         ),
-                                        Text(widget.searchResult.groups[i],
+                                        Text(
+                                            widget.searchResult.groups[i]
+                                                .chatName,
                                             style: TextStyle(fontSize: 18)),
                                       ],
                                     ),
