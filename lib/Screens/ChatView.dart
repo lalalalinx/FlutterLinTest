@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:chatki_project/Components.dart';
 import 'package:chatki_project/JSONtoDART/ShowChat.dart';
 import 'package:chatki_project/Screens/chat/GroupChat.dart';
 import 'package:chatki_project/Screens/chat/IndividualChat.dart';
@@ -65,7 +66,7 @@ class _ChatViewState extends State<ChatView> {
                 future: getMutipleChatData(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return WaitingAction();
+                    return Components.waitingAction();
                   } else if (snapshot.data == "no") {
                     return Text("No chat");
                   } else
@@ -231,28 +232,4 @@ class _ChatViewState extends State<ChatView> {
     );
   }
 
-//Waiting action
-  Container WaitingAction() {
-    return Container(
-      height: 500,
-      child: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 200.0,
-            ),
-            CircularProgressIndicator(),
-            SizedBox(
-              height: 30.0,
-            ),
-            Text(
-              'L o a d i n g . . .',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

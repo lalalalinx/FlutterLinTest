@@ -2,13 +2,12 @@
 // show ProfileView
 import 'dart:convert';
 import 'dart:async';
-
 import 'package:chatki_project/Model/ProfileData.dart';
 import 'package:chatki_project/JSONtoDART/ShowProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:chatki_project/Profile/EditProfile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'package:chatki_project/Components.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileView extends StatefulWidget {
@@ -92,28 +91,7 @@ class _ProfileViewState extends State<ProfileView> {
                   future: getProfileData(),
                   builder: (context, AsyncSnapshot<ProfileData> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Container(
-                        height: 500,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 200.0,
-                              ),
-                              CircularProgressIndicator(),
-                              SizedBox(
-                                height: 30.0,
-                              ),
-                              Text(
-                                'L o a d i n g . . .',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                      return Components.waitingAction();
                     } else
                       return Center(
                         child: Column(
@@ -124,42 +102,8 @@ class _ProfileViewState extends State<ProfileView> {
                                 color: Colors.grey[900],
                               ),
                             ),
-                            Container(
-                              color: Colors.grey[900],
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 30),
-                                child: Center(
-                                  child: Container(
-                                    width: 170,
-                                    height: 170,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[900],
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage("assets/images/everyone's profile.jpg"),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.topRight,
-                              color: Colors.grey[900],
-                              height: 50,
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  snapshot.data!.employeeID + ' ',
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            Components.ContainerPersonProfile(),
+                            DisplayEmployeeID(),
                             SizedBox(height: 20.0),
                             DisplayNameAndLastName(snapshot),
                             SizedBox(height: 10.0),
@@ -191,27 +135,27 @@ class _ProfileViewState extends State<ProfileView> {
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("City"),
+            Components.titleText("City"),
             SizedBox(width: 49.0),
-            infoText(snapshot.data!.city),
+            Components.infoText(snapshot.data!.city),
           ],
         ),
         SizedBox(height: 10.0),
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("Street"),
+            Components.titleText("Street"),
             SizedBox(width: 31.0),
-            infoText(snapshot.data!.street),
+            Components.infoText(snapshot.data!.street),
           ],
         ),
         SizedBox(height: 10.0),
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("ZIP"),
+            Components.titleText("ZIP"),
             SizedBox(width: 50.0),
-            infoText(snapshot.data!.zip),
+            Components.infoText(snapshot.data!.zip),
           ],
         ),
       ],
@@ -225,21 +169,41 @@ class _ProfileViewState extends State<ProfileView> {
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("Email"),
+            Components.titleText("Email"),
             SizedBox(width: 25.0),
-            infoText(snapshot.data!.email),
+            Components.infoText(snapshot.data!.email),
           ],
         ),
         SizedBox(height: 10.0),
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("Tel"),
+            Components.titleText("Tel"),
             SizedBox(width: 46.0),
-            infoText(snapshot.data!.tel),
+            Components.infoText(snapshot.data!.tel),
           ],
         ),
       ],
+    );
+  }
+
+  //show employee's ID section
+  Container DisplayEmployeeID() {
+    return Container(
+      alignment: Alignment.topRight,
+      color: Colors.grey[900],
+      height: 50,
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Text(
+          stored.employeeID + ' ',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w300,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 
@@ -275,30 +239,6 @@ class _ProfileViewState extends State<ProfileView> {
           ),
         ),
       ],
-    );
-  }
-
-  // set text style
-  Text infoText(String info) {
-    return Text(
-      info,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w400,
-        color: Colors.grey[900],
-      ),
-    );
-  }
-
-  //set text style
-  Text staticText(String text) {
-    return Text(
-      '$text :',
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: Colors.deepPurple,
-      ),
     );
   }
 }

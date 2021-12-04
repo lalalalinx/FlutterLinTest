@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:chatki_project/Components.dart';
 import 'Search/Search.dart';
 
 class HomeView extends StatefulWidget {
@@ -98,7 +99,7 @@ class _HomeViewState extends State<HomeView> {
                 future: getHomeData(),
                 builder: (context, AsyncSnapshot<ShowHome> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return WaitingAction();
+                    return Components.waitingAction();
                   } else
                     return Padding(
                       padding: EdgeInsets.all(0),
@@ -173,19 +174,7 @@ class _HomeViewState extends State<HomeView> {
                           child: ListTile(
                             title: Row(
                               children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[900],
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(
-                                          "assets/images/every groups' profile.jpg"),
-                                    ),
-                                  ),
-                                ),
+                                Components.OvalProfile("assets/images/every groups' profile.jpg"),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -260,19 +249,7 @@ class _HomeViewState extends State<HomeView> {
                           child: ListTile(
                             title: Row(
                               children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[900],
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(
-                                          "assets/images/everyone's profile.jpg"),
-                                    ),
-                                  ),
-                                ),
+                                Components.OvalProfile("assets/images/everyone's profile.jpg"),
                                 SizedBox(
                                   width: 20,
                                 ),
@@ -396,31 +373,6 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  // loading animation while wait action
-  Container WaitingAction() {
-    return Container(
-      height: 500,
-      child: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 200.0,
-            ),
-            CircularProgressIndicator(),
-            SizedBox(
-              height: 30.0,
-            ),
-            Text(
-              'L o a d i n g . . .',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
       ),
     );
   }

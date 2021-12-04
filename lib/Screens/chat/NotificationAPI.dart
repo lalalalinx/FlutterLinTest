@@ -23,30 +23,5 @@ class NotificationAPI {
     String? payload,
 
   }) async => notification.show(id, title, body, await notificationDetails(),payload: payload);
-  
-  // waitingAction
-  static Container waitingAction() {
-    return Container(
-      height: 500,
-      child: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 200.0,
-            ),
-            CircularProgressIndicator(),
-            SizedBox(
-              height: 30.0,
-            ),
-            Text(
-              'L o a d i n g . . .',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
 }

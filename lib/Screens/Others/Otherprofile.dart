@@ -8,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:chatki_project/Model/ProfileData.dart'; //list data ของ user
 import 'package:chatki_project/JSONtoDART/ShowProfile.dart'; //๋JSON
 import 'package:chatki_project/Components.dart';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import 'package:http/http.dart' as http;
 
 class OtherProfile extends StatefulWidget {
@@ -101,7 +99,7 @@ class _OtherProfileState extends State<OtherProfile> {
             return IndividualChat(
                 chatID: showOtherChat.chatId,
                 chatName: showOtherChat.chatName,
-                targetID: widget.targetID); 
+                targetID: widget.targetID);
           },
         ),
       );
@@ -154,42 +152,8 @@ class _OtherProfileState extends State<OtherProfile> {
                                 color: Colors.grey[900],
                               ),
                             ),
-                            Container(
-                              color: Colors.grey[900],
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 30),
-                                child: Center(
-                                  child: Container(
-                                    width: 170,
-                                    height: 170,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[900],
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage("assets/images/everyone's profile.jpg"),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.topRight,
-                              color: Colors.grey[900],
-                              height: 50,
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(
-                                  stored.employeeID + ' ',
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            Components.ContainerPersonProfile(),
+                            DisplayEmployeeID(),
                             SizedBox(height: 20.0),
                             DisplayOtherNandL(),
                             SizedBox(height: 10.0),
@@ -201,7 +165,6 @@ class _OtherProfileState extends State<OtherProfile> {
                             SizedBox(height: 20.0),
                             DisplayOtherAddress(),
                             Padding(
-                              //ปุ่ม 'chat' ด้านล่าง
                               padding: const EdgeInsets.symmetric(
                                   vertical: 30.0, horizontal: 110),
                               child: Container(
@@ -226,7 +189,6 @@ class _OtherProfileState extends State<OtherProfile> {
                                     ),
                                   ),
                                   style: ElevatedButton.styleFrom(
-                                    //primary: Colors.deepPurple[700],
                                     fixedSize: const Size(200, 50),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50),
@@ -253,21 +215,6 @@ class _OtherProfileState extends State<OtherProfile> {
     );
   }
 
-  // // waitingAction
-  // Container waitingAction() {
-  //   return Container(
-  //     height: 500,
-  //     child: Align(
-  //       alignment: Alignment.center,
-  //       child: Text(
-  //         'L o a d i n g . . .',
-  //         textAlign: TextAlign.center,
-  //         style: TextStyle(fontSize: 20),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   //show address section
   Column DisplayOtherAddress() {
     return Column(
@@ -275,30 +222,50 @@ class _OtherProfileState extends State<OtherProfile> {
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("City"),
+            Components.staticText("City"),
             SizedBox(width: 49.0),
-            infoOtherText(stored.city),
+            Components.infoText(stored.city),
           ],
         ),
         SizedBox(height: 10.0),
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("Street"),
+            Components.staticText("Street"),
             SizedBox(width: 31.0),
-            infoOtherText(stored.street),
+            Components.infoText(stored.street),
           ],
         ),
         SizedBox(height: 10.0),
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("ZIP"),
+            Components.staticText("ZIP"),
             SizedBox(width: 50.0),
-            infoOtherText(stored.zip),
+            Components.infoText(stored.zip),
           ],
         ),
       ],
+    );
+  }
+
+  //show employee's ID section
+  Container DisplayEmployeeID() {
+    return Container(
+      alignment: Alignment.topRight,
+      color: Colors.grey[900],
+      height: 50,
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Text(
+          stored.employeeID + ' ',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w300,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 
@@ -309,18 +276,18 @@ class _OtherProfileState extends State<OtherProfile> {
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("Email"),
+            Components.staticText("Email"),
             SizedBox(width: 25.0),
-            infoOtherText(stored.email),
+            Components.infoText(stored.email),
           ],
         ),
         SizedBox(height: 10.0),
         Row(
           children: [
             SizedBox(width: 40.0),
-            staticText("Tel"),
+            Components.staticText("Tel"),
             SizedBox(width: 46.0),
-            infoOtherText(stored.tel),
+            Components.infoText(stored.tel),
           ],
         ),
       ],
@@ -332,7 +299,6 @@ class _OtherProfileState extends State<OtherProfile> {
     return Column(
       children: [
         Center(
-          //padding: EdgeInsets.only(left: 40),
           child: Text(
             'Name - Surname',
             style: TextStyle(
@@ -344,46 +310,22 @@ class _OtherProfileState extends State<OtherProfile> {
         ),
         SizedBox(height: 10),
         Center(
-            //padding: EdgeInsets.only(left: 125),
-            child: Padding(
-          padding: EdgeInsets.only(
-            left: 20,
-            right: 20,
-          ),
-          child: Text(
-            stored.userFName + '  ' + stored.userLName,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey[900],
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: Text(
+              stored.userFName + '  ' + stored.userLName,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey[900],
+              ),
             ),
           ),
-        )),
+        ),
       ],
-    );
-  }
-
-  // set text style
-  Text staticText(String text) {
-    return Text(
-      '$text :',
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
-        color: Colors.deepPurple,
-      ),
-    );
-  }
-
-  // set text style
-  Text infoOtherText(String text) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.w400,
-        color: Colors.grey[900],
-      ),
     );
   }
 }
