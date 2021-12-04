@@ -90,7 +90,7 @@ class _ChatViewState extends State<ChatView> {
                                                     .isGroup ==
                                                 true) {
                                               print(snapshot
-                                                  .data!.getAllChat[i].chatId);
+                                                  .data!.getAllChat[i].chatID);
                                               print(snapshot.data!.getAllChat[i]
                                                   .chatName);
                                               Navigator.push(
@@ -99,7 +99,7 @@ class _ChatViewState extends State<ChatView> {
                                                   builder: (context) {
                                                     return GroupChat(
                                                       chatID: snapshot.data!
-                                                          .getAllChat[i].chatId,
+                                                          .getAllChat[i].chatID,
                                                       chatName: snapshot
                                                           .data!
                                                           .getAllChat[i]
@@ -123,7 +123,7 @@ class _ChatViewState extends State<ChatView> {
                                                         chatID: snapshot
                                                             .data!
                                                             .getAllChat[i]
-                                                            .chatId,
+                                                            .chatID,
                                                         chatName: snapshot
                                                             .data!
                                                             .getAllChat[i]
