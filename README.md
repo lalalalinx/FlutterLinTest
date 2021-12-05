@@ -1,16 +1,11 @@
-# chatki_project
+# Arumjoh Frontend
 
-A new Flutter project.
+Frontend source code for Arumjoh chat app frontend
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project required android sdk or android device to run this project
 
-A few resources to get you started if this is your first Flutter project:
+vscode required dart and flutter extension to connect your device
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+next, connect your device and press F5 to run the source code to your device
