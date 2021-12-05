@@ -288,6 +288,11 @@ class _HomeViewState extends State<HomeView> {
               builder: (context) {
                 return CreateGroup();
               },
+            ),).then(
+            (value) => setState(
+              () {
+                getHomeData();
+              },
             ),
           );
         },
