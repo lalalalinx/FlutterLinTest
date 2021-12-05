@@ -222,7 +222,7 @@ class _OtherProfileState extends State<OtherProfile> {
         Row(
           children: [
             SizedBox(width: 40.0),
-            Components.staticText("City"),
+            Components.titleText("City"),
             SizedBox(width: 49.0),
             Components.infoText(stored.city),
           ],
@@ -231,7 +231,7 @@ class _OtherProfileState extends State<OtherProfile> {
         Row(
           children: [
             SizedBox(width: 40.0),
-            Components.staticText("Street"),
+            Components.titleText("Street"),
             SizedBox(width: 31.0),
             Components.infoText(stored.street),
           ],
@@ -240,7 +240,7 @@ class _OtherProfileState extends State<OtherProfile> {
         Row(
           children: [
             SizedBox(width: 40.0),
-            Components.staticText("ZIP"),
+            Components.titleText("ZIP"),
             SizedBox(width: 50.0),
             Components.infoText(stored.zip),
           ],
@@ -276,7 +276,7 @@ class _OtherProfileState extends State<OtherProfile> {
         Row(
           children: [
             SizedBox(width: 40.0),
-            Components.staticText("Email"),
+            Components.titleText("Email"),
             SizedBox(width: 25.0),
             Components.infoText(stored.email),
           ],
@@ -285,7 +285,7 @@ class _OtherProfileState extends State<OtherProfile> {
         Row(
           children: [
             SizedBox(width: 40.0),
-            Components.staticText("Tel"),
+            Components.titleText("Tel"),
             SizedBox(width: 46.0),
             Components.infoText(stored.tel),
           ],
