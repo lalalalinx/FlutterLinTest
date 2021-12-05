@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 // register new user page
 import 'dart:convert';
+import 'package:chatki_project/Login_Register/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,7 +35,7 @@ class _RegisterState extends State<Register> {
       print(res.body);
       login();
       showToast("Registered successfully");
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return RegisterNext();
       }));
     } else {
@@ -89,7 +90,14 @@ class _RegisterState extends State<Register> {
           backgroundColor: Colors.white,
           leading: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Login();
+                      },
+                    ),
+                  );
               },
               icon: Icon(
                 Icons.arrow_back_ios,

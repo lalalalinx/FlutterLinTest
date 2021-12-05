@@ -40,7 +40,7 @@ class _OtherProfileState extends State<OtherProfile> {
 
   //This function get a target user information via API
   //return proflie class data
-  Future getProfileData() async {
+  Future<ProfileData> getProfileData() async {
     final token = await storage.read(key: "token");
     final refreshToken = await storage.read(key: "refreshToken");
     var res = await http.post(
@@ -58,7 +58,7 @@ class _OtherProfileState extends State<OtherProfile> {
     final showProfile = ShowProfile.fromJson(jsonDecode(res.body));
     String output = res.body;
     if (res.statusCode == 200) {
-      ProfileData profileDatas = ProfileData(
+      stored = ProfileData(
           employeeID: showProfile.view[0],
           email: showProfile.view[1],
           tel: showProfile.view[2],
@@ -67,10 +67,11 @@ class _OtherProfileState extends State<OtherProfile> {
           city: showProfile.view[5],
           street: showProfile.view[6],
           zip: showProfile.view[7]);
-      return profileDatas;
+      
     } else {
       print(output);
     }
+    return stored;
   }
 
   Future sentToChat() async {
@@ -139,7 +140,7 @@ class _OtherProfileState extends State<OtherProfile> {
               Center(
                 child: FutureBuilder(
                   future: getProfileData(),
-                  builder: (context, snapshot) {
+                  builder: (context, AsyncSnapshot<ProfileData> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Components.waitingAction();
                     } else
@@ -153,17 +154,17 @@ class _OtherProfileState extends State<OtherProfile> {
                               ),
                             ),
                             Components.ContainerPersonProfile(),
-                            DisplayEmployeeID(),
+                            DisplayEmployeeID(snapshot),
                             SizedBox(height: 20.0),
-                            DisplayOtherNandL(),
+                            DisplayOtherNandL(snapshot),
                             SizedBox(height: 10.0),
                             Divider(thickness: 1),
                             SizedBox(height: 20.0),
-                            DisplayOtherEmailAndTel(),
+                            DisplayOtherEmailAndTel(snapshot),
                             SizedBox(height: 10.0),
                             Divider(thickness: 1),
                             SizedBox(height: 20.0),
-                            DisplayOtherAddress(),
+                            DisplayOtherAddress(snapshot),
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 30.0, horizontal: 110),
@@ -216,7 +217,7 @@ class _OtherProfileState extends State<OtherProfile> {
   }
 
   //show address section
-  Column DisplayOtherAddress() {
+  Column DisplayOtherAddress(AsyncSnapshot<ProfileData> snapshot) {
     return Column(
       children: [
         Row(
@@ -224,7 +225,7 @@ class _OtherProfileState extends State<OtherProfile> {
             SizedBox(width: 40.0),
             Components.titleText("City"),
             SizedBox(width: 49.0),
-            Components.infoText(stored.city),
+            Components.infoText(snapshot.data!.city),
           ],
         ),
         SizedBox(height: 10.0),
@@ -233,16 +234,16 @@ class _OtherProfileState extends State<OtherProfile> {
             SizedBox(width: 40.0),
             Components.titleText("Street"),
             SizedBox(width: 31.0),
-            Components.infoText(stored.street),
+            Components.infoText(snapshot.data!.street),
           ],
         ),
         SizedBox(height: 10.0),
         Row(
           children: [
-            SizedBox(width: 40.0),
+            SizedBox(width: 42.0),
             Components.titleText("ZIP"),
             SizedBox(width: 50.0),
-            Components.infoText(stored.zip),
+            Components.infoText(snapshot.data!.zip),
           ],
         ),
       ],
@@ -250,7 +251,7 @@ class _OtherProfileState extends State<OtherProfile> {
   }
 
   //show employee's ID section
-  Container DisplayEmployeeID() {
+  Container DisplayEmployeeID(AsyncSnapshot<ProfileData> snapshot) {
     return Container(
       alignment: Alignment.topRight,
       color: Colors.grey[900],
@@ -258,7 +259,7 @@ class _OtherProfileState extends State<OtherProfile> {
       child: Align(
         alignment: Alignment.centerRight,
         child: Text(
-          stored.employeeID + ' ',
+          snapshot.data!.employeeID + ' ',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.w300,
@@ -270,7 +271,7 @@ class _OtherProfileState extends State<OtherProfile> {
   }
 
   //show email section
-  Column DisplayOtherEmailAndTel() {
+  Column DisplayOtherEmailAndTel(AsyncSnapshot<ProfileData> snapshot) {
     return Column(
       children: [
         Row(
@@ -278,7 +279,7 @@ class _OtherProfileState extends State<OtherProfile> {
             SizedBox(width: 40.0),
             Components.titleText("Email"),
             SizedBox(width: 25.0),
-            Components.infoText(stored.email),
+            Components.infoText(snapshot.data!.email),
           ],
         ),
         SizedBox(height: 10.0),
@@ -287,7 +288,7 @@ class _OtherProfileState extends State<OtherProfile> {
             SizedBox(width: 40.0),
             Components.titleText("Tel"),
             SizedBox(width: 46.0),
-            Components.infoText(stored.tel),
+            Components.infoText(snapshot.data!.tel),
           ],
         ),
       ],
@@ -295,7 +296,7 @@ class _OtherProfileState extends State<OtherProfile> {
   }
 
   //show name and surname section
-  Column DisplayOtherNandL() {
+  Column DisplayOtherNandL(AsyncSnapshot<ProfileData> snapshot) {
     return Column(
       children: [
         Center(
@@ -316,7 +317,7 @@ class _OtherProfileState extends State<OtherProfile> {
               right: 20,
             ),
             child: Text(
-              stored.userFName + '  ' + stored.userLName,
+              snapshot.data!.userFName + '  ' + snapshot.data!.userLName,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w400,

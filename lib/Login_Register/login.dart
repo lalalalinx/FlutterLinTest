@@ -162,7 +162,7 @@ class _LoginState extends State<Login> {
                       side: BorderSide(color: Colors.black, width: 1.5)),
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) {

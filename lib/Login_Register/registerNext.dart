@@ -60,7 +60,7 @@ class _RegisterNextState extends State<RegisterNext> {
   }
 
   //controller
-  final imageController = TextEditingController();
+  //final imageController = TextEditingController();
   final userFNameController = TextEditingController();
   final userLNameController = TextEditingController();
   final telController = TextEditingController();
@@ -112,10 +112,6 @@ class _RegisterNextState extends State<RegisterNext> {
                 ),
                 SizedBox(
                   height: 40.0,
-                ),
-                registerInfoForm('Image', imageController),
-                SizedBox(
-                  height: 20.0,
                 ),
                 registerInfoForm('Name', userFNameController),
                 SizedBox(

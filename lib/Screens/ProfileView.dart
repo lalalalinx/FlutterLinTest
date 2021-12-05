@@ -152,7 +152,7 @@ class _ProfileViewState extends State<ProfileView> {
         SizedBox(height: 10.0),
         Row(
           children: [
-            SizedBox(width: 40.0),
+            SizedBox(width: 42.0),
             Components.titleText("ZIP"),
             SizedBox(width: 50.0),
             Components.infoText(snapshot.data!.zip),

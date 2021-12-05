@@ -340,6 +340,12 @@ class _GroupProfileState extends State<GroupProfile> {
                     chatID: widget.chatID, groupName: widget.groupName);
               },
             ),
+          ).then(
+            (value) => setState(
+              () {
+                getGroupProfile();
+              },
+            ),
           );
         },
         child: Row(

@@ -51,7 +51,7 @@ class _CreateGroupState extends State<CreateGroup> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Colors.orange[700],
         leading: Row(
           children: [
             IconButton(
@@ -71,13 +71,13 @@ class _CreateGroupState extends State<CreateGroup> {
           children: [
             Text('Create new group',
                 style: TextStyle(
-                    fontWeight: FontWeight.w400, color: Colors.orange[400])),
+                    fontWeight: FontWeight.w400, color: Colors.white)),
             SizedBox(
               width: 10,
             ),
             Icon(
               Icons.group_add,
-              color: Colors.orange[400],
+              color: Colors.white,
             ),
             SizedBox(
               width: 10,
@@ -111,7 +111,7 @@ class _CreateGroupState extends State<CreateGroup> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 40),
                   Center(
                     child: Row(
                       children: [

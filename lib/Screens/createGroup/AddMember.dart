@@ -9,6 +9,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Components.dart';
+
 class AddMember extends StatefulWidget {
   const AddMember({Key? key, required this.chatID, required this.groupName})
       : super(key: key);
@@ -158,18 +160,7 @@ class _AddMemberState extends State<AddMember> {
                                     child: ListTile(
                                       title: Row(
                                         children: [
-                                          Container(
-                                            width: 170,
-                                            height: 170,
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey[900],
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: AssetImage("assets/images/everyone's profile.jpg"),
-                                              ),
-                                            ),
-                                          ),
+                                          Components.OvalProfile("assets/images/everyone's profile.jpg"),
                                           SizedBox(
                                             width: 20,
                                           ),
@@ -205,7 +196,7 @@ class _AddMemberState extends State<AddMember> {
   AppBar AddMemberAppBar(BuildContext context) {
     return AppBar(
       elevation: 0,
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.blue,
       leading: Row(
         children: [
           IconButton(
